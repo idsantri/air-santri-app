@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../../hooks/use-input';
 import InputField from '../../components/InputField';
 import { ButtonNormal } from '../../components/Button';
+import { useEffect } from 'react';
+import auth from '../../models/auth';
 
 function LoginPage() {
 	const navigate = useNavigate();
@@ -14,7 +16,20 @@ function LoginPage() {
 		e.preventDefault();
 		console.log(e);
 	};
-
+	useEffect(() => {
+		const testLogin = async () => {
+			try {
+				const response = await auth.login({
+					login: 'user1',
+					password: '112233',
+				});
+				// console.log('response', response);
+			} catch (error) {
+				// console.error('Login error:', error);
+			}
+		};
+		testLogin();
+	}, []);
 	return (
 		<>
 			<h2 className="p-2 text-xl text-center text-slate-800 dark:text-slate-200">
