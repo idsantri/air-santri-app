@@ -22,21 +22,13 @@ function ButtonMore({ clickLogout }) {
 				>
 					<li className="">
 						<Link to="/tatib" className="">
-							<Icon
-								icon="codicon:symbol-ruler"
-								width="24"
-								height="24"
-							/>
+							<Icon icon="codicon:symbol-ruler" width="24" height="24" />
 							Tata Tertib
 						</Link>
 					</li>
 					<li className="">
 						<Link to="/domisili" className="">
-							<Icon
-								icon="mdi:bed-outline"
-								width="24"
-								height="24"
-							/>
+							<Icon icon="mdi:bed-outline" width="24" height="24" />
 							Riwayat Domisili
 						</Link>
 					</li>
@@ -45,11 +37,7 @@ function ButtonMore({ clickLogout }) {
 							onClick={clickLogout}
 							className="text-red-500 hover:bg-red-500 hover:text-red-100"
 						>
-							<Icon
-								icon="bitcoin-icons:exit-filled"
-								width="24"
-								height="24"
-							/>
+							<Icon icon="bitcoin-icons:exit-filled" width="24" height="24" />
 							Keluar
 						</button>
 					</li>

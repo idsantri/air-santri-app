@@ -19,8 +19,8 @@ const useAuthStore = create(
 				window.location.href = '/login';
 			},
 		}),
-		{ name: 'auth', storage: createJSONStorage(() => localStorage) }
-	)
+		{ name: 'auth', storage: createJSONStorage(() => localStorage) },
+	),
 );
 
 export default useAuthStore;

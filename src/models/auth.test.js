@@ -1,6 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import auth from './auth';
-import api from './api';
 
 async function doLogin() {
 	localStorage.removeItem('token');
@@ -29,7 +28,7 @@ describe('auth model', () => {
 			auth.login({
 				login: 'user1',
 				password: 'wrongpassword',
-			})
+			}),
 		).rejects.toThrow();
 	});
 

@@ -33,9 +33,7 @@ const InputField = ({
 					onChange={onChange}
 					required={required}
 					placeholder={placeholder}
-					className={`${defaultClassName} ${className} ${
-						disabled ? 'bg-slate-200' : ''
-					}`}
+					className={`${defaultClassName} ${className} ${disabled ? 'bg-slate-200' : ''}`}
 					{...additionalProps}
 					disabled={disabled}
 				/>
