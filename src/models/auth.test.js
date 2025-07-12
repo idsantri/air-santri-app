@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import auth from './auth';
 
 async function doLogin() {
-	localStorage.removeItem('token');
+	localStorage.clear();
 	return await auth.login({
 		login: 'user1',
 		password: '112233',
