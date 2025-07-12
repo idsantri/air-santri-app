@@ -1,4 +1,5 @@
 import config from '../config';
+import useAuthStore from '../store/authStore';
 import ApiError from './ApiError';
 
 const api = (() => {
@@ -15,7 +16,6 @@ const api = (() => {
 				},
 			});
 		} catch (_err) {
-			// console.log('🚀 ~ fetchGuest ~ err:', err);
 			throw new ApiError('Gagal terhubung ke server');
 		}
 
@@ -47,24 +47,19 @@ const api = (() => {
 			...options,
 			headers: {
 				...options.headers,
-				Authorization: `Bearer ${getAccessToken()}`,
+				Authorization: `Bearer ${token}`,
 			},
 		});
 	}
 
-	function putAccessToken(token) {
-		localStorage.setItem('token', token);
-	}
-
 	function getAccessToken() {
-		return localStorage.getItem('token');
+		const { auth } = useAuthStore.getState();
+		return auth.token;
 	}
 
 	return {
 		fetchGuest,
 		fetchAuth,
-		putAccessToken,
-		getAccessToken,
 	};
 })();
 

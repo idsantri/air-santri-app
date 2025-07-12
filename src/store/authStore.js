@@ -16,7 +16,6 @@ const useAuthStore = create(
 			},
 			logout: () => {
 				set({ auth: initAuth });
-				window.location.href = '/login';
 			},
 		}),
 		{ name: 'auth', storage: createJSONStorage(() => localStorage) },

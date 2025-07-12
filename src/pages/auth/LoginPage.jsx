@@ -1,11 +1,13 @@
 import useInput from '../../hooks/use-input';
 import auth from '../../models/auth';
 import { useState } from 'react';
+import useAuthStore from '../../store/authStore';
 
 function LoginPage() {
 	const [login, onLoginChange] = useInput('');
 	const [password, onPasswordChange] = useInput('');
 	const [isLoading, setIsLoading] = useState(false);
+	const authStore = useAuthStore();
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -15,9 +17,12 @@ function LoginPage() {
 				login: login,
 				password: password,
 			})
-			.then(() => {
-				// window.location.href = '/';
-				alert('Login berhasil!'); // Replace with a redirect or notification
+			.then((res) => {
+				authStore.login({
+					isAuthenticated: true,
+					token: res.token,
+					user: res.user,
+				});
 			})
 			.finally(() => {
 				setIsLoading(false);

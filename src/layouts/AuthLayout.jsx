@@ -1,10 +1,16 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import ToggleMode from '../components/ToggleMode';
 import config from '../config';
 import LogoAvatar from './_components/LogoAvatar';
 import InstallPwa from './_components/InstallPwa';
+import useAuthStore from '../store/authStore';
 
 const AuthLayout = () => {
+	const { auth } = useAuthStore();
+	if (auth.isAuthenticated) {
+		return <Navigate to="/home" replace />;
+	}
+
 	return (
 		<>
 			<div className="min-h-screen p-4 bg-blue-50 text-blue-950 flex items-center justify-center">
