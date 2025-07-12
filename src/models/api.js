@@ -1,22 +1,38 @@
 import config from '../config';
+import ApiError from './ApiError';
 
 const api = (() => {
 	const BASE_URL = config.BASE_API + config.END_API;
 
 	async function fetchGuest(endPoint, options = {}) {
-		const response = await fetch(BASE_URL + endPoint, {
-			...options,
-			headers: {
-				...options.headers,
-				'Content-Type': 'application/json',
-			},
-		});
+		let response;
+		try {
+			response = await fetch(BASE_URL + endPoint, {
+				...options,
+				headers: {
+					...options.headers,
+					'Content-Type': 'application/json',
+				},
+			});
+		} catch (_err) {
+			// console.log('🚀 ~ fetchGuest ~ err:', err);
+			throw new ApiError('Gagal terhubung ke server');
+		}
 
-		const responseJson = await response.json();
+		let responseJson;
+		try {
+			responseJson = await response.json();
+		} catch (_err) {
+			throw new ApiError('Invalid JSON response');
+		}
+
 		const { error, message } = responseJson;
 
 		if (!response.ok || error) {
-			throw new Error(message || 'unexpected error occurred');
+			throw new ApiError(
+				message || 'unexpected error occurred',
+				response.status,
+			);
 		}
 
 		return responseJson;
@@ -25,8 +41,7 @@ const api = (() => {
 	async function fetchAuth(endPoint, options = {}) {
 		const token = getAccessToken();
 		if (!token) {
-			// alert('Anda belum login!');
-			throw new Error('No access token found');
+			throw new ApiError('No access token found');
 		}
 		return fetchGuest(endPoint, {
 			...options,

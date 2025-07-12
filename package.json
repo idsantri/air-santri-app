@@ -15,14 +15,17 @@
 	"dependencies": {
 		"@tailwindcss/cli": "^4.1.11",
 		"@tailwindcss/vite": "^4.1.11",
+		"daisyui": "^5.0.46",
 		"date-fns": "^4.1.0",
 		"framer-motion": "^12.23.3",
 		"html-react-parser": "^5.2.5",
 		"react": "^19.1.0",
+		"react-data-table-component": "^7.7.0",
 		"react-dom": "^19.1.0",
 		"react-rating": "^2.0.5",
 		"react-router-dom": "^7.6.3",
 		"react-toastify": "^11.0.5",
+		"styled-components": "^6.1.19",
 		"tailwindcss": "^4.1.11",
 		"zustand": "^5.0.6"
 	},

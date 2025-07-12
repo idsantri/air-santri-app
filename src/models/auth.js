@@ -1,3 +1,5 @@
+import { notifyError, notifySuccess } from '../components/Notify';
+import { buildTextError } from '../utils/array-object';
 import api from './api';
 
 const auth = (() => {
@@ -11,10 +13,10 @@ const auth = (() => {
 			api.putAccessToken(token);
 			localStorage.setItem('token', token);
 			localStorage.setItem('user', JSON.stringify(user));
-			console.log('🚀 ~ login ~ response:', response.message);
+			notifySuccess({ message: response.message });
 			return response;
 		} catch (error) {
-			console.error('Login error:', error.message);
+			notifyError({ message: buildTextError(error.message) });
 			throw error;
 		}
 	}
@@ -30,7 +32,7 @@ const auth = (() => {
 			console.log('🚀 ~ logout ~ response:', response.message);
 			return response;
 		} catch (error) {
-			console.error('Logout error:', error.message);
+			notifyError({ message: buildTextError(error.message) });
 			throw error;
 		}
 	}

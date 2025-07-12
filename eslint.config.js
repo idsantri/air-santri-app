@@ -22,7 +22,15 @@ export default tseslint.config([
 			prettier: prettierPlugin,
 		},
 		rules: {
-			'@typescript-eslint/no-unused-vars': 'warn',
+			'@typescript-eslint/no-unused-vars': [
+				'warn',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+					caughtErrorsIgnorePattern: '^_', // Untuk catch block
+					destructuredArrayIgnorePattern: '^_', // Untuk array destructuring
+				},
+			],
 		},
 		languageOptions: {
 			ecmaVersion: 2020,

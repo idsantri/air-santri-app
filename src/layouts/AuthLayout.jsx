@@ -7,15 +7,15 @@ import InstallPwa from './_components/InstallPwa';
 const AuthLayout = () => {
 	return (
 		<>
-			<div className="grid min-h-screen p-4 bg-blue-50 text-blue-950 place-content-center">
-				<div className="max-w-sm text-center">
+			<div className="min-h-screen p-4 bg-blue-50 text-blue-950 flex items-center justify-center">
+				<div className="max-w-sm w-full">
 					<InstallPwa className="mb-4" />
-					<div className="px-4 py-10 rounded-md shadow-md bg-blue-200 shadow-blue-500 relative">
+					<div className="px-4 py-10 rounded-md shadow-sm bg-blue-100 shadow-blue-500 relative">
 						{/* button mode */}
 						<ToggleMode className="absolute top-2 right-2 hidden" />
 						<header className="">
 							<LogoAvatar className="" />
-							<div className="">
+							<div className="text-center">
 								<h1
 									style={{ fontSize: '1.6em' }}
 									className="mt-4 font-medium text-blue-700"

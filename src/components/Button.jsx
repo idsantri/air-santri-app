@@ -23,25 +23,17 @@ function BaseButton({
 			aria-disabled={disabled}
 		>
 			{iconName && (
-				<Icon className="inline mr-2" icon={iconName} width="1.5em" height="1.5em" />
+				<Icon
+					className="inline mr-2"
+					icon={iconName}
+					width="1.5em"
+					height="1.5em"
+				/>
 			)}
 			{children}
 		</Component>
 	);
 }
-
-// BaseButton.propTypes = {
-// 	/** Render as different HTML element or component, eg: button, a, Link */
-// 	as: PropTypes.elementType,
-// 	/** Button children */
-// 	children: PropTypes.node,
-// 	/** Icon name from Iconify (https://iconify.design/) */
-// 	iconName: PropTypes.string,
-// 	/** Disabled state */
-// 	disabled: PropTypes.bool,
-// 	/** Additional CSS class */
-// 	className: PropTypes.string,
-// };
 
 // Style configurations for each variant
 const VARIANT_STYLES = {
@@ -72,7 +64,9 @@ function createButtonVariant(variant) {
       ${disabled ? variantStyles.disabled : variantStyles.enabled}
     `;
 
-		return <BaseButton disabled={disabled} className={className} {...props} />;
+		return (
+			<BaseButton disabled={disabled} className={className} {...props} />
+		);
 	};
 
 	buttonFunction.propTypes = BaseButton.propTypes;
