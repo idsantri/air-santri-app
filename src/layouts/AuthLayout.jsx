@@ -13,36 +13,24 @@ const AuthLayout = () => {
 
 	return (
 		<>
-			<div className="min-h-screen p-4 bg-blue-50 text-blue-950 flex items-center justify-center">
+			<div className="min-h-screen p-4  flex items-center justify-center">
 				<div className="max-w-sm w-full">
 					<InstallPwa className="mb-4" />
-					<div className="px-4 py-10 rounded-md shadow-sm bg-blue-100 shadow-blue-500 relative">
+					<div className="card px-4 py-10 shadow-sm bg-base-200 rounded-md relative">
 						{/* button mode */}
 						<ToggleMode className="absolute top-2 right-2 hidden" />
 						<header className="">
 							<LogoAvatar className="" />
-							<div className="text-center">
-								<h1
-									style={{ fontSize: '1.6em' }}
-									className="mt-4 font-medium text-blue-700"
-								>
+							<div className="text-center text-primary-content">
+								<h1 className="mt-4 text-3xl">
 									{config.APP_NAME}
 								</h1>
 								<p>
-									<span
-										style={{ fontSize: '1.2em' }}
-										className="font-medium text-blue-800"
-									>
+									<span className="font-medium text-xl">
 										{config.INS_DESC}
 									</span>
 									<br />
-									<span
-										style={{
-											fontVariant: 'small-caps',
-											fontSize: '1.5em',
-										}}
-										className="text-blue-900"
-									>
+									<span className=" font-bold text-lg">
 										{config.INS_NAME}
 									</span>
 								</p>

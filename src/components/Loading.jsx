@@ -10,7 +10,10 @@ const Loading = () => {
 				alignItems: 'center',
 			}}
 		>
-			<div className="loading loading-ring loading-lg" style={{ width: '100px' }}></div>
+			<div
+				className="loading loading-ring loading-lg"
+				style={{ width: '100px' }}
+			></div>
 		</div>
 	);
 };

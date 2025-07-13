@@ -7,7 +7,8 @@ const useNotify = () => {
 		code: '',
 		isError: true,
 		show: false,
-		onClose: () => setObjNotify((prevNotify) => ({ ...prevNotify, show: false })),
+		onClose: () =>
+			setObjNotify((prevNotify) => ({ ...prevNotify, show: false })),
 	});
 
 	return { objNotify, setObjNotify };

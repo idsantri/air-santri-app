@@ -16,7 +16,10 @@ function InstallPwa({ className }) {
 			{ regex: /mac/i, name: 'Mac/iOS' },
 		];
 
-		return osList.find(({ regex }) => regex.test(userAgent))?.name || 'Unknown OS';
+		return (
+			osList.find(({ regex }) => regex.test(userAgent))?.name ||
+			'Unknown OS'
+		);
 	};
 	const isIos = () => getOS() === 'iOS';
 	const isAndroid = () => getOS() === 'Android';
@@ -34,10 +37,16 @@ function InstallPwa({ className }) {
 			}
 		};
 
-		window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+		window.addEventListener(
+			'beforeinstallprompt',
+			handleBeforeInstallPrompt,
+		);
 
 		return () => {
-			window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+			window.removeEventListener(
+				'beforeinstallprompt',
+				handleBeforeInstallPrompt,
+			);
 		};
 	});
 
@@ -69,10 +78,15 @@ function InstallPwa({ className }) {
 					>
 						<div className="flex items-center space-x-2">
 							<div>
-								<Icon icon="typcn:info" height="32" className="text-yellow-200" />
+								<Icon
+									icon="typcn:info"
+									height="32"
+									className="text-yellow-200"
+								/>
 							</div>
 							<div className="text-sm italic text-left">
-								Instal aplikasi untuk mendapatkan pengalaman lebih baik!
+								Instal aplikasi untuk mendapatkan pengalaman
+								lebih baik!
 							</div>
 							{isAndroid() && (
 								<button
@@ -92,9 +106,17 @@ function InstallPwa({ className }) {
 									onClick={() => setShowIosComp(!showIosComp)}
 								>
 									{showIosComp ? (
-										<Icon icon="mingcute:up-fill" width="24" height="24" />
+										<Icon
+											icon="mingcute:up-fill"
+											width="24"
+											height="24"
+										/>
 									) : (
-										<Icon icon="mingcute:down-fill" width="24" height="24" />
+										<Icon
+											icon="mingcute:down-fill"
+											width="24"
+											height="24"
+										/>
 									)}
 								</button>
 							)}
@@ -105,23 +127,28 @@ function InstallPwa({ className }) {
 								<ul className="ml-4 text-sm font-light list-decimal list-outside">
 									<li className="">
 										Pastikan Anda menggunakan browser{' '}
-										<span className="font-semibold">Safari</span>;
+										<span className="font-semibold">
+											Safari
+										</span>
+										;
 									</li>
 									<li className="">
-										Ketuk ikon bagikan (sebuah kotak dengan panah ke atas di
-										bagian bawah layar);
+										Ketuk ikon bagikan (sebuah kotak dengan
+										panah ke atas di bagian bawah layar);
 									</li>
 									<li>
-										Gulir ke bawah dalam menu bagikan dan pilih opsi
-										&ldquo;Tambahkan ke Layar Utama&rdquo;;
+										Gulir ke bawah dalam menu bagikan dan
+										pilih opsi &ldquo;Tambahkan ke Layar
+										Utama&rdquo;;
 									</li>
 									<li>
-										Anda mungkin akan diminta untuk memberikan nama dan
-										mengonfigurasi ikon;
+										Anda mungkin akan diminta untuk
+										memberikan nama dan mengonfigurasi ikon;
 									</li>
 									<li>
-										Ketuk &ldquo;Tambahkan&rdquo; di pojok kanan atas layar
-										untuk menyelesaikan proses;
+										Ketuk &ldquo;Tambahkan&rdquo; di pojok
+										kanan atas layar untuk menyelesaikan
+										proses;
 									</li>
 								</ul>
 							</div>

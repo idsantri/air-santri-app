@@ -14,7 +14,9 @@ class Sales {
 
 	async #getById(id) {
 		try {
-			const response = await api.fetchAuth(`sales/${id}`, { method: 'GET' });
+			const response = await api.fetchAuth(`sales/${id}`, {
+				method: 'GET',
+			});
 			console.log('🚀 [getById] response:', response.message);
 			return response;
 		} catch (error) {

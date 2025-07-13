@@ -1,6 +1,6 @@
 @import 'tailwindcss';
-@plugin "daisyui";
-
-body {
-	@apply bg-gray-50 text-gray-950;
+@plugin "daisyui" {
+	themes:
+		lemonade --default,
+		abyss --prefersdark;
 }

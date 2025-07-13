@@ -12,7 +12,9 @@ const LoadingTailwind = ({ children = '' }) => {
 					<div className="w-8 h-8 animate-pulse  bg-[#4fb85e] rounded-full"></div>
 					<div className="w-8 h-8 animate-pulse bg-[#2a6424] rounded-full"></div>
 				</div>
-				<div className="p-2">{children || 'Tunggu sebentar, sedang memuat data …'}</div>
+				<div className="p-2">
+					{children || 'Tunggu sebentar, sedang memuat data …'}
+				</div>
 			</div>
 		</>
 	);
