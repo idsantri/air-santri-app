@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router';
 import MainTop from './_components/MainTop';
 import DockNavigation from './_components/DockNavigation';
 import useAuthStore from '../store/authStore';

@@ -1,9 +1,4 @@
-import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import MainLayout from './layouts/MainLayout';
 import LoginPage from './pages/auth/LoginPage';

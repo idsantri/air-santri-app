@@ -5,12 +5,13 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
+		"dev-pwa": "vite --force --config vite.config.pwa.js",
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"test": "vitest --no-watch",
 		"test:watch": "vitest --watch",
-		"format": "prettier --write ."
+		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,vue,scss,html,md,json}\" --ignore-path .gitignore"
 	},
 	"dependencies": {
 		"@tailwindcss/cli": "^4.1.11",
@@ -23,7 +24,7 @@
 		"react-data-table-component": "^7.7.0",
 		"react-dom": "^19.1.0",
 		"react-rating": "^2.0.5",
-		"react-router-dom": "^7.6.3",
+		"react-router": "^7.6.3",
 		"react-toastify": "^11.0.5",
 		"styled-components": "^6.1.19",
 		"tailwindcss": "^4.1.11",

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
-function InstallPwa({ className }) {
+function InstallPwa() {
 	const [deferredPrompt, setDeferredPrompt] = useState(null);
 	const [showInstallBanner, setShowInstallBanner] = useState(false);
 	const [showIosComp, setShowIosComp] = useState(false);
@@ -74,35 +74,38 @@ function InstallPwa({ className }) {
 				<>
 					<div
 						role="alert"
-						className={`alert rounded-md bg-blue-600 text-blue-100 shadow-md shadow-blue-500 border-blue-200 ${className}`}
+						className="card bg-success mb-2 p-2 rounded-md "
 					>
-						<div className="flex items-center space-x-2">
-							<div>
-								<Icon
-									icon="typcn:info"
-									height="32"
-									className="text-yellow-200"
-								/>
+						<div className="flex items-center justify-between gap-2">
+							<div className="flex items-center gap-2">
+								<div>
+									<Icon
+										icon="typcn:info"
+										height="32"
+										className=""
+									/>
+								</div>
+								<div className="text-sm italic text-left">
+									Instal aplikasi untuk mendapatkan pengalaman
+									lebih baik!
+								</div>
 							</div>
-							<div className="text-sm italic text-left">
-								Instal aplikasi untuk mendapatkan pengalaman
-								lebih baik!
-							</div>
+
 							{isAndroid() && (
 								<button
-									className="px-2 font-medium border-none shadow-sm btn btn-ghost bg-blue-200 text-blue-900 shadow-blue-950"
+									className="btn btn-neutral px-2 "
 									onClick={installPwa}
 								>
 									<Icon
 										icon="material-symbols-light:install-mobile"
-										height="32"
+										height="24"
 									/>
 									Instal
 								</button>
 							)}
 							{isIos() && (
 								<button
-									className="font-medium border-none rounded-full shadow-sm btn btn-ghost btn-circle btn-sm bg-blue-200 text-blue-900 shadow-blue-950"
+									className="font-medium border-none rounded-full shadow-sm btn btn-ghost btn-circle btn-sm  text-neutral shadow-neutral"
 									onClick={() => setShowIosComp(!showIosComp)}
 								>
 									{showIosComp ? (
@@ -122,36 +125,41 @@ function InstallPwa({ className }) {
 							)}
 						</div>
 						{showIosComp && (
-							<div className="w-full px-4 py-2 text-left border rounded-md bg-blue-700">
-								<p>Bagi Pengguna iOS!</p>
-								<ul className="ml-4 text-sm font-light list-decimal list-outside">
-									<li className="">
-										Pastikan Anda menggunakan browser{' '}
-										<span className="font-semibold">
-											Safari
-										</span>
-										;
-									</li>
-									<li className="">
-										Ketuk ikon bagikan (sebuah kotak dengan
-										panah ke atas di bagian bawah layar);
-									</li>
-									<li>
-										Gulir ke bawah dalam menu bagikan dan
-										pilih opsi &ldquo;Tambahkan ke Layar
-										Utama&rdquo;;
-									</li>
-									<li>
-										Anda mungkin akan diminta untuk
-										memberikan nama dan mengonfigurasi ikon;
-									</li>
-									<li>
-										Ketuk &ldquo;Tambahkan&rdquo; di pojok
-										kanan atas layar untuk menyelesaikan
-										proses;
-									</li>
-								</ul>
-							</div>
+							<>
+								<div className="divider mt-2 mb-0"></div>
+								<div className="w-full text-left card rounded-md ">
+									<p>Bagi Pengguna iOS!</p>
+									<ul className="ml-4 text-sm font-light list-decimal list-outside">
+										<li className="">
+											Pastikan Anda menggunakan browser{' '}
+											<span className="font-semibold">
+												Safari
+											</span>
+											;
+										</li>
+										<li className="">
+											Ketuk ikon bagikan (sebuah kotak
+											dengan panah ke atas di bagian bawah
+											layar);
+										</li>
+										<li>
+											Gulir ke bawah dalam menu bagikan
+											dan pilih opsi &ldquo;Tambahkan ke
+											Layar Utama&rdquo;;
+										</li>
+										<li>
+											Anda mungkin akan diminta untuk
+											memberikan nama dan mengonfigurasi
+											ikon;
+										</li>
+										<li>
+											Ketuk &ldquo;Tambahkan&rdquo; di
+											pojok kanan atas layar untuk
+											menyelesaikan proses;
+										</li>
+									</ul>
+								</div>
+							</>
 						)}
 					</div>
 				</>
