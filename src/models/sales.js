@@ -16,11 +16,10 @@ class Sales {
 		return response.data || true;
 	}
 
-	async post(data, notify) {
+	async post(data) {
 		const response = await api.fetchAuth('sales', {
 			method: 'POST',
 			body: JSON.stringify(data),
-			notify,
 		});
 		return response.data || true;
 	}
