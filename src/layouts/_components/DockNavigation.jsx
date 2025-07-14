@@ -4,7 +4,7 @@ import DockButton from './DockButton';
 function DockNavigation({ clickLogout }) {
 	return (
 		<nav className="">
-			<li className="dock bg-neutral text-neutral-content border-t-2 border-accent ">
+			<ul className="dock bg-neutral text-neutral-content border-t-2 border-accent ">
 				<DockButton
 					iconName="solar:user-id-linear"
 					to="/santri"
@@ -27,7 +27,7 @@ function DockNavigation({ clickLogout }) {
 					label="Iuran"
 				/>
 				<DockMore clickLogout={clickLogout} />
-			</li>
+			</ul>
 		</nav>
 	);
 }

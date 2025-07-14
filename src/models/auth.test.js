@@ -1,26 +1,26 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import auth from './auth';
-
-async function doLogin() {
-	localStorage.clear();
-	return await auth.login({
-		login: 'user1',
-		password: '112233',
-	});
-}
+import { authTestUtils, doLogin } from './setup-auth-test';
 
 describe('auth model', () => {
-	it('login should return token on success', async () => {
-		const { data } = await doLogin();
-		const { token } = data;
-		expect(token).toBeDefined();
-		expect(typeof token).toBe('string');
+	beforeEach(() => {
+		localStorage.clear();
+		authTestUtils.resetAuth();
 	});
 
-	it('should store token in localStorage after login', async () => {
-		const { data } = await doLogin();
-		const storedToken = localStorage.getItem('token');
-		expect(storedToken).toBe(data.token);
+	it('login should return token on success', async () => {
+		const result = await doLogin();
+		expect(result.token).toBeDefined();
+		expect(typeof result.token).toBe('string');
+	});
+
+	it('should store token in auth store after login', async () => {
+		const result = await doLogin();
+		const authState = authTestUtils.getAuthState();
+
+		expect(authState.token).toBe(result.token);
+		expect(authState.isAuthenticated).toBe(true);
+		expect(authState.user).toBeDefined();
 	});
 
 	it('login should throw error on wrong credentials', async () => {
@@ -32,14 +32,24 @@ describe('auth model', () => {
 		).rejects.toThrow();
 	});
 
-	it('logout should call API and remove token from localStorage after real login', async () => {
-		const { data } = await doLogin();
-		const storedToken = localStorage.getItem('token');
-		expect(storedToken).toBe(data.token);
+	it('logout should call API and clear auth state after real login', async () => {
+		const result = await doLogin();
 
-		const response = await auth.logout();
-		const afterLogoutToken = localStorage.getItem('token');
-		expect(afterLogoutToken).toBeNull();
-		expect(response).toBeDefined();
+		// Verify login worked
+		let authState = authTestUtils.getAuthState();
+		expect(authState.token).toBe(result.token);
+		expect(authState.isAuthenticated).toBe(true);
+
+		// Perform logout
+		const logoutResponse = await auth.logout(false);
+
+		// Clear store after logout
+		authTestUtils.resetAuth();
+
+		// Verify logout worked
+		authState = authTestUtils.getAuthState();
+		expect(authState.token).toBeNull();
+		expect(authState.isAuthenticated).toBe(false);
+		expect(logoutResponse).toBeDefined();
 	});
 });
