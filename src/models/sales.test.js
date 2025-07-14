@@ -1,14 +1,10 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { format } from 'date-fns';
 import sales from './sales';
-import auth from './auth';
+import { doLogin } from './setup-auth-test';
 
 beforeAll(async () => {
-	localStorage.clear();
-	return await auth.login({
-		login: 'user1',
-		password: '112233',
-	});
+	await doLogin();
 });
 
 describe('sales model', () => {
@@ -20,32 +16,32 @@ describe('sales model', () => {
 			customer_id: 1,
 			sale_date: format(new Date(), 'yyyy-MM-dd'),
 		};
-		const response = await sales.post(data);
+		const response = await sales.post(data, false);
 		expect(response).toBeDefined();
-		expect(response.data.sale).toHaveProperty('id');
-		createdId = response.data.sale.id;
+		expect(response.sale).toHaveProperty('id');
+		createdId = response.sale.id;
 	});
 
 	it('should get all sales', async () => {
-		const response = await sales.get();
+		const response = await sales.getAll(false, false);
 		expect(response).toBeDefined();
-		expect(Array.isArray(response.data.sales)).toBe(true);
+		expect(Array.isArray(response.sales)).toBe(true);
 	});
 
 	it('should get sale by id', async () => {
-		const response = await sales.get(createdId);
+		const response = await sales.getById(createdId, false);
 		expect(response).toBeDefined();
-		expect(response.data.sale).toHaveProperty('id', createdId);
+		expect(response.sale).toHaveProperty('id', createdId);
 	});
 
 	it('should update sale', async () => {
 		const update = { amount: 200 };
-		const response = await sales.put(createdId, update);
+		const response = await sales.put(createdId, update, false);
 		expect(response).toBeDefined();
 	});
 
 	it('should remove sale', async () => {
-		const response = await sales.remove(createdId);
+		const response = await sales.remove(createdId, false);
 		expect(response).toBeDefined();
 	});
 });

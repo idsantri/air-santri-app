@@ -5,8 +5,8 @@ const customers = (() => {
 	async function getAll(params, notify) {
 		const response = await api.fetchAuth(`customers`, {
 			method: 'GET',
-			notify,
 			params,
+			notify,
 		});
 		return response.data || true;
 	}

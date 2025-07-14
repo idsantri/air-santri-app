@@ -2,6 +2,7 @@ import api from './api';
 
 const auth = (() => {
 	async function login({ login, password }, notify) {
+		// api.setNotifyConfig(notify);
 		const response = await api.fetchGuest(`login`, {
 			method: 'POST',
 			body: JSON.stringify({ login, password }),
