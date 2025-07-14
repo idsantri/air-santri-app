@@ -2,9 +2,16 @@ import config from '../config';
 import useAuthStore from '../store/authStore';
 import { buildTextError } from '../utils/array-object';
 import { notifyError, notifySuccess } from '../components/Notify';
+import {
+	logErrorDetails,
+	logErrorToken,
+	logRequestDetails,
+	logResponseDetails,
+} from './logger';
 
 const api = (() => {
 	const BASE_URL = config.BASE_API + config.END_API;
+
 	function handleNotify(notify) {
 		// Default configuration
 		const config = {
@@ -51,59 +58,90 @@ const api = (() => {
 		return config;
 	}
 
-	async function fetchGuest(endPoint, options = {}) {
-		const { showSuccess, showError } = handleNotify(options?.notify);
-		if (options?.notify) delete options.notify;
+	async function performFetch({ fullUrl, options, showError }) {
+		const requestStart = Date.now();
 
-		let response;
 		try {
-			response = await fetch(BASE_URL + endPoint, {
+			const response = await fetch(fullUrl, {
 				...options,
 				headers: {
 					...options.headers,
 					'Content-Type': 'application/json',
 				},
 			});
+
+			// Attach requestStart to response for duration calculation
+			response.requestStart = requestStart;
+
+			return response;
 		} catch (error) {
-			if (showError) {
-				notifyError({ message: 'Gagal terhubung ke server' });
-			} else {
+			if (!showError) {
+				logErrorDetails({ error, fullUrl, options });
 				console.error('Fetch error:', error.message);
+			} else {
+				notifyError({ message: 'Gagal terhubung ke server' });
 			}
 			throw error;
 		}
+	}
 
-		let responseJson;
+	async function handleErrorResponse({ response, showError, showSuccess }) {
+		let errorMessage = 'Terjadi kesalahan pada server';
+		let responseJson = null;
+
+		// Try to parse error response for better error message
 		try {
 			responseJson = await response.json();
-		} catch (error) {
-			if (showError) {
-				notifyError({ message: 'Gagal memproses respons server' });
-			} else {
-				console.error('JSON parse error:', error.message);
-			}
-			throw error;
-		}
-
-		const { error, message } = responseJson;
-
-		if (!response.ok || error) {
-			if (showError) {
-				notifyError({
-					message:
-						buildTextError(message) ||
-						'Terjadi kesalahan pada server',
-				});
-			} else {
+			errorMessage = buildTextError(responseJson.message) || errorMessage;
+		} catch (parseError) {
+			// If JSON parsing fails, use default error message
+			if (!showError) {
 				console.error(
-					`API error (${response.status}): `,
-					message || 'Unknown error',
+					'Failed to parse error response:',
+					parseError.message,
 				);
 			}
-			throw error;
 		}
 
-		// success
+		// Log error details only if notifications are disabled
+		if (!showSuccess && !showError) {
+			logResponseDetails(response, responseJson);
+		}
+
+		if (showError) {
+			notifyError({ message: errorMessage });
+		} else {
+			console.error(
+				`API error (${response.status}): `,
+				responseJson?.message || 'Unknown error',
+			);
+		}
+
+		throw responseJson || new Error(errorMessage);
+	}
+
+	async function parseSuccessResponse({
+		response,
+		showError,
+		fullUrl,
+		options,
+	}) {
+		try {
+			return await response.json();
+		} catch (error) {
+			if (!showError) {
+				logErrorDetails({ error, fullUrl, options });
+				console.error('JSON parse error:', error.message);
+			} else {
+				notifyError({ message: 'Gagal memproses respons server' });
+			}
+			throw error;
+		}
+	}
+
+	function handleSuccessResponse({ responseJson, showSuccess, response }) {
+		const { message } = responseJson;
+
 		if (showSuccess) {
 			notifySuccess({ message: message || 'Success' });
 		} else {
@@ -115,6 +153,56 @@ const api = (() => {
 				console.info('Response data:', responseJson.data);
 			}
 		}
+	}
+
+	async function fetchGuest(endPoint, options = {}) {
+		const { showSuccess, showError } = handleNotify(options?.notify);
+		if (options?.notify) delete options.notify;
+
+		const fullUrl = BASE_URL + endPoint;
+
+		// Log request details only if notifications are disabled
+		if (!showSuccess && !showError) {
+			logRequestDetails(fullUrl, {
+				...options,
+				headers: {
+					...options.headers,
+					'Content-Type': 'application/json',
+				},
+			});
+		}
+
+		// Perform fetch request
+		const response = await performFetch({
+			fullUrl,
+			options,
+			showError,
+		});
+
+		// Handle error response
+		if (!response.ok) {
+			await handleErrorResponse({
+				response,
+				showError,
+				showSuccess,
+			});
+		}
+
+		// Parse successful response
+		const responseJson = await parseSuccessResponse({
+			response,
+			showError,
+			fullUrl,
+			options,
+		});
+
+		// Log response details only if notifications are disabled
+		if (!showSuccess && !showError) {
+			logResponseDetails(response, responseJson);
+		}
+
+		// Handle success response
+		handleSuccessResponse({ responseJson, showSuccess, response });
 
 		return responseJson;
 	}
@@ -129,10 +217,11 @@ const api = (() => {
 					message: 'Tidak ada token akses yang ditemukan',
 				});
 			} else {
-				console.error('No access token found');
+				logErrorToken(BASE_URL + endPoint, options);
 			}
 			throw new Error('No access token found');
 		}
+
 		return fetchGuest(endPoint, {
 			...options,
 			headers: {

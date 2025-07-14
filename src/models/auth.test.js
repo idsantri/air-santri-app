@@ -25,10 +25,13 @@ describe('auth model', () => {
 
 	it('login should throw error on wrong credentials', async () => {
 		await expect(
-			auth.login({
-				login: 'user1',
-				password: 'wrongpassword',
-			}),
+			auth.login(
+				{
+					login: 'user1',
+					password: 'wrongpassword',
+				},
+				false,
+			),
 		).rejects.toThrow();
 	});
 

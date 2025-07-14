@@ -24,6 +24,9 @@ function LoginPage() {
 					user: res.user,
 				});
 			})
+			.catch((error) => {
+				console.error('Login failed:', error);
+			})
 			.finally(() => {
 				setIsLoading(false);
 			});
