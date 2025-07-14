@@ -15,32 +15,37 @@ describe('customers model', () => {
 			address: 'Test Address',
 			code: new Date().getTime(),
 		};
-		const response = await customers.post(data, false);
+		customers.setNotify(false);
+		const response = await customers.post(data);
 		expect(response).toBeDefined();
 		expect(response.customer).toHaveProperty('id');
 		createdId = response.customer.id;
 	});
 
 	it('should get all customers', async () => {
-		const response = await customers.getAll(false, false);
+		customers.setNotify(false);
+		const response = await customers.getAll();
 		expect(response).toBeDefined();
 		expect(Array.isArray(response.customers)).toBe(true);
 	});
 
 	it('should get customer by id', async () => {
-		const response = await customers.getById(createdId, false);
+		customers.setNotify(false);
+		const response = await customers.getById(createdId);
 		expect(response).toBeDefined();
 		expect(response.customer).toHaveProperty('id', createdId);
 	});
 
 	it('should update customer', async () => {
 		const update = { name: 'Updated Customer' };
-		const response = await customers.put(createdId, update, false);
+		customers.setNotify(false);
+		const response = await customers.put(createdId, update);
 		expect(response).toBeDefined();
 	});
 
 	it('should remove customer', async () => {
-		const response = await customers.remove(createdId, false);
+		customers.setNotify(false);
+		const response = await customers.remove(createdId);
 		expect(response).toBeDefined();
 	});
 });

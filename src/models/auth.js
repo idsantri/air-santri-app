@@ -1,27 +1,29 @@
 import api from './api';
 
 const auth = (() => {
-	async function login({ login, password }, notify) {
-		// api.setNotifyConfig(notify);
+	async function login({ login, password }) {
 		const response = await api.fetchGuest(`login`, {
 			method: 'POST',
 			body: JSON.stringify({ login, password }),
-			notify,
 		});
 		return response.data || true;
 	}
 
-	async function logout(notify) {
+	async function logout() {
 		const response = await api.fetchAuth(`logout`, {
 			method: 'POST',
-			notify,
 		});
 		return response.data || true;
+	}
+
+	function setNotify(config) {
+		api.setNotify(config);
 	}
 
 	return {
 		login,
 		logout,
+		setNotify,
 	};
 })();
 

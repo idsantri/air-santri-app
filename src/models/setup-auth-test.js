@@ -17,13 +17,11 @@ export const authTestUtils = {
 
 export async function doLogin() {
 	localStorage.clear();
-	const result = await auth.login(
-		{
-			login: 'user1',
-			password: '112233',
-		},
-		false,
-	);
+	auth.setNotify(false);
+	const result = await auth.login({
+		login: 'user1',
+		password: '112233',
+	});
 
 	// Update store with login result
 	authTestUtils.loginToStore({

@@ -1,19 +1,17 @@
 import api from './api';
 
 class Sales {
-	async getAll(params, notify) {
+	async getAll(params) {
 		const response = await api.fetchAuth('sales', {
 			method: 'GET',
 			params,
-			notify,
 		});
 		return response.data || true;
 	}
 
-	async getById(id, notify) {
+	async getById(id) {
 		const response = await api.fetchAuth(`sales/${id}`, {
 			method: 'GET',
-			notify,
 		});
 		return response.data || true;
 	}
@@ -27,21 +25,23 @@ class Sales {
 		return response.data || true;
 	}
 
-	async put(id, data, notify) {
+	async put(id, data) {
 		const response = await api.fetchAuth(`sales/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify(data),
-			notify,
 		});
 		return response;
 	}
 
-	async remove(id, notify) {
+	async remove(id) {
 		const response = await api.fetchAuth(`sales/${id}`, {
 			method: 'DELETE',
-			notify,
 		});
 		return response.data || true;
+	}
+
+	setNotify(config) {
+		api.setNotify(config);
 	}
 }
 

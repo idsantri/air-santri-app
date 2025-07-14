@@ -16,32 +16,37 @@ describe('sales model', () => {
 			customer_id: 1,
 			sale_date: format(new Date(), 'yyyy-MM-dd'),
 		};
-		const response = await sales.post(data, false);
+		sales.setNotify(false);
+		const response = await sales.post(data);
 		expect(response).toBeDefined();
 		expect(response.sale).toHaveProperty('id');
 		createdId = response.sale.id;
 	});
 
 	it('should get all sales', async () => {
-		const response = await sales.getAll(false, false);
+		// sales.setNotifyConfig(false);
+		const response = await sales.getAll();
 		expect(response).toBeDefined();
 		expect(Array.isArray(response.sales)).toBe(true);
 	});
 
 	it('should get sale by id', async () => {
-		const response = await sales.getById(createdId, false);
+		sales.setNotify(false);
+		const response = await sales.getById(createdId);
 		expect(response).toBeDefined();
 		expect(response.sale).toHaveProperty('id', createdId);
 	});
 
 	it('should update sale', async () => {
 		const update = { amount: 200 };
-		const response = await sales.put(createdId, update, false);
+		sales.setNotify(false);
+		const response = await sales.put(createdId, update);
 		expect(response).toBeDefined();
 	});
 
 	it('should remove sale', async () => {
-		const response = await sales.remove(createdId, false);
+		sales.setNotify(false);
+		const response = await sales.remove(createdId);
 		expect(response).toBeDefined();
 	});
 });

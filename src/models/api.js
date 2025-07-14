@@ -18,7 +18,7 @@ const api = (() => {
 		showError: true,
 	};
 
-	function setNotifyConfig(notify) {
+	function setNotify(notify) {
 		// Handle undefined, use default config
 		if (notify === undefined) {
 			notifyConfig = {
@@ -165,8 +165,6 @@ const api = (() => {
 	}
 
 	async function fetchGuest(endPoint, options = {}) {
-		setNotifyConfig(options?.notify);
-		if (options?.notify) delete options.notify;
 		const fullUrl = BASE_URL + endPoint;
 
 		// Log request details only if notifications are disabled
@@ -232,8 +230,8 @@ const api = (() => {
 	return {
 		fetchGuest,
 		fetchAuth,
-		setNotifyConfig,
-		getNotifyConfig: () => ({ ...notifyConfig }), // Return copy to prevent direct mutation
+		setNotify,
+		getNotify: () => ({ ...notifyConfig }), // Return copy to prevent direct mutation
 	};
 })();
 
