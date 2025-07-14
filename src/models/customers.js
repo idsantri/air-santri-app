@@ -17,7 +17,7 @@ const customers = (() => {
 		return response.data || true;
 	}
 
-	async function post(data) {
+	async function create(data) {
 		const response = await api.fetchAuth(`customers`, {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -25,7 +25,7 @@ const customers = (() => {
 		return response.data || true;
 	}
 
-	async function put(id, data) {
+	async function update(id, data) {
 		const response = await api.fetchAuth(`customers/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify(data),
@@ -47,8 +47,8 @@ const customers = (() => {
 	return {
 		getAll,
 		getById,
-		post,
-		put,
+		create,
+		update,
 		remove,
 		setNotify,
 	};

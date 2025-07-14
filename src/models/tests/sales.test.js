@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { format } from 'date-fns';
-import sales from './sales';
-import { doLogin } from './setup-auth-test';
+import sales from '../sales';
+import { doLogin } from './setup-auth';
 
 beforeAll(async () => {
 	await doLogin();
@@ -17,7 +17,7 @@ describe('sales model', () => {
 			sale_date: format(new Date(), 'yyyy-MM-dd'),
 		};
 		sales.setNotify(false);
-		const response = await sales.post(data);
+		const response = await sales.create(data);
 		expect(response).toBeDefined();
 		expect(response.sale).toHaveProperty('id');
 		createdId = response.sale.id;
@@ -40,7 +40,7 @@ describe('sales model', () => {
 	it('should update sale', async () => {
 		const update = { amount: 200 };
 		sales.setNotify(false);
-		const response = await sales.put(createdId, update);
+		const response = await sales.update(createdId, update);
 		expect(response).toBeDefined();
 	});
 

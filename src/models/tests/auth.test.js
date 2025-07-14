@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import auth from './auth';
-import { authTestUtils, doLogin } from './setup-auth-test';
+import auth from '../auth';
+import { authTestUtils, doLogin } from './setup-auth';
 
 describe('auth model', () => {
 	beforeEach(() => {

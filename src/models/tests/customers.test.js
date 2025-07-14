@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import customers from './customers';
-import { doLogin } from './setup-auth-test';
+import customers from '../customers';
+import { doLogin } from './setup-auth';
 
 beforeAll(async () => {
 	await doLogin();
@@ -16,7 +16,7 @@ describe('customers model', () => {
 			code: new Date().getTime(),
 		};
 		customers.setNotify(false);
-		const response = await customers.post(data);
+		const response = await customers.create(data);
 		expect(response).toBeDefined();
 		expect(response.customer).toHaveProperty('id');
 		createdId = response.customer.id;
@@ -39,7 +39,7 @@ describe('customers model', () => {
 	it('should update customer', async () => {
 		const update = { name: 'Updated Customer' };
 		customers.setNotify(false);
-		const response = await customers.put(createdId, update);
+		const response = await customers.update(createdId, update);
 		expect(response).toBeDefined();
 	});
 

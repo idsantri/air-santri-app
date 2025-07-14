@@ -1,5 +1,5 @@
-import auth from './auth';
-import useAuthStore from '../store/authStore';
+import useAuthStore from '../../store/authStore';
+import auth from '../auth';
 
 // Test utilities
 export const authTestUtils = {

@@ -1,7 +1,7 @@
 import useInput from '../../hooks/use-input';
-import auth from '../../models/auth';
 import { useState } from 'react';
 import useAuthStore from '../../store/authStore';
+import auth from '../../models/auth';
 
 function LoginPage() {
 	const [login, onLoginChange] = useInput('');

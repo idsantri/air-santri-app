@@ -16,7 +16,7 @@ class Sales {
 		return response.data || true;
 	}
 
-	async post(data) {
+	async create(data) {
 		const response = await api.fetchAuth('sales', {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -24,7 +24,7 @@ class Sales {
 		return response.data || true;
 	}
 
-	async put(id, data) {
+	async update(id, data) {
 		const response = await api.fetchAuth(`sales/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify(data),
