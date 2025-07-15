@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 
 export default function Sales() {
 	const [isLoading, setIsLoading] = useState(true);
-	const [salesData, setSalesData] = useState([]);
+	const [data, setData] = useState([]);
 	const { user } = useAuthStore().auth;
 	const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export default function Sales() {
 		sales
 			.getAll({ warehouse_id: user.warehouse_id })
 			.then((res) => {
-				setSalesData(res.sales);
+				setData(res.sales);
 				// console.log(res.sales);
 			})
 			.catch((_e) => {})
@@ -55,7 +55,7 @@ export default function Sales() {
 	const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
 	// Filter berdasarkan customer_name dan/atau warehouse_name
-	const filteredItems = salesData.filter((item) => {
+	const filteredItems = data.filter((item) => {
 		const searchTerm = filterText.toLowerCase();
 		const customerMatch =
 			item.customer_name &&
@@ -87,9 +87,7 @@ export default function Sales() {
 		<div className="">
 			<div className="text-center">
 				<h2 className="text-2xl font-bold">Data Penjualan</h2>
-				<p>
-					{user.name}, {user.warehouse_name}
-				</p>
+				<p>{user.warehouse_name}</p>
 				<p className="text-sm">{user.warehouse_address}</p>
 				{isLoading ? (
 					<LoadingTailwind />
