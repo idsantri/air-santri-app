@@ -25,7 +25,7 @@ describe('sales model', () => {
 
 	it('should get all sales', async () => {
 		// sales.setNotifyConfig(false);
-		const response = await sales.getAll();
+		const response = await sales.getAll({ warehouse_id: 1 });
 		expect(response).toBeDefined();
 		expect(Array.isArray(response.sales)).toBe(true);
 	});

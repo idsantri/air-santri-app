@@ -77,6 +77,21 @@ const api = (() => {
 		withLog = value ? true : false;
 	}
 
+	// Helper function to build query string from params object
+	function buildQueryString(params) {
+		if (!params || typeof params !== 'object') return '';
+
+		const searchParams = new URLSearchParams();
+		Object.entries(params).forEach(([key, value]) => {
+			if (value !== null && value !== undefined) {
+				searchParams.append(key, String(value));
+			}
+		});
+
+		const queryString = searchParams.toString();
+		return queryString ? `?${queryString}` : '';
+	}
+
 	async function performFetch(fullUrl, options) {
 		const requestStart = Date.now();
 
@@ -142,12 +157,15 @@ const api = (() => {
 	}
 
 	async function fetchGuest(endPoint, options = {}) {
-		const fullUrl = BASE_URL + endPoint;
+		// Extract params from options and build query string
+		const { params, ...fetchOptions } = options;
+		const queryString = buildQueryString(params);
+		const fullUrl = BASE_URL + endPoint + queryString;
 
-		if (withLog) logRequestDetails(fullUrl, options);
+		if (withLog) logRequestDetails(fullUrl, fetchOptions);
 
 		// Perform fetch request
-		const response = await performFetch(fullUrl, options);
+		const response = await performFetch(fullUrl, fetchOptions);
 
 		// Handle error response
 		if (!response.ok) {
@@ -155,7 +173,7 @@ const api = (() => {
 		}
 
 		// Parse successful response
-		const responseJson = await parseSuccessResponse(response, options);
+		const responseJson = await parseSuccessResponse(response, fetchOptions);
 
 		if (withLog) logResponseDetails(response, responseJson);
 

@@ -25,7 +25,11 @@ function logResponseDetails(response, responseJson) {
 	console.log('📅 Response Time:', new Date().toISOString());
 
 	if (responseJson) {
-		console.log('📄 Response Data:', responseJson);
+		console.group('📄 Response Data:');
+		console.log('error: ', responseJson.error);
+		console.log('message: ', responseJson.message);
+		console.log('data: ', responseJson.data);
+		console.groupEnd();
 	}
 
 	// Log response headers if available
