@@ -20,10 +20,15 @@ const auth = (() => {
 		api.setNotify(config);
 	}
 
+	function setLog(value) {
+		api.setLog(value);
+	}
+
 	return {
 		login,
 		logout,
 		setNotify,
+		setLog,
 	};
 })();
 

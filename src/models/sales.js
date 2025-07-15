@@ -29,7 +29,7 @@ class Sales {
 			method: 'PUT',
 			body: JSON.stringify(data),
 		});
-		return response;
+		return response.data || true;
 	}
 
 	async remove(id) {
@@ -41,6 +41,10 @@ class Sales {
 
 	setNotify(config) {
 		api.setNotify(config);
+	}
+
+	setLog(value) {
+		api.setLog(value);
 	}
 }
 

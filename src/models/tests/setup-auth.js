@@ -18,6 +18,7 @@ export const authTestUtils = {
 export async function doLogin() {
 	localStorage.clear();
 	auth.setNotify(false);
+	auth.setLog(true);
 	const result = await auth.login({
 		login: 'user1',
 		password: '112233',

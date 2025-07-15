@@ -40,8 +40,12 @@ const customers = (() => {
 		return response.data || true;
 	}
 
-	async function setNotify(config) {
+	function setNotify(config) {
 		api.setNotify(config);
+	}
+
+	function setLog(value) {
+		api.setLog(value);
 	}
 
 	return {
@@ -51,6 +55,7 @@ const customers = (() => {
 		update,
 		remove,
 		setNotify,
+		setLog,
 	};
 })();
 

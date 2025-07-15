@@ -1,18 +1,14 @@
 function logRequestDetails(fullUrl, options) {
 	const method = options.method || 'GET';
-	console.group(`🚀 API Request: ${method} ${fullUrl}`);
-	console.log('📍 URL:', fullUrl);
-	console.log('🔧 Method:', method);
-
-	if (options.headers) {
-		console.log('📋 Headers:', options.headers);
-	}
-
-	if (options.body) {
-		console.log('📦 Body:', options.body);
-	}
-
-	console.log('⏰ Timestamp:', new Date().toISOString());
+	console.group(
+		'-+-~-+-~-+-~-+-~-+- API Request: ' +
+			new Date().toISOString() +
+			' -+-~-+-~-+-~-+-~-+-',
+	);
+	console.log(`🚀 ${method}: ${fullUrl}`);
+	console.log('📋 Headers:', options?.headers || '-');
+	console.log('📦 Body:', options?.body || '-');
+	console.log('🔍 Params:', options?.params || '-');
 	console.groupEnd();
 }
 
@@ -24,8 +20,6 @@ function logResponseDetails(response, responseJson) {
 	console.group(
 		`${emoji} API Response: ${response.status} ${response.statusText}`,
 	);
-	console.log('🔢 Status Code:', response.status);
-	console.log('📊 Status Text:', response.statusText);
 	console.log('🌐 URL:', response.url);
 	console.log('⏱️ Duration:', `${duration}ms`);
 	console.log('📅 Response Time:', new Date().toISOString());

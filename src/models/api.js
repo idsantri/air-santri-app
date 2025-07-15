@@ -18,6 +18,8 @@ const api = (() => {
 		showError: true,
 	};
 
+	let withLog = false;
+
 	function setNotify(notify) {
 		// Handle undefined, use default config
 		if (notify === undefined) {
@@ -71,6 +73,10 @@ const api = (() => {
 		};
 	}
 
+	function setLog(value) {
+		withLog = value ? true : false;
+	}
+
 	async function performFetch(fullUrl, options) {
 		const requestStart = Date.now();
 
@@ -88,12 +94,9 @@ const api = (() => {
 
 			return response;
 		} catch (error) {
-			if (!notifyConfig.showError) {
-				logErrorDetails({ error, fullUrl, options });
-				console.error('Fetch error:', error.message);
-			} else {
+			if (withLog) logErrorDetails({ error, fullUrl, options });
+			if (notifyConfig.showError)
 				notifyError({ message: 'Gagal terhubung ke server' });
-			}
 			throw error;
 		}
 	}
@@ -107,76 +110,41 @@ const api = (() => {
 			responseJson = await response.json();
 			errorMessage = buildTextError(responseJson.message) || errorMessage;
 		} catch (parseError) {
-			// If JSON parsing fails, use default error message
-			if (!notifyConfig.showError) {
+			if (withLog)
 				console.error(
 					'Failed to parse error response:',
 					parseError.message,
 				);
-			}
+			throw parseError;
 		}
 
-		// Log error details only if notifications are disabled
-		if (!notifyConfig.showSuccess && !notifyConfig.showError) {
-			logResponseDetails(response, responseJson);
-		}
-
-		if (notifyConfig.showError) {
-			notifyError({ message: errorMessage });
-		} else {
-			console.error(
-				`API error (${response.status}): `,
-				responseJson?.message || 'Unknown error',
-			);
-		}
-
+		if (notifyConfig.showError) notifyError({ message: errorMessage });
+		if (withLog) logResponseDetails(response, responseJson);
 		throw responseJson || new Error(errorMessage);
 	}
 
 	async function parseSuccessResponse(response, options) {
-		const url = response.url || 'unknown';
+		const fullUrl = response.url || 'unknown';
 		try {
 			return await response.json();
 		} catch (error) {
-			if (!notifyConfig.showError) {
-				logErrorDetails({ error, url, options });
-				console.error('JSON parse error:', error.message);
-			} else {
+			if (withLog) logErrorDetails({ error, fullUrl, options });
+			if (notifyConfig.showError)
 				notifyError({ message: 'Gagal memproses respons server' });
-			}
 			throw error;
 		}
 	}
 
-	function handleSuccessResponse(responseJson, response) {
+	function handleSuccessResponse(responseJson) {
 		const { message } = responseJson;
-
-		if (notifyConfig.showSuccess) {
+		if (notifyConfig.showSuccess)
 			notifySuccess({ message: message || 'Success' });
-		} else {
-			console.info(
-				`API success (${response.status}): `,
-				`${message || 'Success'}`,
-			);
-			if (responseJson.data) {
-				console.info('Response data:', responseJson.data);
-			}
-		}
 	}
 
 	async function fetchGuest(endPoint, options = {}) {
 		const fullUrl = BASE_URL + endPoint;
 
-		// Log request details only if notifications are disabled
-		if (!notifyConfig.showSuccess && !notifyConfig.showError) {
-			logRequestDetails(fullUrl, {
-				...options,
-				headers: {
-					...options.headers,
-					'Content-Type': 'application/json',
-				},
-			});
-		}
+		if (withLog) logRequestDetails(fullUrl, options);
 
 		// Perform fetch request
 		const response = await performFetch(fullUrl, options);
@@ -189,13 +157,9 @@ const api = (() => {
 		// Parse successful response
 		const responseJson = await parseSuccessResponse(response, options);
 
-		// Log response details only if notifications are disabled
-		if (!notifyConfig.showSuccess && !notifyConfig.showError) {
-			logResponseDetails(response, responseJson);
-		}
+		if (withLog) logResponseDetails(response, responseJson);
 
-		// Handle success response
-		handleSuccessResponse(responseJson, response);
+		handleSuccessResponse(responseJson);
 
 		return responseJson;
 	}
@@ -203,12 +167,11 @@ const api = (() => {
 	async function fetchAuth(endPoint, options = {}) {
 		const token = getAccessToken();
 		if (!token) {
+			if (withLog) logErrorToken(BASE_URL + endPoint, options);
 			if (notifyConfig.showError) {
 				notifyError({
 					message: 'Tidak ada token akses yang ditemukan',
 				});
-			} else {
-				logErrorToken(BASE_URL + endPoint, options);
 			}
 			throw new Error('No access token found');
 		}
@@ -232,6 +195,8 @@ const api = (() => {
 		fetchAuth,
 		setNotify,
 		getNotify: () => ({ ...notifyConfig }), // Return copy to prevent direct mutation
+		setLog,
+		getLog: () => withLog, // Return current log state
 	};
 })();
 
