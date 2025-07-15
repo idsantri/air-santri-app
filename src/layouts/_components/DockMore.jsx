@@ -3,13 +3,12 @@ import { Link } from 'react-router';
 
 function DockMore({ clickLogout }) {
 	return (
-		<li className="text-lg pt-1.5 dropdown dropdown-top dropdown-end">
+		<li className="pt-1.5 dropdown dropdown-top dropdown-end">
 			<div tabIndex={0} role="button" className="">
 				<Icon
 					className="w-full"
 					icon="basil:other-1-solid"
-					width="1.2em"
-					height="1.2em"
+					width="1.5em"
 				/>
 				<span className="block pb-1 text-xs font-light text-center ">
 					Lainnya

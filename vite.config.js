@@ -20,8 +20,8 @@ export default defineConfig({
 			manifest: manifest,
 		}),
 	],
-	server: {
-		host: '0.0.0.0', // Ensure the server listens on all network interfaces
-		port: 5173, // Ensure the port matches your script
-	},
+	// server: {
+	// 	host: '0.0.0.0', // Ensure the server listens on all network interfaces
+	// 	port: 5173, // Ensure the port matches your script
+	// },
 });

@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 const LoadingTailwind = ({ children = '' }) => {
 	return (
 		<>
@@ -18,11 +16,6 @@ const LoadingTailwind = ({ children = '' }) => {
 			</div>
 		</>
 	);
-};
-
-LoadingTailwind.propTypes = {
-	/** Custom loading message */
-	children: PropTypes.node,
 };
 
 export default LoadingTailwind;

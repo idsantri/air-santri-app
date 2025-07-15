@@ -16,9 +16,9 @@ function DockNavigation({ clickLogout }) {
 					label="Madrasah"
 				/>
 				<DockButton
-					iconName="entypo:home"
-					to="/"
-					label="Beranda"
+					iconName="f7:cart-badge-plus"
+					to="/sales"
+					label="Penjualan"
 					className="dock-active"
 				/>
 				<DockButton

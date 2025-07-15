@@ -6,9 +6,10 @@ import tseslint from 'typescript-eslint';
 import { globalIgnores } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
+import react from 'eslint-plugin-react';
 
 export default tseslint.config([
-	globalIgnores(['dist']),
+	globalIgnores(['dist', 'node_modules', 'dev-dist', 'public']),
 	{
 		files: ['**/*.{ts,js,tsx,jsx}'],
 		extends: [
@@ -19,6 +20,7 @@ export default tseslint.config([
 			prettier,
 		],
 		plugins: {
+			react,
 			prettier: prettierPlugin,
 		},
 		rules: {

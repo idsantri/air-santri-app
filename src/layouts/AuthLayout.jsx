@@ -8,7 +8,7 @@ import useAuthStore from '../store/authStore';
 const AuthLayout = () => {
 	const { auth } = useAuthStore();
 	if (auth.isAuthenticated) {
-		return <Navigate to="/home" replace />;
+		return <Navigate to="/" replace />;
 	}
 
 	return (

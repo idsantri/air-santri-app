@@ -9,13 +9,8 @@ function DockNavigation({
 }) {
 	return (
 		<li className={`${className}`}>
-			<Link to={to} className="text-lg">
-				<Icon
-					className="w-full"
-					icon={iconName}
-					width="1.2em"
-					height="1.2em"
-				/>
+			<Link to={to} className="">
+				<Icon className="w-full" icon={iconName} width="1.5em" />
 				<span className="block pb-1 text-xs font-light text-center ">
 					{label}
 				</span>
