@@ -65,7 +65,6 @@ export default function Sales() {
 	];
 
 	const [filterText, setFilterText] = useState('');
-	const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
 	const filteredItems = data.filter((item) => {
 		const searchTerm = filterText.toLowerCase();
@@ -80,10 +79,7 @@ export default function Sales() {
 	});
 
 	const handleClear = () => {
-		if (filterText) {
-			setResetPaginationToggle(!resetPaginationToggle);
-			setFilterText('');
-		}
+		setFilterText('');
 	};
 
 	return (
@@ -96,6 +92,7 @@ export default function Sales() {
 			<FilterComponent
 				onFilter={(e) => setFilterText(e.target.value)}
 				onClear={handleClear}
+				onAdd={() => navigate('/sales/create')}
 				filterText={filterText}
 			/>
 			{isLoading ? (
@@ -106,7 +103,6 @@ export default function Sales() {
 					columns={columns}
 					data={filteredItems}
 					pagination
-					paginationResetDefaultPage={resetPaginationToggle}
 					persistTableHead
 					onRowClicked={(row) => {
 						navigate(`/sales/${row.id}`);

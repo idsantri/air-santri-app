@@ -78,12 +78,14 @@ function SaleDetailTab({ details, payments }) {
 						<li className="px-2 py-2 bg-base-200/50 text-left">
 							Total:{' '}
 							<span className="font-semibold">
-								{details
-									.reduce(
-										(total, item) => total + item.subtotal,
-										0,
-									)
-									.toRupiah()}{' '}
+								{details?.length &&
+									details
+										.reduce(
+											(total, item) =>
+												total + item.subtotal,
+											0,
+										)
+										.toRupiah()}{' '}
 							</span>
 						</li>
 					</ul>
@@ -139,12 +141,14 @@ function SaleDetailTab({ details, payments }) {
 						<li className="px-2 py-2 bg-base-200/50 text-left">
 							Total:{' '}
 							<span className="font-semibold">
-								{payments
-									.reduce(
-										(total, item) => total + item.amount,
-										0,
-									)
-									.toRupiah()}{' '}
+								{payments?.length &&
+									payments
+										.reduce(
+											(total, item) =>
+												total + item.amount,
+											0,
+										)
+										.toRupiah()}{' '}
 							</span>
 						</li>
 					</ul>

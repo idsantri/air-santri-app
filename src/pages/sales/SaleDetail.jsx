@@ -34,10 +34,13 @@ const SaleDetail = () => {
 			<div className="">
 				<div className="flex items-center justify-between  rounded-sm p-2 bg-base-200 mb-2">
 					<h2 className="text-xl text-neutral">Detail Penjualan</h2>
-					<button className="btn btn-sm btn-neutral rounded-sm">
+					<Link
+						className="btn btn-sm btn-neutral rounded-sm"
+						to={`/sales/${id}/edit`}
+					>
 						<Icon icon="material-symbols:edit-rounded" />
 						Edit
-					</button>
+					</Link>
 				</div>
 				{isLoading ? (
 					<LoadingTailwind />
@@ -82,7 +85,8 @@ const SaleDetail = () => {
 										<tr>
 											<td>Tagihan</td>
 											<td>
-												{data.total_amount.toRupiah()}{' '}
+												{data?.total_amount &&
+													data.total_amount?.toRupiah()}{' '}
 												<span className="text-xs italic">
 													({details?.length || 0}{' '}
 													item)
@@ -92,7 +96,8 @@ const SaleDetail = () => {
 										<tr>
 											<td>Terbayar</td>
 											<td>
-												{data.total_payment.toRupiah()}{' '}
+												{data?.total_payment &&
+													data.total_payment.toRupiah()}{' '}
 												<span className="text-xs italic">
 													({payments?.length || 0}{' '}
 													kali)

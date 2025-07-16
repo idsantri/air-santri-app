@@ -8,6 +8,8 @@ import { ConfirmDialogProvider } from './context/ConfirmDialogContext';
 import SaleIndex from './pages/sales/SaleIndex';
 import SaleDetail from './pages/sales/SaleDetail';
 import './utils/rupiah';
+import SaleCreate from './pages/sales/SaleCreate';
+import SaleEdit from './pages/sales/SaleُEdit';
 
 const App = () => {
 	return (
@@ -24,7 +26,9 @@ const App = () => {
 					</Route>
 					<Route element={<MainLayout />}>
 						<Route path="/sales" element={<SaleIndex />} />
+						<Route path="/sales/create" element={<SaleCreate />} />
 						<Route path="/sales/:id" element={<SaleDetail />} />
+						<Route path="/sales/:id/edit" element={<SaleEdit />} />
 					</Route>
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
