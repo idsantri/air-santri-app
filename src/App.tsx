@@ -7,6 +7,7 @@ import AuthLayout from './layouts/AuthLayout';
 import { ConfirmDialogProvider } from './context/ConfirmDialogContext';
 import SaleIndex from './pages/sales/SaleIndex';
 import SaleDetail from './pages/sales/SaleDetail';
+import './utils/rupiah';
 
 const App = () => {
 	return (

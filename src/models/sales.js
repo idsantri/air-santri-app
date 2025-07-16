@@ -2,6 +2,7 @@ import api from './api';
 
 class Sales {
 	async getAll(params) {
+		api.setNotify(false);
 		const response = await api.fetchAuth('sales', {
 			method: 'GET',
 			params,
@@ -10,6 +11,7 @@ class Sales {
 	}
 
 	async getById(id) {
+		api.setNotify(false);
 		const response = await api.fetchAuth(`sales/${id}`, {
 			method: 'GET',
 		});

@@ -8,12 +8,12 @@ function DockNavigation({ clickLogout }) {
 				<DockButton
 					iconName="solar:user-id-linear"
 					to="/santri"
-					label="Santri"
+					label="Pelanggan"
 				/>
 				<DockButton
 					iconName="healthicons:i-training-class-24px"
 					to="/madrasah"
-					label="Madrasah"
+					label="Stok"
 				/>
 				<DockButton
 					iconName="f7:cart-badge-plus"
@@ -24,7 +24,7 @@ function DockNavigation({ clickLogout }) {
 				<DockButton
 					iconName="majesticons:creditcard-hand"
 					to="/iuran"
-					label="Iuran"
+					label="Produk"
 				/>
 				<DockMore clickLogout={clickLogout} />
 			</ul>

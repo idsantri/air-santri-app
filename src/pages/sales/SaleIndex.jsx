@@ -45,8 +45,21 @@ export default function Sales() {
 			sortable: true,
 		},
 		{
-			name: 'Status Pembayaran',
-			selector: (row) => row.payment_status,
+			name: 'Status',
+			selector: (row) => row.status,
+			sortable: true,
+		},
+		{
+			name: 'Pembayaran',
+			selector: (row) => {
+				if (row.total_payment >= row.total_amount) {
+					return 'Lunas';
+				} else if (row.total_payment > 0) {
+					return 'Sebagian';
+				} else {
+					return 'Belum Dibayar';
+				}
+			},
 			sortable: true,
 		},
 	];

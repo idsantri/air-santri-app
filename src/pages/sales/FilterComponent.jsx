@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
 	<div className="flex items-center gap-2 w-full justify-between p-0">
 		<div className="join">
-			<div>
-				<label className="input join-item px-1">
+			<div className="">
+				<label className="input join-item px-1 ">
 					<Icon icon="material-symbols-light:search" width="24" />
 					<input
 						id="search"
@@ -16,14 +16,17 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 				</label>
 			</div>
 			<button
-				className="btn btn-neutral join-item px-2"
+				className="btn btn-neutral join-item px-2 "
 				type="button"
 				onClick={onClear}
 			>
 				✕
 			</button>
 		</div>
-		<button className="btn btn-neutral">Tambah</button>
+		<button className="btn btn-neutral px-2 rounded-sm">
+			<Icon icon="material-symbols-light:add-rounded" width="1.5em" />
+			Tambah
+		</button>
 	</div>
 );
 
