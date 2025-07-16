@@ -16,28 +16,19 @@ function DockMore({ clickLogout }) {
 			</div>
 			<ul
 				tabIndex={0}
-				className="dropdown-content menu bg-warning text-primary-content rounded-md z-[1] w-48 p-1 shadow-md  mb-2 mr-2 "
+				className="dropdown-content menu bg-neutral-700/70 text-base-100 rounded-md z-[1] w-48 shadow-md p-0 mb-2 "
 			>
-				<li className="">
-					<Link to="/tatib" className="">
-						<Icon
-							icon="codicon:symbol-ruler"
-							width="24"
-							height="24"
-						/>
-						Tata Tertib
+				<li className="p-2">
+					<Link to="/profile" className="">
+						<Icon icon="mdi:user" width="24" height="24" />
+						Profil
 					</Link>
 				</li>
-				<li className="">
-					<Link to="/domisili" className="">
-						<Icon icon="mdi:bed-outline" width="24" height="24" />
-						Riwayat Domisili
-					</Link>
-				</li>
-				<li className="">
+
+				<li className="p-2 bg-warning text-warning-content">
 					<button
 						onClick={clickLogout}
-						className="text-error-content hover:bg-error hover:text-neutral"
+						className="cursor-pointer hover:cursor-pointer"
 					>
 						<Icon
 							icon="bitcoin-icons:exit-filled"
