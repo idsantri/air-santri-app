@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import sales from '../../models/sales';
 import useAuthStore from '../../store/authStore';
 import LoadingTailwind from '../../components/LoadingTailwind';
@@ -67,7 +67,6 @@ export default function Sales() {
 	const [filterText, setFilterText] = useState('');
 	const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
-	// Filter berdasarkan customer_name dan/atau warehouse_name
 	const filteredItems = data.filter((item) => {
 		const searchTerm = filterText.toLowerCase();
 		const customerMatch =
@@ -80,53 +79,44 @@ export default function Sales() {
 		return customerMatch || warehouseMatch;
 	});
 
-	const subHeaderComponentMemo = useMemo(() => {
-		const handleClear = () => {
-			if (filterText) {
-				setResetPaginationToggle(!resetPaginationToggle);
-				setFilterText('');
-			}
-		};
-		return (
+	const handleClear = () => {
+		if (filterText) {
+			setResetPaginationToggle(!resetPaginationToggle);
+			setFilterText('');
+		}
+	};
+
+	return (
+		<>
+			<header className="text-center">
+				<h2 className="text-2xl ">Data Penjualan</h2>
+				<p>{user.warehouse_name}</p>
+				<p className="text-sm">{user.warehouse_address}</p>
+			</header>
 			<FilterComponent
 				onFilter={(e) => setFilterText(e.target.value)}
 				onClear={handleClear}
 				filterText={filterText}
 			/>
-		);
-	}, [filterText, resetPaginationToggle]);
-
-	return (
-		<div className="">
-			<div className="text-center">
-				<h2 className="text-2xl font-bold">Data Penjualan</h2>
-				<p>{user.warehouse_name}</p>
-				<p className="text-sm">{user.warehouse_address}</p>
-				{isLoading ? (
-					<LoadingTailwind />
-				) : (
-					<div className="mt-4">
-						<DataTable
-							noHeader
-							columns={columns}
-							data={filteredItems}
-							pagination
-							paginationResetDefaultPage={resetPaginationToggle}
-							subHeader
-							subHeaderComponent={subHeaderComponentMemo}
-							persistTableHead
-							onRowClicked={(row) => {
-								navigate(`/sales/${row.id}`);
-							}}
-							striped
-							responsive
-							highlightOnHover
-							pointerOnHover
-							subHeaderAlign="center"
-						/>
-					</div>
-				)}
-			</div>
-		</div>
+			{isLoading ? (
+				<LoadingTailwind />
+			) : (
+				<DataTable
+					noHeader
+					columns={columns}
+					data={filteredItems}
+					pagination
+					paginationResetDefaultPage={resetPaginationToggle}
+					persistTableHead
+					onRowClicked={(row) => {
+						navigate(`/sales/${row.id}`);
+					}}
+					striped
+					responsive
+					highlightOnHover
+					pointerOnHover
+				/>
+			)}
+		</>
 	);
 }

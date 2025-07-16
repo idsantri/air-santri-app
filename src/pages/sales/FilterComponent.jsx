@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
-	<div className="flex items-center gap-2 w-full justify-between p-0">
+	<div className="flex items-center gap-2 w-full justify-between p-2 bg-base-200/75 rounded-sm my-2">
 		<div className="join">
 			<div className="">
 				<label className="input join-item px-1 ">
