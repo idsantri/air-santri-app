@@ -14,7 +14,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
  * @param {string} [props.value] - The currently selected value.
  * @param {function(string | null): void} [props.onChange] - Callback function when an option is selected or cleared.
  */
-const CustomSelect = ({
+const SelectSearch = ({
 	options,
 	placeholder = 'Pilih...',
 	value,
@@ -158,7 +158,7 @@ const CustomSelect = ({
 					<button
 						type="button"
 						onClick={handleClear}
-						className="absolute right-8 text-gray-500 hover:text-gray-700 focus:outline-none"
+						className="absolute right-8 text-neutral-500 hover:text-gray-700 focus:outline-none"
 						aria-label="Clear selection"
 					>
 						<svg
@@ -178,7 +178,7 @@ const CustomSelect = ({
 					</button>
 				)}
 				<svg
-					className={`w-4 h-4 text-base-300 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+					className={`w-4 h-4 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
 					fill="none"
 					stroke="currentColor"
 					viewBox="0 0 24 24"
@@ -194,7 +194,7 @@ const CustomSelect = ({
 			</div>
 
 			{isOpen && (
-				<div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+				<div className="absolute w-full mt-1 bg-white border text-black border-base-300 rounded-md shadow-lg max-h-100 overflow-y-auto z-9999">
 					{filteredOptions.length > 0 ? (
 						filteredOptions.map((option) => (
 							<div
@@ -221,4 +221,4 @@ const CustomSelect = ({
 	);
 };
 
-export default CustomSelect;
+export default SelectSearch;

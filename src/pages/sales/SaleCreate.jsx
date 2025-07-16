@@ -1,27 +1,6 @@
-import { useState } from 'react';
-import SelectSearch from './SelectSearch';
+import SaleForm from './SaleForm';
 
 const SaleCreate = () => {
-	const optionsData = [
-		{ value: 'apple', label: 'Apel' },
-		{ value: 'banana', label: 'Pisang', description: 'Rasa manis' },
-		{ value: 'cherry', label: 'Ceri' },
-		{ value: 'date', label: 'Kurma', description: 'Rasa manis' },
-		{ value: 'grape', label: 'Anggur' },
-		{ value: 'kiwi', label: 'Kiwi' },
-		{ value: 'lemon', label: 'Lemon' },
-		{ value: 'mango', label: 'Mangga' },
-		{ value: 'orange', label: 'Jeruk', description: 'Rasa Asam' },
-		{ value: 'peach', label: 'Persik' },
-	];
-
-	const [selectedFruit, setSelectedFruit] = useState('');
-
-	const handleFruitChange = (value) => {
-		console.log('Buah yang dipilih:', value);
-		setSelectedFruit(value);
-	};
-
 	const onSubmit = (e) => {
 		e.preventDefault();
 		console.log(e);
@@ -37,51 +16,7 @@ const SaleCreate = () => {
 						<p className="badge badge-info">Baru</p>
 					</div>
 				</header>
-				<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-					<SelectSearch
-						options={optionsData}
-						placeholder="Cari pelanggan …"
-						value={selectedFruit}
-						onChange={handleFruitChange}
-					/>
-					<label className="floating-label">
-						<span>Pelanggan (ID)</span>
-						<input
-							type="text"
-							className="input w-full rounded-sm"
-						/>
-					</label>
-					<label className="floating-label">
-						<span>Agen (ID)</span>
-						<input
-							type="text"
-							className="input w-full"
-							disabled
-							value={'123'}
-						/>
-					</label>
-					<label className="floating-label">
-						<span>Tanggal</span>
-						<input type="text" className="input w-full" />
-					</label>
-					<label className="floating-label">
-						<span>Status</span>
-						<input type="text" className="input w-full" />
-					</label>
-					<label className="floating-label">
-						<span>Catatan</span>
-						<textarea type="text" className="textarea w-full" />
-					</label>
-					<div className="flex items-center justify-between ">
-						<button className="btn btn-warning">Hapus</button>
-						<div className="flex items-center gap-2">
-							<button className="btn btn-secondary">Gagal</button>
-							<button type="submit" className="btn btn-primary">
-								Simpan
-							</button>
-						</div>
-					</div>
-				</form>
+				<SaleForm onSubmit={onSubmit} data={null} />
 			</div>
 		</>
 	);
