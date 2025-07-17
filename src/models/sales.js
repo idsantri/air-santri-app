@@ -28,6 +28,7 @@ class Sales {
 	}
 
 	async update(id, data) {
+		api.setNotify(true);
 		const response = await api.fetchAuth(`sales/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify(data),

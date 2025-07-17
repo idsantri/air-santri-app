@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 const notifySuccess = ({
 	message,
 	position = 'bottom-center',
-	autoClose = 3000,
+	autoClose = 1500,
 }) => {
 	toast.success(<div dangerouslySetInnerHTML={{ __html: message }} />, {
 		position: position,

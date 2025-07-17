@@ -4,34 +4,38 @@ import useConfirmDialog from '../../hooks/use-confirm-dialog';
 import FormActions from '../../components/FormActions';
 import customers from '../../models/customers';
 import useAuthStore from '../../store/authStore';
+import useForm from '../../hooks/useForm';
 
 const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
+	const { user } = useAuthStore().auth;
+	const dialog = useConfirmDialog();
+
+	const { formData, updateField, resetForm } = useForm(inputData);
+
+	// const { formData, updateField, setFormData } = useForm(inputData);
+	// setFormData((prev) => ({
+	// 	...prev,
+	// 	dynamic_field: 'baru',
+	// }));
+
 	const [options, setOptions] = useState([]);
 	const [loadingCustomer, setLoadingCustomer] = useState(false);
-	const [input, setInput] = useState(() => inputData);
 
-	const { user } = useAuthStore().auth;
-
-	useEffect(() => {
-		setInput(inputData);
-	}, [inputData]);
-
+	// Muat customer
 	useEffect(() => {
 		setLoadingCustomer(true);
 		customers.setNotify({ showSuccess: false, showError: true });
 		customers
 			.getAll()
 			.then(({ customers }) => {
-				if (customers && customers.length > 0) {
-					const activeOptions = customers
-						.filter((c) => c.is_active)
-						.map((c) => ({
-							value: c.id,
-							label: `${c.name} (${c.code})`,
-							description: c.address,
-						}));
-					setOptions(activeOptions);
-				}
+				const activeOptions = customers
+					.filter((c) => c.is_active)
+					.map((c) => ({
+						value: c.id,
+						label: `${c.name} (${c.code})`,
+						description: c.address,
+					}));
+				setOptions(activeOptions);
 			})
 			.catch((error) => {
 				console.error('Failed to fetch customers:', error);
@@ -43,19 +47,17 @@ const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
 
 	const submitForm = (e) => {
 		e.preventDefault();
-		if (!input?.warehouse_id) {
-			input.warehouse_id = user.warehouse_id;
+		if (!formData?.warehouse_id) {
+			formData.warehouse_id = user.warehouse_id;
 		}
-		onSubmit(input);
+		onSubmit(formData);
 	};
 
-	const dialog = useConfirmDialog();
 	const onDelete = async () => {
 		const isConfirmed = await dialog({
 			message: 'Hapus data ini?',
 		});
 		if (!isConfirmed) return;
-
 		alert('Fitur belum siap');
 	};
 
@@ -65,77 +67,84 @@ const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
 				<span>Kode</span>
 				<input
 					type="text"
-					className="input w-full "
+					className="input w-full"
 					disabled
-					value={input?.code ?? ''}
+					value={formData?.code ?? ''}
 				/>
 			</label>
+
 			<SelectSearch
 				options={options}
 				placeholder="Cari pelanggan/toko …"
-				value={input?.customer_id ?? ''}
-				onChange={(value) => setInput({ ...input, customer_id: value })}
+				value={formData?.customer_id ?? ''}
+				onChange={(value) => updateField('customer_id', value)}
 				isLoading={loadingCustomer}
 				label="Pelanggan/Toko"
 			/>
+
 			<label className="floating-label">
 				<span>Agen (ID)</span>
 				<input
 					type="text"
 					className="input w-full"
-					value={
-						user.warehouse_name + ' (' + user.warehouse_code + ')'
-					}
+					value={`${user.warehouse_name} (${user.warehouse_code})`}
 					disabled
 				/>
 			</label>
+
 			<label className="floating-label">
 				<span>Tanggal</span>
 				<input
 					type="date"
 					className="input w-full"
 					value={
-						input?.sale_date ? input.sale_date.split('T')[0] : ''
+						formData?.sale_date
+							? formData.sale_date.split('T')[0]
+							: ''
 					}
 					onChange={(e) =>
-						setInput({
-							...input,
-							sale_date: new Date(e.target.value).toISOString(), // simpan sebagai ISO datetime
-						})
+						updateField(
+							'sale_date',
+							new Date(e.target.value).toISOString(),
+						)
 					}
 				/>
 				<div className="text-xs text-info-content/75 ml-2">
 					Kosongkan untuk waktu saat ini
 				</div>
 			</label>
+
 			<label className="floating-label" htmlFor="status">
 				<span>Status</span>
 				<select
 					id="status"
-					defaultValue="Proses"
+					value={formData?.status ?? 'Proses'}
 					className="input select w-full"
-					onChange={(e) =>
-						setInput({ ...input, status: e.target.value })
-					}
+					onChange={(e) => updateField('status', e.target.value)}
 				>
 					<option>Proses</option>
 					<option>Selesai</option>
 					<option>Gagal</option>
 				</select>
 			</label>
+
 			<label className="floating-label">
 				<span>Catatan</span>
 				<textarea
-					type="text"
 					className="textarea w-full"
-					value={input?.note ?? ''}
-					onChange={(e) =>
-						setInput({ ...input, note: e.target.value })
-					}
+					value={formData?.note ?? ''}
+					onChange={(e) => updateField('note', e.target.value)}
 				/>
 			</label>
-			<FormActions onDelete={onDelete} isNew isLoading={isLoading} />
+
+			<FormActions
+				onDelete={onDelete}
+				onReset={resetForm}
+				isNew={!formData?.id}
+				isLoading={isLoading}
+			/>
 		</form>
 	);
 };
+
 export default SaleForm;

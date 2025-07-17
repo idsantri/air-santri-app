@@ -1,6 +1,6 @@
 import useConfirmDialog from '../hooks/use-confirm-dialog';
 
-const FormActions = ({ onDelete, isNew, isLoading }) => {
+const FormActions = ({ onDelete, onReset, isNew, isLoading }) => {
 	const dialog = useConfirmDialog();
 
 	const onCancel = async () => {
@@ -14,18 +14,26 @@ const FormActions = ({ onDelete, isNew, isLoading }) => {
 
 	return (
 		<div className="flex items-center justify-between">
-			{!isNew ? (
+			<div className="flex items-center gap-2">
 				<button
 					disabled={isLoading}
-					className="btn btn-warning text-warning-content"
+					className="btn btn-info text-info-content"
 					type="button"
-					onClick={onDelete}
+					onClick={onReset}
 				>
-					Hapus
+					Reset
 				</button>
-			) : (
-				<div></div>
-			)}
+				{!isNew && (
+					<button
+						disabled={isLoading}
+						className="btn btn-warning text-warning-content"
+						type="button"
+						onClick={onDelete}
+					>
+						Hapus
+					</button>
+				)}
+			</div>
 			<div className="flex items-center gap-2">
 				<button
 					disabled={isLoading}

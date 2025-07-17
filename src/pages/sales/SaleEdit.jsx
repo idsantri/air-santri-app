@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router';
+import { useParams, useLocation, useNavigate } from 'react-router';
 import sales from '../../models/sales';
 import SaleForm from './SaleForm';
 import LoadingTailwind from '../../components/LoadingTailwind';
@@ -10,6 +10,7 @@ function SaleEdit() {
 	const [sale, setSale] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isLoadingForm, setIsLoadingForm] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (location.state) {
@@ -34,22 +35,20 @@ function SaleEdit() {
 	}, [location.state, id]); // Tambahkan location.state sebagai dependency
 
 	const onSubmit = (data) => {
-		console.log('🚀 ~ onSubmit ~ data:', data);
-		setIsLoadingForm(false);
-
-		return;
-		// setIsLoading(true);
-		// sales
-		// 	.create(data)
-		// 	.then(({ sale }) => {
-		// 		navigate(`/sales/${sale.id}`);
-		// 	})
-		// 	.catch((e) => {
-		// 		console.log('🚀 ~ onSubmit ~ sales:', e);
-		// 	})
-		// 	.finally(() => setIsLoading(false));
+		// console.log('🚀 ~ onSubmit ~ data:', data);
+		// return;
+		setIsLoadingForm(true);
+		sales
+			.update(sale.id, data)
+			.then(({ sale }) => {
+				navigate(`/sales/${sale.id}`);
+			})
+			.catch((e) => {
+				console.log('🚀 ~ onSubmit ~ sales:', e);
+			})
+			.finally(() => setIsLoadingForm(false));
 	};
-	// const stableInputData = useMemo(() => sale, [sale]);
+
 	return (
 		<>
 			<div className="card p-2 border border-base-200 rounded-sm">
