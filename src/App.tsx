@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
 import { ToastContainer } from 'react-toastify';
+import { ConfirmDialogProvider } from './context/ConfirmDialogContext';
+import './utils/rupiah';
 import MainLayout from './layouts/MainLayout';
 import LoginPage from './pages/auth/LoginPage';
 import ErrorPage from './pages/error/ErrorPage';
 import AuthLayout from './layouts/AuthLayout';
-import { ConfirmDialogProvider } from './context/ConfirmDialogContext';
 import SaleIndex from './pages/sales/SaleIndex';
 import SaleDetail from './pages/sales/SaleDetail';
-import './utils/rupiah';
 import SaleCreate from './pages/sales/SaleCreate';
-import SaleEdit from './pages/sales/SaleُEdit';
+import SaleEdit from './pages/sales/SaleEdit';
 
 const App = () => {
 	return (

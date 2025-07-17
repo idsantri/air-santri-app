@@ -5,11 +5,16 @@ import FormActions from '../../components/FormActions';
 import customers from '../../models/customers';
 import useAuthStore from '../../store/authStore';
 
-const SaleForm = ({ onSubmit, data = {}, isLoading = false }) => {
+const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
 	const [options, setOptions] = useState([]);
 	const [loadingCustomer, setLoadingCustomer] = useState(false);
-	const [inputData, setInputData] = useState(data);
+	const [input, setInput] = useState(() => inputData);
+
 	const { user } = useAuthStore().auth;
+
+	useEffect(() => {
+		setInput(inputData);
+	}, [inputData]);
 
 	useEffect(() => {
 		setLoadingCustomer(true);
@@ -38,8 +43,10 @@ const SaleForm = ({ onSubmit, data = {}, isLoading = false }) => {
 
 	const submitForm = (e) => {
 		e.preventDefault();
-		inputData.warehouse_id = inputData.warehouse_id || user.warehouse_id;
-		onSubmit(inputData);
+		if (!input?.warehouse_id) {
+			input.warehouse_id = user.warehouse_id;
+		}
+		onSubmit(input);
 	};
 
 	const dialog = useConfirmDialog();
@@ -60,16 +67,14 @@ const SaleForm = ({ onSubmit, data = {}, isLoading = false }) => {
 					type="text"
 					className="input w-full "
 					disabled
-					value={inputData?.code ?? ''}
+					value={input?.code ?? ''}
 				/>
 			</label>
 			<SelectSearch
 				options={options}
 				placeholder="Cari pelanggan/toko …"
-				value={inputData?.customer_id ?? ''}
-				onChange={(value) =>
-					setInputData({ ...inputData, customer_id: value })
-				}
+				value={input?.customer_id ?? ''}
+				onChange={(value) => setInput({ ...input, customer_id: value })}
 				isLoading={loadingCustomer}
 				label="Pelanggan/Toko"
 			/>
@@ -89,11 +94,13 @@ const SaleForm = ({ onSubmit, data = {}, isLoading = false }) => {
 				<input
 					type="date"
 					className="input w-full"
-					value={inputData?.sale_date ?? ''}
+					value={
+						input?.sale_date ? input.sale_date.split('T')[0] : ''
+					}
 					onChange={(e) =>
-						setInputData({
-							...inputData,
-							sale_date: e.target.value,
+						setInput({
+							...input,
+							sale_date: new Date(e.target.value).toISOString(), // simpan sebagai ISO datetime
 						})
 					}
 				/>
@@ -108,7 +115,7 @@ const SaleForm = ({ onSubmit, data = {}, isLoading = false }) => {
 					defaultValue="Proses"
 					className="input select w-full"
 					onChange={(e) =>
-						setInputData({ ...inputData, status: e.target.value })
+						setInput({ ...input, status: e.target.value })
 					}
 				>
 					<option>Proses</option>
@@ -121,9 +128,9 @@ const SaleForm = ({ onSubmit, data = {}, isLoading = false }) => {
 				<textarea
 					type="text"
 					className="textarea w-full"
-					value={inputData?.note ?? ''}
+					value={input?.note ?? ''}
 					onChange={(e) =>
-						setInputData({ ...inputData, note: e.target.value })
+						setInput({ ...input, note: e.target.value })
 					}
 				/>
 			</label>

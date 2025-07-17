@@ -37,7 +37,7 @@ const SaleCreate = () => {
 					</div>
 				</header>
 				{isLoading && (
-					<LoadingTailwind>Menyimpan data …</LoadingTailwind>
+					<LoadingTailwind>Menyimpan data…</LoadingTailwind>
 				)}
 				<SaleForm onSubmit={onSubmit} isLoading={isLoading} />
 			</div>
