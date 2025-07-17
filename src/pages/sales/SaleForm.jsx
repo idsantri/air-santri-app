@@ -5,13 +5,15 @@ import FormActions from '../../components/FormActions';
 import customers from '../../models/customers';
 import useAuthStore from '../../store/authStore';
 import useForm from '../../hooks/useForm';
+import sales from '../../models/sales';
+import { useNavigate } from 'react-router';
+import LoadingTailwind from '../../components/LoadingTailwind';
 
-const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
+const SaleForm = ({ inputData = {} }) => {
 	const { user } = useAuthStore().auth;
 	const dialog = useConfirmDialog();
-
 	const { formData, updateField, resetForm } = useForm(inputData);
-
+	const navigate = useNavigate();
 	// const { formData, updateField, setFormData } = useForm(inputData);
 	// setFormData((prev) => ({
 	// 	...prev,
@@ -19,6 +21,7 @@ const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
 	// }));
 
 	const [options, setOptions] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 	const [loadingCustomer, setLoadingCustomer] = useState(false);
 
 	// Muat customer
@@ -28,14 +31,14 @@ const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
 		customers
 			.getAll()
 			.then(({ customers }) => {
-				const activeOptions = customers
+				const mapCustomers = customers
 					.filter((c) => c.is_active)
 					.map((c) => ({
 						value: c.id,
 						label: `${c.name} (${c.code})`,
 						description: c.address,
 					}));
-				setOptions(activeOptions);
+				setOptions(mapCustomers);
 			})
 			.catch((error) => {
 				console.error('Failed to fetch customers:', error);
@@ -45,24 +48,54 @@ const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
 			});
 	}, []);
 
-	const submitForm = (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault();
-		if (!formData?.warehouse_id) {
-			formData.warehouse_id = user.warehouse_id;
-		}
-		onSubmit(formData);
+		if (!formData?.warehouse_id) formData.warehouse_id = user.warehouse_id;
+		if (formData.id) handleUpdate(formData);
+		else handleCreate(formData);
 	};
 
-	const onDelete = async () => {
+	const handleUpdate = (data) => {
+		setIsLoading(true);
+		sales
+			.update(formData.id, data)
+			.then(({ sale }) => {
+				navigate(`/sales/${sale.id}`);
+			})
+			.catch((e) => console.log(e))
+			.finally(() => setIsLoading(false));
+	};
+
+	const handleCreate = (data) => {
+		setIsLoading(true);
+		sales
+			.create(data)
+			.then(({ sale }) => {
+				navigate(`/sales/${sale.id}`);
+			})
+			.catch((e) => console.log(e))
+			.finally(() => setIsLoading(false));
+	};
+
+	const handleDelete = async () => {
 		const isConfirmed = await dialog({
 			message: 'Hapus data ini?',
 		});
 		if (!isConfirmed) return;
-		alert('Fitur belum siap');
+
+		setIsLoading(true);
+		sales
+			.remove(formData.id)
+			.then(() => {
+				navigate('/sales');
+			})
+			.catch((e) => console.log(e).finally(() => setIsLoading(false)));
 	};
 
 	return (
-		<form onSubmit={submitForm} className="flex flex-col gap-4 mt-4">
+		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
+			{isLoading && <LoadingTailwind>Memproses data…</LoadingTailwind>}
+
 			<label className="floating-label">
 				<span>Kode</span>
 				<input
@@ -138,7 +171,7 @@ const SaleForm = ({ onSubmit, inputData = {}, isLoading = false }) => {
 			</label>
 
 			<FormActions
-				onDelete={onDelete}
+				onDelete={handleDelete}
 				onReset={resetForm}
 				isNew={!formData?.id}
 				isLoading={isLoading}

@@ -3,6 +3,7 @@ import api from './api';
 
 const customers = (() => {
 	async function getAll(params) {
+		api.setNotify({ showSuccess: false, showError: true });
 		const response = await api.fetchAuth(`customers`, {
 			method: 'GET',
 			params,
@@ -11,7 +12,7 @@ const customers = (() => {
 	}
 
 	async function getById(id) {
-		api.setNotify(false);
+		api.setNotify({ showSuccess: false, showError: true });
 		const response = await api.fetchAuth(`customers/${id}`, {
 			method: 'GET',
 		});
@@ -19,6 +20,7 @@ const customers = (() => {
 	}
 
 	async function create(data) {
+		api.setNotify(true);
 		const response = await api.fetchAuth(`customers`, {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -27,6 +29,7 @@ const customers = (() => {
 	}
 
 	async function update(id, data) {
+		api.setNotify(true);
 		const response = await api.fetchAuth(`customers/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify(data),
@@ -35,6 +38,7 @@ const customers = (() => {
 	}
 
 	async function remove(id) {
+		api.setNotify(true);
 		const response = await api.fetchAuth(`customers/${id}`, {
 			method: 'DELETE',
 		});

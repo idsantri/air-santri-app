@@ -37,6 +37,7 @@ class Sales {
 	}
 
 	async remove(id) {
+		api.setNotify(true);
 		const response = await api.fetchAuth(`sales/${id}`, {
 			method: 'DELETE',
 		});
