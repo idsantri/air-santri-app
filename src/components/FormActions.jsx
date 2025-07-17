@@ -1,6 +1,6 @@
 import useConfirmDialog from '../hooks/use-confirm-dialog';
 
-const FormActions = ({ onDelete, isNew }) => {
+const FormActions = ({ onDelete, isNew, isLoading }) => {
 	const dialog = useConfirmDialog();
 
 	const onCancel = async () => {
@@ -16,6 +16,7 @@ const FormActions = ({ onDelete, isNew }) => {
 		<div className="flex items-center justify-between">
 			{!isNew ? (
 				<button
+					disabled={isLoading}
 					className="btn btn-warning text-warning-content"
 					type="button"
 					onClick={onDelete}
@@ -27,6 +28,7 @@ const FormActions = ({ onDelete, isNew }) => {
 			)}
 			<div className="flex items-center gap-2">
 				<button
+					disabled={isLoading}
 					className="btn btn-secondary text-secondary-content"
 					type="button"
 					onClick={onCancel}
@@ -34,6 +36,7 @@ const FormActions = ({ onDelete, isNew }) => {
 					Gagal
 				</button>
 				<button
+					disabled={isLoading}
 					type="submit"
 					className="btn btn-neutral text-neutral-content"
 				>

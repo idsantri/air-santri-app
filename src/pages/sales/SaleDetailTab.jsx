@@ -5,7 +5,7 @@ import formatDate from '../../utils/format-date';
 function SaleDetailTab({ details, payments }) {
 	const [activeTab, setActiveTab] = useState('tab1');
 	// console.log(details[0]);
-	console.log(payments[0]);
+	// console.log(payments[0]);
 	return (
 		<div className="mt-2">
 			{/* Tab Navigation */}
@@ -123,7 +123,7 @@ function SaleDetailTab({ details, payments }) {
 											</span>
 										</div>
 										<div className="text-xs opacity-75">
-											{payment?.notes}
+											{payment?.note}
 										</div>
 									</div>
 									<button className="btn btn-square text-center">

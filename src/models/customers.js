@@ -3,7 +3,6 @@ import api from './api';
 
 const customers = (() => {
 	async function getAll(params) {
-		api.setNotify(false);
 		const response = await api.fetchAuth(`customers`, {
 			method: 'GET',
 			params,

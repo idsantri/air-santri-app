@@ -11,7 +11,7 @@ class Sales {
 	}
 
 	async getById(id) {
-		api.setNotify(false);
+		api.setNotify({ showSuccess: false, showError: true });
 		const response = await api.fetchAuth(`sales/${id}`, {
 			method: 'GET',
 		});
@@ -19,6 +19,7 @@ class Sales {
 	}
 
 	async create(data) {
+		api.setNotify(true);
 		const response = await api.fetchAuth('sales', {
 			method: 'POST',
 			body: JSON.stringify(data),

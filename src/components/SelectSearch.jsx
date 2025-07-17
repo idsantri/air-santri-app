@@ -4,40 +4,44 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
  * @typedef {Object} SelectOption
  * @property {string} value - The value of the option.
  * @property {string} label - The display label of the option.
+ * @property {string} [description] - Optional description for the option.
  */
 
 /**
- * Custom Select Component with Search and Clear Functionality
+ * Custom Select Component with Search, Clear Functionality, Floating Label, and Loading Indicator
  * @param {Object} props - Component props.
  * @param {SelectOption[]} props.options - An array of objects for select options, e.g., [{ value: 'apple', label: 'Apple' }].
+ * @param {string} [props.label='Select'] - Label text for the floating label.
  * @param {string} [props.placeholder='Pilih...'] - Placeholder text for the select input.
  * @param {string} [props.value] - The currently selected value.
  * @param {function(string | null): void} [props.onChange] - Callback function when an option is selected or cleared.
+ * @param {boolean} [props.isLoading=false] - Whether the data is currently loading.
  */
 const SelectSearch = ({
 	options,
-	placeholder = 'Pilih...',
+	label = 'Pilih...', // Added label prop
+	placeholder = 'Cari...',
 	value,
 	onChange,
+	isLoading = false, // New prop for loading state
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [filteredOptions, setFilteredOptions] = useState(options);
-	const [currentSelectedValue, setCurrentSelectedValue] = useState(value); // Renamed to avoid confusion with prop 'value'
+	const [currentSelectedValue, setCurrentSelectedValue] = useState(value);
 	const selectRef = useRef(null);
-	const inputRef = useRef(null); // Ref for the input element
+	const inputRef = useRef(null);
 
 	// Effect to update internal selected value when external prop changes
 	useEffect(() => {
 		setCurrentSelectedValue(value);
-		// When value is set externally, clear search term
 		if (value) {
 			const selectedOption = options.find(
 				(option) => option.value === value,
 			);
 			setSearchTerm(selectedOption ? selectedOption.label : '');
 		} else {
-			setSearchTerm(''); // Clear search term if value is null
+			setSearchTerm('');
 		}
 	}, [value, options]);
 
@@ -62,14 +66,13 @@ const SelectSearch = ({
 				!selectRef.current.contains(event.target)
 			) {
 				setIsOpen(false);
-				// If an item is selected, reset search term to its label when clicking outside
 				if (currentSelectedValue) {
 					const selectedOption = options.find(
 						(opt) => opt.value === currentSelectedValue,
 					);
 					setSearchTerm(selectedOption ? selectedOption.label : '');
 				} else {
-					setSearchTerm(''); // Clear search term if nothing is selected
+					setSearchTerm('');
 				}
 			}
 		};
@@ -82,7 +85,7 @@ const SelectSearch = ({
 	const handleSelect = useCallback(
 		(option) => {
 			setCurrentSelectedValue(option.value);
-			setSearchTerm(option.label); // Set search term to selected label for display
+			setSearchTerm(option.label);
 			setIsOpen(false);
 			if (onChange) {
 				onChange(option.value);
@@ -94,11 +97,10 @@ const SelectSearch = ({
 	const handleInputChange = useCallback(
 		(e) => {
 			setSearchTerm(e.target.value);
-			setIsOpen(true); // Open dropdown when typing
-			setCurrentSelectedValue(null); // Clear selected value when user starts typing again
+			setIsOpen(true);
+			setCurrentSelectedValue(null);
 			if (onChange && currentSelectedValue) {
-				// If user starts typing after selecting
-				onChange(null); // Notify parent that selection is cleared
+				onChange(null);
 			}
 		},
 		[onChange, currentSelectedValue],
@@ -106,23 +108,21 @@ const SelectSearch = ({
 
 	const handleClear = useCallback(
 		(e) => {
-			e.stopPropagation(); // Prevent dropdown from opening/closing
+			e.stopPropagation();
 			setCurrentSelectedValue(null);
 			setSearchTerm('');
-			setFilteredOptions(options); // Reset filtered options to all
-			setIsOpen(false); // Close dropdown on clear
+			setFilteredOptions(options);
+			setIsOpen(false);
 			if (onChange) {
-				onChange(null); // Notify parent that selection has been cleared
+				onChange(null);
 			}
-			inputRef.current?.focus(); // Focus the input after clearing
+			inputRef.current?.focus();
 		},
 		[options, onChange],
 	);
 
 	const toggleDropdown = useCallback(() => {
 		setIsOpen((prev) => !prev);
-		// When opening, if something is selected, set search term to its label
-		// If nothing selected, ensure search term is empty for fresh search
 		if (!isOpen && currentSelectedValue) {
 			const selectedOption = options.find(
 				(opt) => opt.value === currentSelectedValue,
@@ -131,38 +131,64 @@ const SelectSearch = ({
 		} else if (!isOpen && !currentSelectedValue) {
 			setSearchTerm('');
 		}
-		inputRef.current?.focus(); // Focus the input when dropdown is toggled
+		inputRef.current?.focus();
 	}, [isOpen, currentSelectedValue, options]);
 
 	const displayInputValue = currentSelectedValue
 		? options.find((option) => option.value === currentSelectedValue)
 				?.label || ''
-		: searchTerm; // Display search term when no item is officially selected
+		: searchTerm;
+
+	const isInputActive = !!displayInputValue || isOpen;
 
 	return (
 		<div className="relative w-full" ref={selectRef}>
-			<div
-				className="flex items-center justify-between p-2 border border-base-300 rounded-md  cursor-pointer hover:border-primary-500 focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500"
-				onClick={toggleDropdown} // Use toggleDropdown for click on the main div
+			<label
+				className={`floating-label ${isInputActive ? 'active' : ''}`}
+				onClick={toggleDropdown}
 			>
-				<input
-					ref={inputRef}
-					type="text"
-					className="w-full bg-transparent outline-none pr-6" // Added pr-6 for clear button
-					placeholder={placeholder}
-					value={displayInputValue}
-					onChange={handleInputChange}
-					onFocus={() => setIsOpen(true)}
-				/>
-				{currentSelectedValue && (
-					<button
-						type="button"
-						onClick={handleClear}
-						className="absolute right-8 text-neutral-500 hover:text-gray-700 focus:outline-none"
-						aria-label="Clear selection"
-					>
+				<span className="label-text">{label}</span>
+				<div className="flex items-center w-full relative">
+					<input
+						ref={inputRef}
+						type="text"
+						className="input w-full pr-14"
+						placeholder={placeholder}
+						value={displayInputValue}
+						onChange={handleInputChange}
+						onFocus={() => setIsOpen(true)}
+						disabled={isLoading} // Disable input when loading
+					/>
+					{isLoading && (
+						<span className="loading loading-spinner loading-sm absolute right-2"></span> // DaisyUI spinner
+					)}
+					{!isLoading &&
+						currentSelectedValue && ( // Show clear button only if not loading
+							<button
+								type="button"
+								onClick={handleClear}
+								className="absolute right-8 text-neutral-500 hover:text-gray-700 focus:outline-none"
+								aria-label="Clear selection"
+							>
+								<svg
+									className="w-4 h-4"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										d="M6 18L18 6M6 6l12 12"
+									></path>
+								</svg>
+							</button>
+						)}
+					{!isLoading && ( // Show arrow icon only if not loading
 						<svg
-							className="w-4 h-4"
+							className={`w-4 h-4 text-neutral-500 transition-transform duration-200 absolute right-2 ${isOpen ? 'rotate-180' : ''}`}
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
@@ -172,30 +198,26 @@ const SelectSearch = ({
 								strokeLinecap="round"
 								strokeLinejoin="round"
 								strokeWidth="2"
-								d="M6 18L18 6M6 6l12 12"
+								d="M19 9l-7 7-7-7"
 							></path>
 						</svg>
-					</button>
-				)}
-				<svg
-					className={`w-4 h-4 text-neutral-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth="2"
-						d="M19 9l-7 7-7-7"
-					></path>
-				</svg>
-			</div>
+					)}
+				</div>
+			</label>
 
 			{isOpen && (
 				<div className="absolute w-full mt-1 bg-white border text-black border-base-300 rounded-md shadow-lg max-h-100 overflow-y-auto z-9999">
-					{filteredOptions.length > 0 ? (
+					{isLoading ? (
+						// Skeleton or spinner for loading options
+						<div className="p-2">
+							<span className="loading loading-spinner text-primary"></span>{' '}
+							Loading options...
+							{/* Or a skeleton loader for better UX */}
+							{/* <div className="skeleton h-4 w-full mb-2"></div>
+                            <div className="skeleton h-4 w-full mb-2"></div>
+                            <div className="skeleton h-4 w-full"></div> */}
+						</div>
+					) : filteredOptions.length > 0 ? (
 						filteredOptions.map((option) => (
 							<div
 								key={option.value}
