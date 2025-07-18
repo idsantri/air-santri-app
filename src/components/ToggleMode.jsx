@@ -15,11 +15,11 @@ function ToggleMode({ className }) {
 	return (
 		<button
 			onClick={toggleTheme}
-			className={`${className} p-2 rounded-full border border-solid transition-colors duration-200
+			className={`${className} p-2 rounded-full border border-solid transition-colors duration-200 
                 ${
 					currentTheme
-						? 'text-accent-content border-accent-content'
-						: 'text-secondary-content border-secondary-content'
+						? 'text-warning border-warning'
+						: 'text-neutral-600 border-neutral-text-neutral-600'
 				}`}
 			title={`Switch to ${currentTheme ? 'light' : 'dark'} mode`}
 		>

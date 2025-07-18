@@ -37,7 +37,7 @@ function SaleListPayment() {
 					Detail Pembayaran
 				</h3>
 				<Link
-					className="btn btn-sm btn-neutral rounded-sm"
+					className="btn btn-sm btn-secondary rounded-sm"
 					to={`/sales/${sale?.id}/payments/create`}
 				>
 					<Icon
@@ -70,7 +70,7 @@ function SaleListPayment() {
 							</div>
 						</div>
 						<button
-							className="btn btn-square text-center"
+							className="btn btn-square btn-error"
 							onClick={() => handleDelete(payment.id)}
 						>
 							<Icon icon="material-symbols:delete-outline-rounded" />

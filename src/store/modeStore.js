@@ -45,6 +45,8 @@ const useThemeStore = create(
 // Helper function to update DOM theme
 const updateDOMTheme = (theme) => {
 	const html = document.documentElement;
+
+	// perlu sinkron dengan main.css
 	const themeLight = 'lemonade';
 	const themeDark = 'coffee';
 

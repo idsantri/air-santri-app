@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import { ConfirmDialogProvider } from './context/ConfirmDialogContext';
-import './utils/rupiah';
 import MainLayout from './layouts/MainLayout';
 import LoginPage from './pages/auth/LoginPage';
 import ErrorPage from './pages/error/ErrorPage';
@@ -12,6 +11,7 @@ import SaleCreate from './pages/sales/SaleCreate';
 import SaleEdit from './pages/sales/SaleEdit';
 import SaleDetailCreate from './pages/sale-details/SaleDetailCreate';
 import SalePaymentCreate from './pages/sale-payments/SalePaymentCreate';
+import ProductIndex from './pages/products/ProductIndex';
 
 const App = () => {
 	return (
@@ -41,6 +41,9 @@ const App = () => {
 							path="/sales/:sale_id/payments/create"
 							element={<SalePaymentCreate />}
 						/>
+
+						{/* products */}
+						<Route path="/products" element={<ProductIndex />} />
 					</Route>
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>

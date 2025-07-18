@@ -36,10 +36,8 @@ function SaleEdit() {
 		<>
 			<div className="card p-2 border border-base-200 rounded-sm">
 				<header>
-					<div className="flex items-center justify-between  rounded-sm p-2 bg-secondary text-secondary-content mb-2">
-						<h2 className="text-xl text-neutral">
-							Formulir Transaksi
-						</h2>
+					<div className="flex items-center justify-between rounded-sm p-2 bg-accent text-accent-content mb-2">
+						<h2 className="text-xl">Formulir Transaksi</h2>
 						<p className="badge badge-info">Edit</p>
 					</div>
 				</header>

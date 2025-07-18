@@ -23,8 +23,8 @@ function SalePaymentCreate() {
 					<h2 className="text-md">Formulir Pembayaran Transaksi</h2>
 					<p className="badge badge-info">Baru</p>
 				</div>
-				<div className="border border-base-200 p-2 rounded-sm">
-					<table className="text-sm text-secondary-content">
+				<div className="border border-base-200 p-2 rounded-sm bg-base-200">
+					<table className="text-sm">
 						<tbody>
 							<tr>
 								<td className="pr-4 italic">Kode</td>

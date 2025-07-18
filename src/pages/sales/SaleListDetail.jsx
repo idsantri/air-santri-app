@@ -37,7 +37,7 @@ function SaleListDetail() {
 						Detail Pemesanan
 					</h3>
 					<Link
-						className="btn btn-sm btn-neutral rounded-sm"
+						className="btn btn-sm btn-secondary rounded-sm"
 						to={`/sales/${sale?.id}/details/create`}
 					>
 						<Icon
@@ -66,7 +66,7 @@ function SaleListDetail() {
 								</div>
 							</div>
 							<button
-								className="btn btn-square text-center"
+								className="btn btn-square btn-error"
 								onClick={() => handleDelete(detail.id)}
 							>
 								<Icon icon="material-symbols:delete-outline-rounded" />
