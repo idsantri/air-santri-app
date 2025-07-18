@@ -1,27 +1,33 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { useEffect } from 'react';
 import useThemeStore from '../store/modeStore';
 
 function ToggleMode({ className }) {
-	const { toggleTheme, isDarkMode } = useThemeStore();
+	const { toggleTheme, isDarkMode, initializeTheme } = useThemeStore();
+
+	// Initialize theme on component mount
+	useEffect(() => {
+		initializeTheme();
+	}, [initializeTheme]);
 
 	const currentTheme = isDarkMode();
 
 	return (
 		<button
 			onClick={toggleTheme}
-			className={`${className} p-2 rounded-full border border-solid
+			className={`${className} p-2 rounded-full border border-solid transition-colors duration-200
                 ${
 					currentTheme
-						? 'text-yellow-400 border-yellow-400'
-						: 'text-blue-900 border-blue-900'
+						? 'text-accent-content border-accent-content'
+						: 'text-secondary-content border-secondary-content'
 				}`}
 			title={`Switch to ${currentTheme ? 'light' : 'dark'} mode`}
 		>
 			<Icon
 				icon={
 					currentTheme
-						? 'material-symbols-light:dark-mode'
-						: 'material-symbols-light:light-mode'
+						? 'material-symbols-light:light-mode'
+						: 'material-symbols-light:dark-mode'
 				}
 				width="24"
 			/>

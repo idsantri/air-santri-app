@@ -1,6 +1,8 @@
 @import 'tailwindcss';
+
+/* perlu diatur juga pada mode store*/
 @plugin "daisyui" {
 	themes:
 		lemonade --default,
-		abyss --prefersdark;
+		coffee --prefersdark;
 }

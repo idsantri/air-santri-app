@@ -44,7 +44,7 @@ function MainTop() {
 				</div>
 			</div>
 			{/* Button Mode */}
-			<ToggleMode className=" hidden" />
+			<ToggleMode className="" />
 		</div>
 	);
 }

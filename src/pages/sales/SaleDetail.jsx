@@ -51,8 +51,8 @@ const SaleDetail = () => {
 
 	return (
 		<>
-			<div className="flex items-center justify-between  rounded-sm p-2 bg-base-200 mb-2">
-				<h2 className="text-xl text-neutral">Detail Penjualan</h2>
+			<div className="flex items-center justify-between  rounded-sm p-2 bg-base-300 mb-2">
+				<h2 className="text-xl text-base-content">Detail Penjualan</h2>
 				<Link
 					className="btn btn-sm btn-neutral rounded-sm"
 					to={`/sales/${id}/edit`}
