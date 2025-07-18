@@ -1,18 +1,21 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import SaleDetailForm from './SaleDetailForm';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import useSaleStore from '../../store/saleStore';
 
 function SaleDetailCreate() {
-	const { state } = useLocation();
+	const sale = useSaleStore((state) => state.sale);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!state || (state && !state.sale)) {
-			navigate(-1);
+		// Cek jika sale adalah objek kosong
+		const isEmpty = sale && Object.keys(sale).length === 0;
+
+		if (!sale || isEmpty) {
+			navigate(-1); // redirect back
 		}
-	}, [state, navigate]);
-	// console.log(state.sale);
+	}, [sale, navigate]);
 
 	return (
 		<div className="card p-2 border border-base-200 rounded-sm">
@@ -28,21 +31,21 @@ function SaleDetailCreate() {
 						<tbody>
 							<tr>
 								<td className="pr-4 italic">Kode</td>
-								<td>{state?.sale?.code}</td>
+								<td>{sale?.code}</td>
 							</tr>
 							<tr>
 								<td className="pr-4 italic">Pelanggan</td>
-								<td>{state?.sale?.customer_name}</td>
+								<td>{sale?.customer_name}</td>
 							</tr>
 							<tr>
 								<td className="pr-4 italic">Agen</td>
-								<td>{state?.sale?.warehouse_name}</td>
+								<td>{sale?.warehouse_name}</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</header>
-			{state?.sale?.id && <SaleDetailForm sale_id={state.sale.id} />}
+			{sale?.id && <SaleDetailForm sale_id={sale.id} />}
 			<div className="fixed bottom-20 right-4">
 				<button
 					type="button"

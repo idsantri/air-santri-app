@@ -39,9 +39,6 @@ function SaleListDetail() {
 					<Link
 						className="btn btn-sm btn-neutral rounded-sm"
 						to={`/sales/${sale?.id}/details/create`}
-						state={{
-							sale,
-						}}
 					>
 						<Icon
 							icon="material-symbols-light:add-rounded"
