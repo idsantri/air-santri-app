@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import FormActions from '../../components/FormActions';
-import LoadingTailwind from '../../components/LoadingFixed';
+import LoadingFixed from '../../components/LoadingFixed';
 import useForm from '../../hooks/useForm';
 import salePayments from '../../models/salePayments';
 import { useNavigate } from 'react-router';
@@ -49,7 +49,7 @@ const SalePaymentForm = ({ sale_id, inputData = {} }) => {
 
 	return (
 		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingTailwind>Memproses data…</LoadingTailwind>}
+			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
 			<label className="floating-label">
 				<span>Nominal</span>
 				<input

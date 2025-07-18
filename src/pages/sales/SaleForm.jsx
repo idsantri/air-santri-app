@@ -7,7 +7,7 @@ import useAuthStore from '../../store/authStore';
 import useForm from '../../hooks/useForm';
 import sales from '../../models/sales';
 import { useNavigate } from 'react-router';
-import LoadingTailwind from '../../components/LoadingFixed';
+import LoadingFixed from '../../components/LoadingFixed';
 
 const SaleForm = ({ inputData = {} }) => {
 	const { user } = useAuthStore().auth;
@@ -96,7 +96,7 @@ const SaleForm = ({ inputData = {} }) => {
 
 	return (
 		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingTailwind>Memproses data…</LoadingTailwind>}
+			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
 
 			<label className="floating-label">
 				<span>Kode</span>

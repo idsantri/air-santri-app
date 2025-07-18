@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import FormActions from '../../components/FormActions';
-import LoadingTailwind from '../../components/LoadingFixed';
+import LoadingFixed from '../../components/LoadingFixed';
 import useForm from '../../hooks/useForm';
 import products from '../../models/products';
 import SelectSearch from '../../components/SelectSearch';
@@ -68,7 +68,7 @@ const SaleDetailForm = ({ sale_id, inputData = {} }) => {
 
 	return (
 		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingTailwind>Memproses data…</LoadingTailwind>}
+			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
 			<SelectSearch
 				options={options}
 				placeholder="Cari produk…"

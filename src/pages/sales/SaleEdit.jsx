@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router';
 import sales from '../../models/sales';
 import SaleForm from './SaleForm';
-import LoadingTailwind from '../../components/LoadingFixed';
+import LoadingFixed from '../../components/LoadingFixed';
 
 function SaleEdit() {
 	const { id } = useParams(); // Jika Anda masih membutuhkan ID dari URL
@@ -41,7 +41,7 @@ function SaleEdit() {
 						<p className="badge badge-info">Edit</p>
 					</div>
 				</header>
-				{isLoading && <LoadingTailwind>Memuat data…</LoadingTailwind>}
+				{isLoading && <LoadingFixed>Memuat data…</LoadingFixed>}
 				<SaleForm inputData={sale} />
 			</div>
 		</>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import sales from '../../models/sales';
 import useAuthStore from '../../store/authStore';
-import LoadingTailwind from '../../components/LoadingFixed';
+import LoadingFixed from '../../components/LoadingFixed';
 import DataTable from 'react-data-table-component';
 import formatDate from '../../utils/format-date';
 import FilterComponent from './FilterComponent';
@@ -85,7 +85,7 @@ export default function Sales() {
 	return (
 		<>
 			<header className="text-center">
-				<h2 className="text-2xl ">Data Penjualan</h2>
+				<h2 className="text-xl">Data Penjualan</h2>
 				<p>{user.warehouse_name}</p>
 				<p className="text-sm">{user.warehouse_address}</p>
 			</header>
@@ -96,7 +96,7 @@ export default function Sales() {
 				filterText={filterText}
 			/>
 			{isLoading ? (
-				<LoadingTailwind />
+				<LoadingFixed />
 			) : (
 				<DataTable
 					noHeader

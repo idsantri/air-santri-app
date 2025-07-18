@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router';
 import sales from '../../models/sales';
 import { useCallback, useEffect, useState } from 'react';
-import LoadingTailwind from '../../components/LoadingFixed';
+import LoadingFixed from '../../components/LoadingFixed';
 import formatDate from '../../utils/format-date';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import SaleDetailTab from './SaleDetailTab';
@@ -65,7 +65,7 @@ const SaleDetail = () => {
 				</Link>
 			</div>
 			{isLoading ? (
-				<LoadingTailwind />
+				<LoadingFixed />
 			) : (
 				<>
 					<div className="card card-border rounded-sm">

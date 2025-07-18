@@ -1,4 +1,4 @@
-const LoadingTailwind = ({ children = '' }) => {
+const LoadingFixed = ({ children = '' }) => {
 	return (
 		<div
 			data-testid="loading"
@@ -16,4 +16,4 @@ const LoadingTailwind = ({ children = '' }) => {
 	);
 };
 
-export default LoadingTailwind;
+export default LoadingFixed;

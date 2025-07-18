@@ -1,3 +1,74 @@
+import { Icon } from '@iconify/react/dist/iconify.js';
+import { useEffect, useState } from 'react';
+import products from '../../models/products';
+import LoadingFixed from '../../components/LoadingFixed';
+import { Link } from 'react-router';
+
 export default function ProductIndex() {
-	return <div>ProductIndex</div>;
+	const [isLoading, setIsLoading] = useState(true);
+	const [data, setData] = useState([]);
+	useEffect(() => {
+		setIsLoading(true);
+		products
+			.getAll()
+			.then(({ products }) => {
+				setData(products);
+				// console.log(res.sales);
+			})
+			.catch((_e) => {})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	}, []);
+	return (
+		<>
+			<ul className="list bg-base-200/50 shadow-sm rounded-md">
+				{isLoading && <LoadingFixed />}
+				<li className="px-2 py-2 bg-base-300/50 flex items-center justify-between">
+					<h2 className="tracking-wide text-xl">Daftar Produk</h2>
+					<Link className="btn btn-accent rounded-sm">
+						<Icon
+							icon="material-symbols-light:add-rounded"
+							width="1.5em"
+						/>
+						Tambah
+					</Link>
+				</li>
+				{data.length > 0 ? (
+					data.map((product) => (
+						<li
+							className="list-row gap-2 bg-gradient-to-b from-base-300 to-base-200/10 rounded-none"
+							key={product.id}
+						>
+							<div className="list-col-grow">
+								<div className="font-semibold text-xl">
+									{product.name}
+								</div>
+								<div className="font-semibold opacity-80">
+									<span className="font-normal">Kulak: </span>
+									{product.purchase_price.toRupiah()}
+									{' ⪼ '}
+									<span className="font-normal">Jual: </span>
+									{product.selling_price.toRupiah()}
+								</div>
+							</div>
+							<p className="list-col-wrap text-sm italic opacity-65">
+								{product.description}
+							</p>
+							<button className="btn btn-square btn-outline">
+								<Icon icon="wpf:edit" width="20" height="20" />
+							</button>
+						</li>
+					))
+				) : (
+					<li className="italic p-4 text-center">
+						Tidak ada produk
+						<br />
+						Silakan tambahkan produk
+					</li>
+				)}
+			</ul>
+			{/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+		</>
+	);
 }
