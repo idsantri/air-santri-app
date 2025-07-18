@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import SelectSearch from '../../components/SelectSearch';
-import useConfirmDialog from '../../hooks/use-confirm-dialog';
+import useConfirmDialog from '../../hooks/useConfirmDialog';
 import FormActions from '../../components/FormActions';
 import customers from '../../models/customers';
 import useAuthStore from '../../store/authStore';
 import useForm from '../../hooks/useForm';
 import sales from '../../models/sales';
 import { useNavigate } from 'react-router';
-import LoadingTailwind from '../../components/LoadingTailwind';
+import LoadingTailwind from '../../components/LoadingFixed';
 
 const SaleForm = ({ inputData = {} }) => {
 	const { user } = useAuthStore().auth;

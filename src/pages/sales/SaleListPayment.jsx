@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import useSaleStore from '../../store/saleStore';
 import formatDate from '../../utils/format-date';
-import useConfirmDialog from '../../hooks/use-confirm-dialog';
+import useConfirmDialog from '../../hooks/useConfirmDialog';
 import { useState } from 'react';
 import salePayments from '../../models/salePayments';
 import LoadingAbsolute from '../../components/LoadingAbsolute';

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import sales from '../../models/sales';
 import useAuthStore from '../../store/authStore';
-import LoadingTailwind from '../../components/LoadingTailwind';
+import LoadingTailwind from '../../components/LoadingFixed';
 import DataTable from 'react-data-table-component';
 import formatDate from '../../utils/format-date';
 import FilterComponent from './FilterComponent';

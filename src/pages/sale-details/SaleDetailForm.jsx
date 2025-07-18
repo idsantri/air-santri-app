@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import FormActions from '../../components/FormActions';
-import LoadingTailwind from '../../components/LoadingTailwind';
+import LoadingTailwind from '../../components/LoadingFixed';
 import useForm from '../../hooks/useForm';
 import products from '../../models/products';
 import SelectSearch from '../../components/SelectSearch';

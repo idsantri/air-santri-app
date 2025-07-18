@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router';
 import sales from '../../models/sales';
 import SaleForm from './SaleForm';
-import LoadingTailwind from '../../components/LoadingTailwind';
+import LoadingTailwind from '../../components/LoadingFixed';
 
 function SaleEdit() {
 	const { id } = useParams(); // Jika Anda masih membutuhkan ID dari URL

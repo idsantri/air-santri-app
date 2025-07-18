@@ -6,13 +6,13 @@ function DockNavigation({ clickLogout }) {
 		<nav className="">
 			<ul className="dock bg-neutral text-neutral-content border-t-2 border-accent ">
 				<DockButton
-					iconName="solar:user-id-linear"
-					to="/santri"
-					label="Pelanggan"
+					iconName="majesticons:creditcard-hand"
+					to="/products"
+					label="Produk"
 				/>
 				<DockButton
 					iconName="healthicons:i-training-class-24px"
-					to="/madrasah"
+					to="/stocks"
 					label="Stok"
 				/>
 				<DockButton
@@ -22,9 +22,9 @@ function DockNavigation({ clickLogout }) {
 					className="dock-active"
 				/>
 				<DockButton
-					iconName="majesticons:creditcard-hand"
-					to="/iuran"
-					label="Produk"
+					iconName="solar:user-id-linear"
+					to="/customers"
+					label="Pelanggan"
 				/>
 				<DockMore clickLogout={clickLogout} />
 			</ul>

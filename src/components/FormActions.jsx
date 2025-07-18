@@ -1,4 +1,4 @@
-import useConfirmDialog from '../hooks/use-confirm-dialog';
+import useConfirmDialog from '../hooks/useConfirmDialog';
 
 const FormActions = ({
 	onDelete,

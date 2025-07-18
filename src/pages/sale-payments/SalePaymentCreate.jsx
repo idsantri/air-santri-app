@@ -39,9 +39,12 @@ function SalePaymentCreate() {
 								<td>{sale?.warehouse_name}</td>
 							</tr>
 							<tr>
-								<td className="pr-4 italic">Total Tagihan</td>
+								<td className="pr-4 italic">Sisa Tagihan</td>
 								<td className="font-semibold">
-									{sale?.total_amount.toRupiah()}
+									{(
+										(sale?.total_amount || 0) -
+										(sale?.total_payment || 0)
+									).toRupiah()}
 								</td>
 							</tr>
 						</tbody>

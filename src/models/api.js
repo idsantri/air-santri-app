@@ -1,13 +1,13 @@
 import config from '../config';
 import useAuthStore from '../store/authStore';
-import { buildTextError } from '../utils/array-object';
+import buildTextError from './utils/buildTextError';
 import { notifyError, notifySuccess } from '../components/Notify';
 import {
 	logErrorDetails,
 	logErrorToken,
 	logRequestDetails,
 	logResponseDetails,
-} from './logger';
+} from './utils/logger';
 
 const api = (() => {
 	const BASE_URL = config.BASE_API + config.END_API;

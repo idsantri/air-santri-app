@@ -13,4 +13,4 @@ function buildTextError(message) {
 	}
 	return result;
 }
-export { isPrimitiveArray, buildTextError };
+export default buildTextError;

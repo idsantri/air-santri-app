@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router';
 import MainTop from './_components/MainTop';
 import DockNavigation from './_components/DockNavigation';
 import useAuthStore from '../store/authStore';
-import useConfirmDialog from '../hooks/use-confirm-dialog';
+import useConfirmDialog from '../hooks/useConfirmDialog';
 import auth from '../models/auth';
 
 const MainLayout = () => {

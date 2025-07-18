@@ -4,7 +4,7 @@ import useSaleStore from '../../store/saleStore';
 import { useState } from 'react';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
 import saleDetails from '../../models/saleDetails';
-import useConfirmDialog from '../../hooks/use-confirm-dialog';
+import useConfirmDialog from '../../hooks/useConfirmDialog';
 
 function SaleListDetail() {
 	const { sale, details, onDeleteDetail } = useSaleStore((state) => state);
