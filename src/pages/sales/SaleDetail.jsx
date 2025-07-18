@@ -1,33 +1,53 @@
 import { Link, useParams } from 'react-router';
 import sales from '../../models/sales';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import LoadingTailwind from '../../components/LoadingTailwind';
 import formatDate from '../../utils/format-date';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import SaleDetailTab from './SaleDetailTab';
+import useSaleStore from '../../store/saleStore';
 
 const SaleDetail = () => {
 	const { id } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
-	const [data, setData] = useState({});
-	const [details, setDetails] = useState({});
-	const [payments, setPayments] = useState({});
 
-	useEffect(() => {
+	const {
+		setSale,
+		sale,
+		details,
+		setDetails,
+		payments,
+		setPayments,
+		setOnDeleteDetail,
+		setOnDeletePayment,
+	} = useSaleStore((state) => state);
+
+	const fetchData = useCallback(() => {
 		setIsLoading(true);
 		sales
 			.getById(id)
 			.then((res) => {
-				setData(res.sale);
+				setSale(res.sale);
 				setDetails(res.details);
 				setPayments(res.payments);
-				// console.log(res);
 			})
-			.catch((_e) => {})
+			.catch((err) => {
+				console.error('Gagal mengambil data:', err);
+			})
 			.finally(() => {
 				setIsLoading(false);
 			});
-	}, [id]);
+	}, [id, setSale, setDetails, setPayments]);
+
+	useEffect(() => {
+		fetchData();
+	}, [fetchData]);
+
+	useEffect(() => {
+		// Simpan handler ke store
+		setOnDeleteDetail(() => fetchData());
+		setOnDeletePayment(() => fetchData());
+	}, [setOnDeleteDetail, setOnDeletePayment, fetchData]);
 
 	return (
 		<>
@@ -37,7 +57,7 @@ const SaleDetail = () => {
 					className="btn btn-sm btn-neutral rounded-sm"
 					to={`/sales/${id}/edit`}
 					state={{
-						saleData: data,
+						saleData: sale,
 					}}
 				>
 					<Icon icon="material-symbols:edit-rounded" />
@@ -56,22 +76,22 @@ const SaleDetail = () => {
 										<td>Tanggal</td>
 										<td>
 											{formatDate(
-												data.sale_date,
+												sale.sale_date,
 												'dd MMMM yyyy',
 											)}
 										</td>
 									</tr>
 									<tr>
 										<td>Invoice</td>
-										<td>{data.code}</td>
+										<td>{sale.code}</td>
 									</tr>
 									<tr>
 										<td>Pelanggan</td>
 										<td className="flex items-center justify-between">
-											{data.customer_name}
+											{sale.customer_name}
 											<Link
 												className="btn btn-sm btn-info btn-circle text-neutral border-neutral-400 absolute right-2"
-												to={`/customers/${data.customer_id}`}
+												to={`/customers/${sale.customer_id}`}
 											>
 												<Icon
 													icon="material-symbols:info"
@@ -82,13 +102,13 @@ const SaleDetail = () => {
 									</tr>
 									<tr>
 										<td>Status</td>
-										<td>{data.status}</td>
+										<td>{sale.status}</td>
 									</tr>
 									<tr>
 										<td>Tagihan</td>
 										<td>
-											{data?.total_amount &&
-												data.total_amount?.toRupiah()}{' '}
+											{sale?.total_amount &&
+												sale.total_amount?.toRupiah()}{' '}
 											<span className="text-xs italic">
 												({details?.length || 0} item)
 											</span>
@@ -97,8 +117,8 @@ const SaleDetail = () => {
 									<tr>
 										<td>Terbayar</td>
 										<td>
-											{data?.total_payment &&
-												data.total_payment.toRupiah()}{' '}
+											{sale?.total_payment &&
+												sale.total_payment.toRupiah()}{' '}
 											<span className="text-xs italic">
 												({payments?.length || 0} kali)
 											</span>
@@ -109,8 +129,8 @@ const SaleDetail = () => {
 										<td>Sisa</td>
 										<td>
 											{(
-												data.total_amount -
-												data.total_payment
+												sale.total_amount -
+												sale.total_payment
 											).toRupiah()}
 										</td>
 									</tr>
@@ -118,10 +138,10 @@ const SaleDetail = () => {
 									<tr>
 										<td>Agen</td>
 										<td className="flex items-center justify-between">
-											{data.warehouse_name}
+											{sale.warehouse_name}
 											<Link
 												className="btn btn-sm btn-info btn-circle text-neutral border-neutral-400 absolute right-2"
-												to={`/warehouses/${data.warehouse_id}`}
+												to={`/warehouses/${sale.warehouse_id}`}
 											>
 												<Icon
 													icon="material-symbols:info"
@@ -133,13 +153,18 @@ const SaleDetail = () => {
 
 									<tr>
 										<td>Catatan</td>
-										<td>{data.note || '-'}</td>
+										<td>{sale.note || '-'}</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<SaleDetailTab details={details} payments={payments} />
+					<SaleDetailTab
+						details={details}
+						payments={payments}
+						sale={sale}
+						onDelete={fetchData}
+					/>
 				</>
 			)}
 		</>

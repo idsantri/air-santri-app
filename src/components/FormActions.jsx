@@ -1,6 +1,12 @@
 import useConfirmDialog from '../hooks/use-confirm-dialog';
 
-const FormActions = ({ onDelete, onReset, isNew, isLoading }) => {
+const FormActions = ({
+	onDelete,
+	onReset,
+	hideDelete,
+	isLoading,
+	hideCancel,
+}) => {
 	const dialog = useConfirmDialog();
 
 	const onCancel = async () => {
@@ -17,16 +23,16 @@ const FormActions = ({ onDelete, onReset, isNew, isLoading }) => {
 			<div className="flex items-center gap-2">
 				<button
 					disabled={isLoading}
-					className="btn btn-info text-info-content"
+					className="btn btn-warning text-warning-content"
 					type="button"
 					onClick={onReset}
 				>
 					Reset
 				</button>
-				{!isNew && (
+				{!hideDelete && (
 					<button
 						disabled={isLoading}
-						className="btn btn-warning text-warning-content"
+						className="btn btn-error text-error-content"
 						type="button"
 						onClick={onDelete}
 					>
@@ -35,18 +41,20 @@ const FormActions = ({ onDelete, onReset, isNew, isLoading }) => {
 				)}
 			</div>
 			<div className="flex items-center gap-2">
-				<button
-					disabled={isLoading}
-					className="btn btn-secondary text-secondary-content"
-					type="button"
-					onClick={onCancel}
-				>
-					Gagal
-				</button>
+				{!hideCancel && (
+					<button
+						disabled={isLoading}
+						className="btn btn-secondary text-secondary-content"
+						type="button"
+						onClick={onCancel}
+					>
+						Gagal
+					</button>
+				)}
 				<button
 					disabled={isLoading}
 					type="submit"
-					className="btn btn-neutral text-neutral-content"
+					className="btn btn-primary text-primary-content"
 				>
 					Simpan
 				</button>

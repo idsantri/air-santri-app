@@ -83,13 +83,15 @@ const SaleForm = ({ inputData = {} }) => {
 		});
 		if (!isConfirmed) return;
 
-		setIsLoading(true);
-		sales
-			.remove(formData.id)
-			.then(() => {
-				navigate('/sales');
-			})
-			.catch((e) => console.log(e).finally(() => setIsLoading(false)));
+		try {
+			setIsLoading(true);
+			await sales.remove(formData.id);
+			navigate('/sales');
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -173,7 +175,7 @@ const SaleForm = ({ inputData = {} }) => {
 			<FormActions
 				onDelete={handleDelete}
 				onReset={resetForm}
-				isNew={!formData?.id}
+				hideDelete={!formData?.id}
 				isLoading={isLoading}
 			/>
 		</form>

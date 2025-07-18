@@ -10,6 +10,7 @@ import SaleIndex from './pages/sales/SaleIndex';
 import SaleDetail from './pages/sales/SaleDetail';
 import SaleCreate from './pages/sales/SaleCreate';
 import SaleEdit from './pages/sales/SaleEdit';
+import SaleDetailCreate from './pages/sale-details/SaleDetailCreate';
 
 const App = () => {
 	return (
@@ -25,10 +26,16 @@ const App = () => {
 						<Route path="/login" element={<LoginPage />} />
 					</Route>
 					<Route element={<MainLayout />}>
+						{/* sales */}
 						<Route path="/sales" element={<SaleIndex />} />
 						<Route path="/sales/create" element={<SaleCreate />} />
 						<Route path="/sales/:id" element={<SaleDetail />} />
 						<Route path="/sales/:id/edit" element={<SaleEdit />} />
+						{/* sale-details */}
+						<Route
+							path="/sales/:sale_id/details/create"
+							element={<SaleDetailCreate />}
+						/>
 					</Route>
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
