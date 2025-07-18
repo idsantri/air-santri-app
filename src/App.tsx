@@ -11,6 +11,7 @@ import SaleDetail from './pages/sales/SaleDetail';
 import SaleCreate from './pages/sales/SaleCreate';
 import SaleEdit from './pages/sales/SaleEdit';
 import SaleDetailCreate from './pages/sale-details/SaleDetailCreate';
+import SalePaymentCreate from './pages/sale-payments/SalePaymentCreate';
 
 const App = () => {
 	return (
@@ -31,10 +32,14 @@ const App = () => {
 						<Route path="/sales/create" element={<SaleCreate />} />
 						<Route path="/sales/:id" element={<SaleDetail />} />
 						<Route path="/sales/:id/edit" element={<SaleEdit />} />
-						{/* sale-details */}
+
 						<Route
 							path="/sales/:sale_id/details/create"
 							element={<SaleDetailCreate />}
+						/>
+						<Route
+							path="/sales/:sale_id/payments/create"
+							element={<SalePaymentCreate />}
 						/>
 					</Route>
 					<Route path="*" element={<ErrorPage />} />

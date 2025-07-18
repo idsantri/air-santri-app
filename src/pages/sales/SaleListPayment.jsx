@@ -1,29 +1,62 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import useSaleStore from '../../store/saleStore';
 import formatDate from '../../utils/format-date';
+import useConfirmDialog from '../../hooks/use-confirm-dialog';
+import { useState } from 'react';
+import salePayments from '../../models/salePayments';
+import LoadingAbsolute from '../../components/LoadingAbsolute';
+import { Link } from 'react-router';
 
 function SaleListPayment() {
-	const { payments } = useSaleStore((state) => state);
+	const { sale, payments, onDeletePayment } = useSaleStore((state) => state);
+	const [isLoading, setIsLoading] = useState(false);
+	const dialog = useConfirmDialog();
+
+	const handleDelete = async (id) => {
+		const isConfirmed = await dialog({
+			message: 'Hapus data ini?',
+		});
+		if (!isConfirmed) return;
+
+		try {
+			setIsLoading(true);
+			await salePayments.remove(id);
+			onDeletePayment?.();
+		} catch (e) {
+			console.log(e);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	return (
-		<ul className="list border border-base-200 rounded">
+		<ul className="list border border-base-200 rounded relative">
+			{isLoading && <LoadingAbsolute />}
 			<li className="px-2 py-2  bg-base-200 flex items-center justify-between">
 				<h3 className="tracking-wide font-semibold">
 					Detail Pembayaran
 				</h3>
-				<button className="btn btn-sm btn-neutral rounded-sm">
+				<Link
+					className="btn btn-sm btn-neutral rounded-sm"
+					to={`/sales/${sale?.id}/payments/create`}
+				>
 					<Icon
 						icon="material-symbols-light:add-rounded"
 						width="1.5em"
 					/>
 					Tambah
-				</button>
+				</Link>
 			</li>
 			{payments.length > 0 ? (
 				payments.map((payment) => (
 					<li className="list-row px-2 py-2" key={payment.id}>
 						<div className="list-col-grow text-left">
-							<div>{formatDate(payment.payment_date)}</div>
+							<div>
+								{formatDate(
+									payment.payment_date,
+									'dd MMMM yyyy HH:mm',
+								)}
+							</div>
 							<div>
 								<span className="font-semibold">
 									{payment.amount.toRupiah()}{' '}
@@ -36,8 +69,11 @@ function SaleListPayment() {
 								{payment?.note}
 							</div>
 						</div>
-						<button className="btn btn-square text-center">
-							<Icon icon="material-symbols:edit-outline-rounded" />
+						<button
+							className="btn btn-square text-center"
+							onClick={() => handleDelete(payment.id)}
+						>
+							<Icon icon="material-symbols:delete-outline-rounded" />
 						</button>
 					</li>
 				))
