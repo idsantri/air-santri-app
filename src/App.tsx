@@ -14,6 +14,7 @@ import SalePaymentCreate from './pages/sale-payments/SalePaymentCreate';
 import ProductIndex from './pages/products/ProductIndex';
 import ProductCreate from './pages/products/ProductCreate';
 import ProductEdit from './pages/products/ProductEdit';
+import CustomerIndex from './pages/customers/CustomerIndex';
 
 const App = () => {
 	return (
@@ -54,6 +55,9 @@ const App = () => {
 							path="/products/:id/edit"
 							element={<ProductEdit />}
 						/>
+
+						{/* customers */}
+						<Route path="/customers" element={<CustomerIndex />} />
 					</Route>
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>

@@ -4,12 +4,13 @@ import useAuthStore from '../../store/authStore';
 import LoadingFixed from '../../components/LoadingFixed';
 import DataTable from 'react-data-table-component';
 import formatDate from '../../utils/format-date';
-import FilterComponent from './FilterComponent';
 import { useNavigate } from 'react-router';
+import FilterDataTable from '../../components/FilterDataTable';
 
 export default function Sales() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState([]);
+	const [filterText, setFilterText] = useState('');
 	const { user } = useAuthStore().auth;
 	const navigate = useNavigate();
 
@@ -17,11 +18,13 @@ export default function Sales() {
 		setIsLoading(true);
 		sales
 			.getAll({ warehouse_id: user.warehouse_id })
-			.then((res) => {
-				setData(res.sales);
+			.then(({ sales }) => {
+				setData(sales);
 				// console.log(res.sales);
 			})
-			.catch((_e) => {})
+			.catch((e) => {
+				console.log('error get sales', e);
+			})
 			.finally(() => {
 				setIsLoading(false);
 			});
@@ -64,8 +67,6 @@ export default function Sales() {
 		},
 	];
 
-	const [filterText, setFilterText] = useState('');
-
 	const filteredItems = data.filter((item) => {
 		const searchTerm = filterText.toLowerCase();
 		const customerMatch =
@@ -78,10 +79,6 @@ export default function Sales() {
 		return customerMatch || warehouseMatch;
 	});
 
-	const handleClear = () => {
-		setFilterText('');
-	};
-
 	return (
 		<>
 			<header className="text-center">
@@ -89,11 +86,11 @@ export default function Sales() {
 				<p>{user.warehouse_name}</p>
 				<p className="text-sm">{user.warehouse_address}</p>
 			</header>
-			<FilterComponent
+			<FilterDataTable
 				onFilter={(e) => setFilterText(e.target.value)}
-				onClear={handleClear}
 				onAdd={() => navigate('/sales/create')}
 				filterText={filterText}
+				placeholder="Cari pelanggan atau agen"
 			/>
 			{isLoading ? (
 				<LoadingFixed />
