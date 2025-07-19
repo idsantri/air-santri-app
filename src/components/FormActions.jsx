@@ -1,5 +1,3 @@
-import useConfirmDialog from '../hooks/useConfirmDialog';
-
 const FormActions = ({
 	onDelete,
 	onReset,
@@ -7,17 +5,6 @@ const FormActions = ({
 	isLoading,
 	hideCancel,
 }) => {
-	const dialog = useConfirmDialog();
-
-	const onCancel = async () => {
-		const isConfirmed = await dialog({
-			message: 'Batalkan formulir ini?',
-		});
-		if (!isConfirmed) return;
-
-		window.history.back();
-	};
-
 	return (
 		<div className="flex items-center justify-between">
 			<div className="flex items-center gap-2">
@@ -46,7 +33,7 @@ const FormActions = ({
 						disabled={isLoading}
 						className="btn btn-secondary text-secondary-content"
 						type="button"
-						onClick={onCancel}
+						onClick={() => window.history.back()}
 					>
 						Gagal
 					</button>

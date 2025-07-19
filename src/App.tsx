@@ -12,6 +12,8 @@ import SaleEdit from './pages/sales/SaleEdit';
 import SaleDetailCreate from './pages/sale-details/SaleDetailCreate';
 import SalePaymentCreate from './pages/sale-payments/SalePaymentCreate';
 import ProductIndex from './pages/products/ProductIndex';
+import ProductCreate from './pages/products/ProductCreate';
+import ProductEdit from './pages/products/ProductEdit';
 
 const App = () => {
 	return (
@@ -44,6 +46,14 @@ const App = () => {
 
 						{/* products */}
 						<Route path="/products" element={<ProductIndex />} />
+						<Route
+							path="/products/create"
+							element={<ProductCreate />}
+						/>
+						<Route
+							path="/products/:id/edit"
+							element={<ProductEdit />}
+						/>
 					</Route>
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>

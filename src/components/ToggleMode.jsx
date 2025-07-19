@@ -10,22 +10,22 @@ function ToggleMode({ className }) {
 		initializeTheme();
 	}, [initializeTheme]);
 
-	const currentTheme = isDarkMode();
+	const isDark = isDarkMode();
 
 	return (
 		<button
 			onClick={toggleTheme}
 			className={`${className} p-2 rounded-full border border-solid transition-colors duration-200 
                 ${
-					currentTheme
-						? 'text-warning border-warning'
-						: 'text-neutral-600 border-neutral-text-neutral-600'
+					isDark
+						? 'text-base-100 border-base-100 bg-warning'
+						: 'text-accent border-accent bg-neutral-700'
 				}`}
-			title={`Switch to ${currentTheme ? 'light' : 'dark'} mode`}
+			title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
 		>
 			<Icon
 				icon={
-					currentTheme
+					isDark
 						? 'material-symbols-light:light-mode'
 						: 'material-symbols-light:dark-mode'
 				}

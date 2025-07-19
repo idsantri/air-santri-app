@@ -108,7 +108,7 @@ const SalePaymentForm = ({ sale_id, inputData = {} }) => {
 				/>
 			</label>
 
-			<FormActions onReset={resetForm} hideCancel hideDelete />
+			<FormActions onReset={resetForm} hideDelete />
 		</form>
 	);
 };

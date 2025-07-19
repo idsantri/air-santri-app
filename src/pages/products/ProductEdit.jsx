@@ -1,33 +1,35 @@
-import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router';
-import sales from '../../models/sales';
-import SaleForm from './SaleForm';
+import { useLocation, useParams } from 'react-router';
 import LoadingFixed from '../../components/LoadingFixed';
+import ProductForm from './ProductForm';
+import ProductHeader from './ProductHeader';
+import { useEffect, useState } from 'react';
+import products from '../../models/products';
 
-function SaleEdit() {
+function ProductEdit() {
 	const { id } = useParams(); // Jika Anda masih membutuhkan ID dari URL
 	const location = useLocation();
-	const [sale, setSale] = useState(null);
+	const [product, setProduct] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		// console.log('🚀 ~ useEffect ~ location.state:', location.state.product);
 		if (
 			location.state &&
-			location.state.sale &&
-			location?.state?.sale?.id == id
+			location.state.product &&
+			location?.state?.product?.id == id
 		) {
 			// Data ada dari navigasi
-			setSale(location.state.sale);
+			setProduct(location.state.product);
 			setIsLoading(false);
 			// console.log('Data loaded from navigation state!');
 		} else {
 			// console.log('No data in state, fetching from server...');
 			setIsLoading(true);
-			sales
+			products
 				.getById(id)
-				.then(({ sale }) => {
-					// console.log(sale);
-					setSale(sale);
+				.then(({ product }) => {
+					// console.log('🚀 ~ .then ~ product:', product);
+					setProduct(product);
 				})
 				.catch((e) => console.log(e))
 				.finally(() => {
@@ -35,21 +37,16 @@ function SaleEdit() {
 				});
 		}
 	}, [location.state, id]); // Tambahkan location.state sebagai dependency
-
+	// console.log(product);
 	return (
 		<>
 			<div className="card p-2 border border-base-200 rounded-sm">
-				<header>
-					<div className="flex items-center justify-between rounded-sm p-2 bg-accent text-accent-content mb-2">
-						<h2 className="text-xl">Formulir Transaksi</h2>
-						<p className="badge badge-info">Edit</p>
-					</div>
-				</header>
+				<ProductHeader />
 				{isLoading && <LoadingFixed>Memuat data…</LoadingFixed>}
-				<SaleForm inputData={sale} />
+				<ProductForm inputData={product} />
 			</div>
 		</>
 	);
 }
 
-export default SaleEdit;
+export default ProductEdit;

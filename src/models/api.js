@@ -1,6 +1,5 @@
 import config from '../config';
 import useAuthStore from '../store/authStore';
-import buildTextError from './utils/buildTextError';
 import { notifyError, notifySuccess } from '../components/Notify';
 import {
 	logErrorDetails,
@@ -123,7 +122,7 @@ const api = (() => {
 		// Try to parse error response for better error message
 		try {
 			responseJson = await response.json();
-			errorMessage = buildTextError(responseJson.message) || errorMessage;
+			errorMessage = responseJson.message || errorMessage;
 		} catch (parseError) {
 			if (withLog)
 				console.error(

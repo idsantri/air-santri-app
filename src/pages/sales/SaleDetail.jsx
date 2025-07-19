@@ -56,9 +56,7 @@ const SaleDetail = () => {
 				<Link
 					className="btn btn-sm btn-accent rounded-sm"
 					to={`/sales/${id}/edit`}
-					state={{
-						saleData: sale,
-					}}
+					state={{ sale }}
 				>
 					<Icon icon="material-symbols:edit-rounded" />
 					Edit

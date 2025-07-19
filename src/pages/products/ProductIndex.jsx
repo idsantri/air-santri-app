@@ -26,7 +26,10 @@ export default function ProductIndex() {
 				{isLoading && <LoadingFixed />}
 				<li className="px-2 py-2 bg-base-300/50 flex items-center justify-between">
 					<h2 className="tracking-wide text-xl">Daftar Produk</h2>
-					<Link className="btn btn-accent rounded-sm">
+					<Link
+						className="btn btn-accent rounded-sm"
+						to={'/products/create'}
+					>
 						<Icon
 							icon="material-symbols-light:add-rounded"
 							width="1.5em"
@@ -55,9 +58,13 @@ export default function ProductIndex() {
 							<p className="list-col-wrap text-sm italic opacity-65">
 								{product.description}
 							</p>
-							<button className="btn btn-square btn-outline">
+							<Link
+								className="btn btn-square btn-outline"
+								to={`/products/${product.id}/edit`}
+								state={{ product: product }}
+							>
 								<Icon icon="wpf:edit" width="20" height="20" />
-							</button>
+							</Link>
 						</li>
 					))
 				) : (
