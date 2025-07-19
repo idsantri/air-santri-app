@@ -26,7 +26,7 @@ const SaleDetailForm = ({ sale_id, inputData = {} }) => {
 						label: `${m.name}`,
 						description:
 							'Harga jual: ' +
-							(m.selling_price ? m.selling_price.toRupiah() : 0),
+							(m.release_price ? m.release_price?.toRupiah() : 0),
 					}));
 				setOptions(mapped);
 				setProductsList(products);
@@ -44,7 +44,7 @@ const SaleDetailForm = ({ sale_id, inputData = {} }) => {
 		// console.log(product_id);
 		const prod = productsList.find((p) => p.id === product_id);
 		// console.log(prod);
-		updateField('unit_price', prod?.selling_price || '');
+		updateField('unit_price', prod?.release_price || '');
 	};
 
 	const onSubmit = (e) => {

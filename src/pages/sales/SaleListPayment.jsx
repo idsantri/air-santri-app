@@ -59,7 +59,7 @@ function SaleListPayment() {
 							</div>
 							<div>
 								<span className="font-semibold">
-									{payment.amount.toRupiah()}{' '}
+									{payment.amount?.toRupiah()}{' '}
 								</span>
 								<span className="text-xs opacity-75">
 									({payment.payment_method})
@@ -90,7 +90,7 @@ function SaleListPayment() {
 					{payments?.length &&
 						payments
 							.reduce((total, item) => total + item.amount, 0)
-							.toRupiah()}{' '}
+							?.toRupiah()}{' '}
 				</span>
 			</li>
 		</ul>

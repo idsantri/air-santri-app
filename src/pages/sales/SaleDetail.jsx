@@ -105,10 +105,10 @@ const SaleDetail = () => {
 									<tr>
 										<td>Tagihan</td>
 										<td>
-											{sale?.total_amount &&
-												sale.total_amount?.toRupiah()}{' '}
+											{sale?.total_gross &&
+												sale.total_gross?.toRupiah()}{' '}
 											<span className="text-xs italic">
-												({details?.length || 0} item)
+												({details?.length || 0} produk)
 											</span>
 										</td>
 									</tr>
@@ -116,7 +116,7 @@ const SaleDetail = () => {
 										<td>Terbayar</td>
 										<td>
 											{sale?.total_payment &&
-												sale.total_payment.toRupiah()}{' '}
+												sale.total_payment?.toRupiah()}{' '}
 											<span className="text-xs italic">
 												({payments?.length || 0} kali)
 											</span>
@@ -127,7 +127,7 @@ const SaleDetail = () => {
 										<td>Sisa</td>
 										<td>
 											{(
-												sale.total_amount -
+												sale.total_gross -
 												sale.total_payment
 											).toRupiah()}
 										</td>

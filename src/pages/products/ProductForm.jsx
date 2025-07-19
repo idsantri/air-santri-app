@@ -15,7 +15,8 @@ const ProductForm = ({ inputData = {} }) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		if (formData?.selling_price < formData?.purchase_price) {
+		console.log(formData);
+		if (formData?.release_price < formData?.take_price) {
 			return notifyError({
 				message: [
 					'<span style="font-style:italic">Ghâddângan bânne karkaran <br/>Dâghângan bânne sedâkaan!</span>',
@@ -87,10 +88,8 @@ const ProductForm = ({ inputData = {} }) => {
 				<input
 					type="number"
 					className="input w-full"
-					value={formData?.purchase_price ?? ''}
-					onChange={(e) =>
-						updateField('purchase_price', e.target.value)
-					}
+					value={formData?.take_price ?? ''}
+					onChange={(e) => updateField('take_price', e.target.value)}
 					required
 				/>
 			</label>
@@ -99,9 +98,9 @@ const ProductForm = ({ inputData = {} }) => {
 				<input
 					type="number"
 					className="input w-full"
-					value={formData?.selling_price ?? ''}
+					value={formData?.release_price ?? ''}
 					onChange={(e) =>
-						updateField('selling_price', e.target.value)
+						updateField('release_price', e.target.value)
 					}
 					required
 				/>

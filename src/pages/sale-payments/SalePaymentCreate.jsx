@@ -44,7 +44,7 @@ function SalePaymentCreate() {
 									{(
 										(sale?.total_amount || 0) -
 										(sale?.total_payment || 0)
-									).toRupiah()}
+									)?.toRupiah()}
 								</td>
 							</tr>
 						</tbody>

@@ -49,10 +49,10 @@ export default function ProductIndex() {
 								</div>
 								<div className="font-semibold opacity-80">
 									<span className="font-normal">Kulak: </span>
-									{product.purchase_price.toRupiah()}
+									{product.take_price?.toRupiah()}
 									{' ⪼ '}
 									<span className="font-normal">Jual: </span>
-									{product.selling_price.toRupiah()}
+									{product.release_price?.toRupiah()}
 								</div>
 							</div>
 							<p className="list-col-wrap text-sm italic opacity-65">

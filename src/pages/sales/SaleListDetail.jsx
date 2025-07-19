@@ -57,7 +57,7 @@ function SaleListDetail() {
 								</div>
 								<div>
 									<span className="font-semibold">
-										{detail.subtotal.toRupiah()}{' '}
+										{detail.subtotal?.toRupiah()}{' '}
 									</span>
 									<span className="text-xs opacity-75">
 										({detail.quantity} x{' '}
