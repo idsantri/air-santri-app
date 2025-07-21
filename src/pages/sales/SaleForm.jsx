@@ -8,11 +8,14 @@ import useForm from '../../hooks/useForm';
 import sales from '../../models/sales';
 import { useNavigate } from 'react-router';
 import LoadingFixed from '../../components/LoadingFixed';
+import SelectClearable from '../../components/SelectClearable';
 
 const SaleForm = ({ inputData = {} }) => {
 	const { user } = useAuthStore().auth;
 	const dialog = useConfirmDialog();
 	const { formData, updateField, resetForm } = useForm(inputData);
+	const [optionsDistrict, setOptionsDistrict] = useState([]);
+	const [district, setDistrict] = useState(null);
 	const navigate = useNavigate();
 	// const { formData, updateField, setFormData } = useForm(inputData);
 	// setFormData((prev) => ({
@@ -23,6 +26,7 @@ const SaleForm = ({ inputData = {} }) => {
 	const [options, setOptions] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [loadingCustomer, setLoadingCustomer] = useState(false);
+	const [customerData, setCustomerData] = useState([]);
 
 	// Muat customer
 	useEffect(() => {
@@ -31,14 +35,16 @@ const SaleForm = ({ inputData = {} }) => {
 		customers
 			.getAll()
 			.then(({ customers }) => {
-				const mapCustomers = customers
-					.filter((c) => c.is_active)
-					.map((c) => ({
-						value: c.id,
-						label: `${c.name} (${c.code})`,
-						description: c.address,
-					}));
-				setOptions(mapCustomers);
+				// console.log(customers);
+				const district = [
+					...new Set(
+						customers
+							.filter((c) => c.district)
+							.map((c) => c.district),
+					),
+				].sort();
+				setOptionsDistrict(district);
+				setCustomerData(customers);
 			})
 			.catch((error) => {
 				console.error('Failed to fetch customers:', error);
@@ -48,17 +54,31 @@ const SaleForm = ({ inputData = {} }) => {
 			});
 	}, []);
 
+	useEffect(() => {
+		const mapCustomers = customerData
+			.filter(
+				(c) =>
+					c.is_active && (district ? c.district === district : true),
+			)
+			.map((c) => ({
+				value: c.id,
+				label: `${c.name} (${c.code})`,
+				description: (c.address ?? '?') + ' — ' + c.district,
+			}));
+		setOptions(mapCustomers);
+	}, [district, customerData]);
+
 	const onSubmit = (e) => {
 		e.preventDefault();
 		if (!formData?.warehouse_id) formData.warehouse_id = user.warehouse_id;
-		if (formData.id) handleUpdate(formData);
+		if (formData.id) handleUpdate(formData.id, formData);
 		else handleCreate(formData);
 	};
 
-	const handleUpdate = (data) => {
+	const handleUpdate = (id, data) => {
 		setIsLoading(true);
 		sales
-			.update(formData.id, data)
+			.update(id, data)
 			.then(({ sale }) => {
 				navigate(`/sales/${sale.id}`);
 			})
@@ -108,6 +128,15 @@ const SaleForm = ({ inputData = {} }) => {
 				/>
 			</label>
 
+			<SelectClearable
+				label="Filter Kecamatan"
+				options={optionsDistrict}
+				value={district}
+				onChange={setDistrict}
+				placeholder="Filter kecamatan"
+				disabled={loadingCustomer}
+			/>
+
 			<SelectSearch
 				options={options}
 				placeholder="Cari pelanggan/toko …"
@@ -144,28 +173,18 @@ const SaleForm = ({ inputData = {} }) => {
 						)
 					}
 				/>
-				<div className="text-xs text-info-content/75 ml-2">
+				<div className="text-xs text-base-content/75 ml-2">
 					Kosongkan untuk waktu saat ini
 				</div>
 			</label>
 
-			<label className="floating-label" htmlFor="status">
-				<span>Status</span>
-				<select
-					id="status"
-					value={formData?.status || ''}
-					className="input select w-full"
-					onChange={(e) => updateField('status', e.target.value)}
-					required
-				>
-					<option value="" disabled hidden>
-						Pilih status
-					</option>
-					<option value="Proses">Proses</option>
-					<option value="Selesai">Selesai</option>
-					<option value="Gagal">Gagal</option>
-				</select>
-			</label>
+			<SelectClearable
+				label="Status Transaksi"
+				options={['Proses', 'Selesai', 'Gagal']}
+				value={formData?.status || ''}
+				onChange={(e) => updateField('status', e)}
+				placeholder="Pilih status transaksi"
+			/>
 
 			<label className="floating-label">
 				<span>Catatan</span>

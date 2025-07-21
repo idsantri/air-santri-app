@@ -28,7 +28,7 @@ function CustomerForm({ inputData = {} }) {
 					.map((c) => ({
 						value: c.code,
 						label: `${c.name} (${c.code})`,
-						description: c.address,
+						description: (c.address ?? '?') + ' — ' + c.district,
 					}));
 				setOptions(mapCustomers);
 				// console.log(mapCustomers);
