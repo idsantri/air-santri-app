@@ -51,7 +51,7 @@ const SaleDetail = () => {
 
 	return (
 		<>
-			<div className="flex items-center justify-between  rounded-sm p-2 bg-base-300 mb-2">
+			<header className="flex items-center justify-between  rounded-sm p-2 bg-base-300 mb-2">
 				<h2 className="text-xl text-base-content">Detail Penjualan</h2>
 				<Link
 					className="btn btn-sm btn-accent rounded-sm"
@@ -61,110 +61,108 @@ const SaleDetail = () => {
 					<Icon icon="material-symbols:edit-rounded" />
 					Edit
 				</Link>
-			</div>
-			{isLoading ? (
-				<LoadingFixed />
-			) : (
-				<>
-					<div className="card card-border rounded-sm">
-						<div className="overflow-x-auto">
-							<table className="table">
-								<tbody>
-									<tr>
-										<td>Tanggal</td>
-										<td>
-											{formatDate(
-												sale.sale_date,
-												'dd MMMM yyyy',
-											)}
-										</td>
-									</tr>
-									<tr>
-										<td>Invoice</td>
-										<td>{sale.code}</td>
-									</tr>
-									<tr>
-										<td>Pelanggan</td>
-										<td className="flex items-center justify-between">
-											{sale.customer_name}
-											<Link
-												className="btn btn-sm btn-info btn-circle text-neutral border-neutral-400 absolute right-2"
-												to={`/customers/${sale.customer_id}`}
-											>
-												<Icon
-													icon="material-symbols:info"
-													width="1.5em"
-												/>
-											</Link>
-										</td>
-									</tr>
-									<tr>
-										<td>Status</td>
-										<td>{sale.status}</td>
-									</tr>
-									<tr>
-										<td>Tagihan</td>
-										<td>
-											{sale?.total_gross &&
-												sale.total_gross?.toRupiah()}{' '}
-											<span className="text-xs italic">
-												({details?.length || 0} produk)
-											</span>
-										</td>
-									</tr>
-									<tr>
-										<td>Terbayar</td>
-										<td>
-											{sale?.total_payment &&
-												sale.total_payment?.toRupiah()}{' '}
-											<span className="text-xs italic">
-												({payments?.length || 0} kali)
-											</span>
-										</td>
-									</tr>
+			</header>
+			{/* <LoadingFixed /> */}
+			{isLoading && <LoadingFixed />}
+			<>
+				<div className="card card-border rounded-sm">
+					<div className="overflow-x-auto">
+						<table className="table">
+							<tbody>
+								<tr>
+									<td>Tanggal</td>
+									<td>
+										{formatDate(
+											sale.sale_date,
+											'dd MMMM yyyy',
+										)}
+									</td>
+								</tr>
+								<tr>
+									<td>Invoice</td>
+									<td>{sale.code}</td>
+								</tr>
+								<tr>
+									<td>Pelanggan</td>
+									<td className="flex items-center justify-between">
+										{sale.customer_name}
+										<Link
+											className="btn btn-sm btn-info btn-circle text-neutral border-neutral-400 absolute right-2"
+											to={`/customers/${sale.customer_id}`}
+										>
+											<Icon
+												icon="material-symbols:info"
+												width="1.5em"
+											/>
+										</Link>
+									</td>
+								</tr>
+								<tr>
+									<td>Status</td>
+									<td>{sale.status}</td>
+								</tr>
+								<tr>
+									<td>Tagihan</td>
+									<td>
+										{sale?.total_gross &&
+											sale.total_gross?.toRupiah()}{' '}
+										<span className="text-xs italic">
+											({details?.length || 0} produk)
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Terbayar</td>
+									<td>
+										{sale?.total_payment &&
+											sale.total_payment?.toRupiah()}{' '}
+										<span className="text-xs italic">
+											({payments?.length || 0} kali)
+										</span>
+									</td>
+								</tr>
 
-									<tr>
-										<td>Sisa</td>
-										<td>
-											{(
-												sale.total_gross -
-												sale.total_payment
-											).toRupiah()}
-										</td>
-									</tr>
+								<tr>
+									<td>Sisa</td>
+									<td>
+										{(
+											sale.total_gross -
+											sale.total_payment
+										).toRupiah()}
+									</td>
+								</tr>
 
-									<tr>
-										<td>Agen</td>
-										<td className="flex items-center justify-between">
-											{sale.warehouse_name}
-											<Link
-												className="btn btn-sm btn-info btn-circle text-neutral border-neutral-400 absolute right-2"
-												to={`/warehouses/${sale.warehouse_id}`}
-											>
-												<Icon
-													icon="material-symbols:info"
-													width="1.5em"
-												/>
-											</Link>
-										</td>
-									</tr>
+								<tr>
+									<td>Agen</td>
+									<td className="flex items-center justify-between">
+										{sale.warehouse_name}
+										<Link
+											className="btn btn-sm btn-info btn-circle text-neutral border-neutral-400 absolute right-2"
+											to={`/warehouses/${sale.warehouse_id}`}
+										>
+											<Icon
+												icon="material-symbols:info"
+												width="1.5em"
+											/>
+										</Link>
+									</td>
+								</tr>
 
-									<tr>
-										<td>Catatan</td>
-										<td>{sale.note || '-'}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+								<tr>
+									<td>Catatan</td>
+									<td>{sale.note || '-'}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-					<SaleDetailTab
-						details={details}
-						payments={payments}
-						sale={sale}
-						onDelete={fetchData}
-					/>
-				</>
-			)}
+				</div>
+				<SaleDetailTab
+					details={details}
+					payments={payments}
+					sale={sale}
+					onDelete={fetchData}
+				/>
+			</>
 		</>
 	);
 };

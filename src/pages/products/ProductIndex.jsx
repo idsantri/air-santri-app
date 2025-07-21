@@ -44,9 +44,7 @@ export default function ProductIndex() {
 							key={product.id}
 						>
 							<div className="list-col-grow">
-								<div className="font-semibold text-xl">
-									{product.name}
-								</div>
+								<div className="text-xl">{product.name}</div>
 								<div className="font-semibold opacity-80">
 									<span className="font-normal">Kulak: </span>
 									{product.take_price?.toRupiah()}

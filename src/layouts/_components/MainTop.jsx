@@ -4,7 +4,7 @@ import LogoAvatar from './LogoAvatar';
 
 function MainTop() {
 	return (
-		<div className="flex items-center justify-between gap-2 p-2 shadow-md bg-success text-primary-content">
+		<div className="flex items-center justify-between gap-2 p-2 shadow-md bg-success text-success-content">
 			<div className="flex items-center gap-2">
 				<a href="/" className="text-decoration-none block">
 					<LogoAvatar className="w-16" />

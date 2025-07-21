@@ -15,6 +15,9 @@ import ProductIndex from './pages/products/ProductIndex';
 import ProductCreate from './pages/products/ProductCreate';
 import ProductEdit from './pages/products/ProductEdit';
 import CustomerIndex from './pages/customers/CustomerIndex';
+import CustomerDetail from './pages/customers/CustomerDetail';
+import CustomerCreate from './pages/customers/CustomerCreate';
+import CustomerEdit from './pages/customers/CustomerEdit';
 
 const App = () => {
 	return (
@@ -58,6 +61,18 @@ const App = () => {
 
 						{/* customers */}
 						<Route path="/customers" element={<CustomerIndex />} />
+						<Route
+							path="/customers/create"
+							element={<CustomerCreate />}
+						/>
+						<Route
+							path="/customers/:id"
+							element={<CustomerDetail />}
+						/>
+						<Route
+							path="/customers/:id/edit"
+							element={<CustomerEdit />}
+						/>
 					</Route>
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>

@@ -2,15 +2,24 @@ const LoadingFixed = ({ children = '' }) => {
 	return (
 		<div
 			data-testid="loading"
-			className="fixed top-0 left-0 bottom-0 right-0 flex items-center justify-center flex-col bg-base-content/25 z-1000"
+			className="fixed inset-0 z-[1000] flex items-center justify-center"
 		>
-			<div className="flex items-center justify-center gap-x-2">
-				<div className="w-8 h-8 animate-pulse bg-[#b1d991] rounded-full"></div>
-				<div className="w-8 h-8 animate-pulse bg-[#4fb85e] rounded-full"></div>
-				<div className="w-8 h-8 animate-pulse bg-[#2a6424] rounded-full"></div>
-			</div>
-			<div className="p-2 text-base-content">
-				{children || 'Tunggu sebentar, sedang memuat data …'}
+			{/* Background dengan efek blur dan transparansi */}
+			<div className="absolute inset-0 backdrop-blur-[1px] bg-base-content/30"></div>
+
+			{/* Konten loading */}
+			<div className="relative flex flex-col items-center justify-center p-6 rounded-xl shadow-lg bg-base-200/50 backdrop-saturate-150 backdrop-contrast-125">
+				{/* Animasi bola loading yang lebih dinamis */}
+				<div className="flex items-center justify-center gap-x-3">
+					<div className="w-6 h-6 bg-[#b1d991] rounded-full animate-bounce  [animation-delay:0.1s]"></div>
+					<div className="w-6 h-6 bg-[#4fb85e] rounded-full animate-bounce [animation-delay:0.3s]"></div>
+					<div className="w-6 h-6 bg-[#2a6424] rounded-full animate-bounce [animation-delay:0.5s]"></div>
+				</div>
+
+				{/* Pesan teks */}
+				<div className="mt-4 px-8 py-4 rounded-md text-sm font-medium text-base-content bg-base-100 shadow shadow-base-content/50 border border-base-content/50">
+					{children || 'Tunggu sebentar, sedang memuat data …'}
+				</div>
 			</div>
 		</div>
 	);
