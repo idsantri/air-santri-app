@@ -52,6 +52,14 @@ function CustomerDetail() {
 								<td>Alamat</td>
 								<td>{`${customer?.address ?? ''} ${customer?.district ?? ''}`}</td>
 							</tr>
+							<tr>
+								<td>No. Telepon</td>
+								<td>{`${customer?.phone ?? ''}`}</td>
+							</tr>
+							<tr>
+								<td>Referensi</td>
+								<td>{`${customer?.is_referrer ? 'Ya' : 'Tidak'}`}</td>
+							</tr>
 
 							<tr>
 								<td>Referrer</td>

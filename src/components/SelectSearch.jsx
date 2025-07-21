@@ -24,6 +24,7 @@ const SelectSearch = ({
 	value,
 	onChange,
 	isLoading = false, // New prop for loading state
+	disabled = false,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
@@ -157,7 +158,7 @@ const SelectSearch = ({
 						value={displayInputValue}
 						onChange={handleInputChange}
 						onFocus={() => setIsOpen(true)}
-						disabled={isLoading} // Disable input when loading
+						disabled={isLoading || disabled} // Disable input when loading
 					/>
 					{isLoading && (
 						<span className="loading loading-spinner loading-sm absolute right-2"></span> // DaisyUI spinner

@@ -16,6 +16,7 @@ function CustomerForm({ inputData = {} }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingCustomer, setIsLoadingCustomer] = useState(false);
 	const [options, setOptions] = useState([]);
+	const [disableReferrer, setDisableReferrer] = useState(false);
 
 	useEffect(() => {
 		setIsLoadingCustomer(true);
@@ -39,6 +40,15 @@ function CustomerForm({ inputData = {} }) {
 				setIsLoadingCustomer(false);
 			});
 	}, []);
+
+	useEffect(() => {
+		if (formData.is_referrer) {
+			setDisableReferrer(true);
+			formData.referrer_code = '';
+		} else {
+			setDisableReferrer(false);
+		}
+	}, [formData]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -114,7 +124,14 @@ function CustomerForm({ inputData = {} }) {
 					name="code"
 					value={formData?.code ?? ''}
 					onChange={(e) => updateField('code', e.target.value)}
+					disabled={formData.id}
 				/>
+				{!formData.id && (
+					<div className="text-xs ml-3 py-0.5 opacity-75">
+						Hanya dibuat sekali (tidak dapat diubah); Kosongkan
+						untuk pengisian otomatis
+					</div>
+				)}
 			</label>
 
 			<label className="floating-label">
@@ -125,6 +142,18 @@ function CustomerForm({ inputData = {} }) {
 					name="name"
 					value={formData?.name ?? ''}
 					onChange={(e) => updateField('name', e.target.value)}
+				/>
+			</label>
+
+			<label className="floating-label">
+				<span>Nomor Telepon</span>
+				<input
+					className="input w-full"
+					type="number"
+					name="phone"
+					value={formData?.phone ?? ''}
+					onChange={(e) => updateField('phone', e.target.value)}
+					placeholder="0812…"
 				/>
 			</label>
 
@@ -159,6 +188,7 @@ function CustomerForm({ inputData = {} }) {
 					))}
 				</select>
 			</label>
+
 			<label className="label rounded-md border-[0.5px] border-base-content/20 text-base-content p-2">
 				<input
 					type="checkbox"
@@ -181,6 +211,7 @@ function CustomerForm({ inputData = {} }) {
 				placeholder="Cari referrer"
 				isLoading={isLoadingCustomer}
 				label="Pilih Referrer"
+				disabled={disableReferrer}
 			/>
 			<FormActions
 				onDelete={handleDelete}
