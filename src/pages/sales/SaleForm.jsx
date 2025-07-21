@@ -153,13 +153,17 @@ const SaleForm = ({ inputData = {} }) => {
 				<span>Status</span>
 				<select
 					id="status"
-					value={formData?.status ?? 'Proses'}
+					value={formData?.status || ''}
 					className="input select w-full"
 					onChange={(e) => updateField('status', e.target.value)}
+					required
 				>
-					<option>Proses</option>
-					<option>Selesai</option>
-					<option>Gagal</option>
+					<option value="" disabled hidden>
+						Pilih status
+					</option>
+					<option value="Proses">Proses</option>
+					<option value="Selesai">Selesai</option>
+					<option value="Gagal">Gagal</option>
 				</select>
 			</label>
 

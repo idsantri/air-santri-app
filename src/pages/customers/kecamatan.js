@@ -1,0 +1,21 @@
+const kec = [
+	'Arosbaya',
+	'Bangkalan',
+	'Blega',
+	'Burneh',
+	'Galis',
+	'Geger',
+	'Kamal',
+	'Klampis',
+	'Kokop',
+	'Konang',
+	'Kwanyar',
+	'Labang',
+	'Modung',
+	'Sepulu',
+	'Socah',
+	'Tanah Merah',
+	'Tanjung Bumi',
+	'Tragah',
+];
+export default kec.sort();
