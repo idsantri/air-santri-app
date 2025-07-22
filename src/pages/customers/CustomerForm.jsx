@@ -128,8 +128,8 @@ function CustomerForm({ inputData = {} }) {
 				/>
 				{!formData.id && (
 					<div className="text-xs ml-3 py-0.5 opacity-75">
-						Hanya dibuat sekali (tidak dapat diubah); Kosongkan
-						untuk pengisian otomatis
+						Kosongkan untuk pengisian otomatis; Hanya dibuat sekali
+						(tidak dapat diubah)
 					</div>
 				)}
 			</label>
