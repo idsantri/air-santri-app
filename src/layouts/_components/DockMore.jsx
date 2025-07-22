@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 function DockMore({ clickLogout }) {
 	return (
-		<li className="pt-1.5 dropdown dropdown-top dropdown-end">
+		<div className="dropdown dropdown-top dropdown-end">
 			<div tabIndex={0} role="button" className="">
 				<Icon
 					className="w-full"
@@ -16,7 +16,7 @@ function DockMore({ clickLogout }) {
 			</div>
 			<ul
 				tabIndex={0}
-				className="dropdown-content menu bg-neutral-700/70 text-base-content rounded-md z-[1] w-48 shadow-md p-0 mb-2 "
+				className="dropdown-content menu bg-neutral-700 text-neutral-content rounded-md z-[1] w-48 shadow-md p-0 mb-4 -mr-5"
 			>
 				<li className="p-2">
 					<Link to="/profile" className="">
@@ -39,7 +39,7 @@ function DockMore({ clickLogout }) {
 					</button>
 				</li>
 			</ul>
-		</li>
+		</div>
 	);
 }
 

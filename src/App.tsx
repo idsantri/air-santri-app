@@ -18,6 +18,7 @@ import CustomerIndex from './pages/customers/CustomerIndex';
 import CustomerDetail from './pages/customers/CustomerDetail';
 import CustomerCreate from './pages/customers/CustomerCreate';
 import CustomerEdit from './pages/customers/CustomerEdit';
+import ProfileIndex from './pages/profile/ProfileIndex';
 
 const App = () => {
 	return (
@@ -73,7 +74,11 @@ const App = () => {
 							path="/customers/:id/edit"
 							element={<CustomerEdit />}
 						/>
+
+						{/* profile */}
+						<Route path="/profile" element={<ProfileIndex />} />
 					</Route>
+
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
 			</Router>
