@@ -19,6 +19,7 @@ import CustomerDetail from './pages/customers/CustomerDetail';
 import CustomerCreate from './pages/customers/CustomerCreate';
 import CustomerEdit from './pages/customers/CustomerEdit';
 import ProfileIndex from './pages/profile/ProfileIndex';
+import StockIndex from './pages/stocks/StockIndex';
 
 const App = () => {
 	return (
@@ -74,6 +75,9 @@ const App = () => {
 							path="/customers/:id/edit"
 							element={<CustomerEdit />}
 						/>
+
+						{/* stock */}
+						<Route path="/stocks" element={<StockIndex />} />
 
 						{/* profile */}
 						<Route path="/profile" element={<ProfileIndex />} />
