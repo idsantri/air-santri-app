@@ -16,21 +16,21 @@ const AuthLayout = () => {
 			<div className="min-h-screen p-4  flex items-center justify-center">
 				<div className="max-w-sm w-full">
 					<InstallPwa />
-					<div className="card px-4 py-10 shadow-sm bg-base-200 rounded-md relative">
+					<div className="card px-4 py-10 shadow-sm shadow-base-content/70 bg-base-200 rounded-md relative">
 						{/* button mode */}
 						<ToggleMode className="absolute top-2 right-2 hidden" />
 						<header className="">
 							<LogoAvatar className="" />
-							<div className="text-center text-primary-content">
+							<div className="text-center text-base-content">
 								<h1 className="mt-4 text-3xl">
 									{config.APP_NAME}
 								</h1>
 								<p>
-									<span className="font-medium text-xl">
+									<span className="text-xl">
 										{config.INS_DESC}
 									</span>
 									<br />
-									<span className=" font-bold text-lg">
+									<span className="text-lg">
 										{config.INS_NAME}
 									</span>
 								</p>
