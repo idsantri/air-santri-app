@@ -22,21 +22,21 @@ export default function ProductIndex() {
 	}, []);
 	return (
 		<>
-			<ul className="list bg-base-200/50 shadow-sm rounded-md">
-				{isLoading && <LoadingFixed />}
-				<li className="px-2 py-2 bg-base-300/50 flex items-center justify-between">
-					<h2 className="tracking-wide text-xl">Daftar Produk</h2>
-					<Link
-						className="btn btn-accent rounded-sm"
-						to={'/products/create'}
-					>
-						<Icon
-							icon="material-symbols-light:add-rounded"
-							width="1.5em"
-						/>
-						Tambah
-					</Link>
-				</li>
+			<header className="px-2 py-2 bg-base-300/50 flex items-center justify-between">
+				<h2 className="tracking-wide text-xl">Daftar Produk</h2>
+				<Link
+					className="btn btn-accent rounded-sm"
+					to={'/products/create'}
+				>
+					<Icon
+						icon="material-symbols-light:add-rounded"
+						width="1.5em"
+					/>
+					Tambah
+				</Link>
+			</header>
+			{isLoading && <LoadingFixed />}
+			<ul className="list bg-base-200/50 shadow-sm rounded-md mt-2">
 				{data.length > 0 ? (
 					data.map((product) => (
 						<li
