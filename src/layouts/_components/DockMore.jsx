@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Link } from 'react-router';
 
-function DockMore({ clickLogout }) {
+function DockMore({ clickLogout, disabled }) {
+	console.log('DockMore render', disabled);
 	return (
 		<div className="dropdown dropdown-top dropdown-end">
 			<div tabIndex={0} role="button" className="">

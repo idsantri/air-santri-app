@@ -2,7 +2,8 @@ import DockMore from './DockMore';
 import DockButton from './DockButton';
 import { useLocation } from 'react-router';
 
-function DockNavigation({ clickLogout }) {
+function DockNavigation({ clickLogout, disabled }) {
+	// console.log('DockNavigation render', disable);
 	const location = useLocation();
 	const currentPath = location.pathname;
 
@@ -29,18 +30,21 @@ function DockNavigation({ clickLogout }) {
 					className={
 						isActiveForPath('/products') ? 'dock-active' : ''
 					}
+					disabled={disabled}
 				/>
 				<DockButton
 					iconName="healthicons:stock-out"
 					to="/stocks"
 					label="Stok"
 					className={isActiveForPath('/stocks') ? 'dock-active' : ''}
+					disabled={disabled}
 				/>
 				<DockButton
 					iconName="iconoir:home-sale"
 					to="/sales"
 					label="Penjualan"
 					className={isActiveForPath('/sales') ? 'dock-active' : ''}
+					disabled={disabled}
 				/>
 				<DockButton
 					iconName="solar:user-id-linear"
@@ -49,9 +53,10 @@ function DockNavigation({ clickLogout }) {
 					className={
 						isActiveForPath('/customers') ? 'dock-active' : ''
 					}
+					disabled={disabled}
 				/>
 				<li className={!anyActive ? 'dock-active' : ''}>
-					<DockMore clickLogout={clickLogout} />
+					<DockMore clickLogout={clickLogout} disabled={disabled} />
 				</li>
 			</ul>
 		</nav>

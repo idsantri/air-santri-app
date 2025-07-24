@@ -1,24 +1,16 @@
-import { Navigate, Outlet, useLocation } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 import MainTop from './_components/MainTop';
 import DockNavigation from './_components/DockNavigation';
 import useAuthStore from '../store/authStore';
 import useConfirmDialog from '../hooks/useConfirmDialog';
 import auth from '../models/auth';
 
-const MainLayout = () => {
+const CommonLayout = () => {
 	const store = useAuthStore();
 	const dialog = useConfirmDialog();
-	const location = useLocation();
 
 	if (!store.auth.isAuthenticated) {
 		return <Navigate to="/login" replace />;
-	}
-
-	if (
-		store.auth.user?.must_change_password &&
-		!location.pathname.startsWith('/profile')
-	) {
-		return <Navigate to="/profile" replace />;
 	}
 
 	async function handleLogout() {
@@ -44,13 +36,10 @@ const MainLayout = () => {
 				</div>
 			</main>
 			<footer className="fixed bottom-0 z-[1000] w-screen">
-				<DockNavigation
-					clickLogout={handleLogout}
-					disabled={store.auth.user?.must_change_password}
-				/>
+				<DockNavigation clickLogout={handleLogout} disable />
 			</footer>
 		</div>
 	);
 };
 
-export default MainLayout;
+export default CommonLayout;
