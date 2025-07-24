@@ -6,12 +6,13 @@ import products from '../../models/products';
 import SelectSearch from '../../components/SelectSearch';
 import saleDetails from '../../models/saleDetails';
 
-const SaleDetailForm = ({ sale_id, inputData = {} }) => {
+const SaleDetailForm = ({ inputData = {} }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingProduct, setIsLoadingProduct] = useState(false);
 	const [options, setOptions] = useState([]);
 	const [productsList, setProductsList] = useState([]);
 	const { formData, updateField, resetForm } = useForm(inputData);
+	const [submitted, setSubmitted] = useState(false);
 
 	useEffect(() => {
 		setIsLoadingProduct(true);
@@ -49,14 +50,15 @@ const SaleDetailForm = ({ sale_id, inputData = {} }) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		formData.sale_id = sale_id;
 		// console.log('🚀 ~ onSubmit ~ formData:', formData);
 		setIsLoading(true);
+		setSubmitted(false);
 		saleDetails
 			.create(formData)
 			.then(({ _product }) => {
-				console.log(_product);
+				// console.log(_product);
 				resetForm();
+				setSubmitted(true);
 			})
 			.catch((error) => {
 				console.error('Failed to create product:', error);
@@ -102,6 +104,11 @@ const SaleDetailForm = ({ sale_id, inputData = {} }) => {
 				).toRupiah()}
 			</div>
 			<FormActions onReset={resetForm} hideCancel hideDelete />
+			{submitted && (
+				<div className="p-4 rounded-sm bg-info text-info-content text-center w-full">
+					Tambahkan produk lagi
+				</div>
+			)}
 		</form>
 	);
 };

@@ -43,7 +43,7 @@ function SaleDetailCreate() {
 					</table>
 				</div>
 			</header>
-			{sale?.id && <SaleDetailForm sale_id={sale.id} />}
+			{sale?.id && <SaleDetailForm inputData={{ sale_id: sale.id }} />}
 			<div className="fixed bottom-20 right-4">
 				<button
 					type="button"

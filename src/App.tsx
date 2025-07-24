@@ -20,6 +20,8 @@ import CustomerCreate from './pages/customers/CustomerCreate';
 import CustomerEdit from './pages/customers/CustomerEdit';
 import ProfileIndex from './pages/profile/ProfileIndex';
 import StockIndex from './pages/stocks/StockIndex';
+import StockCreate from './pages/stocks/StockCreate';
+import StockEdit from './pages/stocks/StockEdit';
 
 const App = () => {
 	return (
@@ -78,6 +80,14 @@ const App = () => {
 
 						{/* stock */}
 						<Route path="/stocks" element={<StockIndex />} />
+						<Route
+							path="/stocks/create"
+							element={<StockCreate />}
+						/>
+						<Route
+							path="/stocks/:id/edit"
+							element={<StockEdit />}
+						/>
 
 						{/* profile */}
 						<Route path="/profile" element={<ProfileIndex />} />

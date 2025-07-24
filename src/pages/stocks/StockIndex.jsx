@@ -16,7 +16,7 @@ function StockIndex() {
 			.getStocks(user.warehouse_id)
 			.then(({ stocks }) => {
 				setStocks(stocks);
-				console.log(stocks);
+				// console.log(stocks);
 			})
 			.catch((_e) => {})
 			.finally(() => {
@@ -34,7 +34,7 @@ function StockIndex() {
 				</div>
 				<Link
 					className="btn btn-accent rounded-sm"
-					to={'/products/create'}
+					to={'/stocks/create'}
 				>
 					<Icon
 						icon="material-symbols-light:add-rounded"
@@ -71,8 +71,8 @@ function StockIndex() {
 							</p>
 							<Link
 								className="btn btn-square btn-outline"
-								to={`/products/${stock.id}/edit`}
-								state={{ product: stock }}
+								to={`/stocks/${stock.id}/edit`}
+								state={{ stock }}
 							>
 								<Icon icon="wpf:edit" width="20" height="20" />
 							</Link>
