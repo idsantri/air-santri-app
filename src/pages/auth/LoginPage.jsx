@@ -2,6 +2,7 @@ import useInput from '../../hooks/useInput';
 import { useState } from 'react';
 import useAuthStore from '../../store/authStore';
 import auth from '../../models/auth';
+import { notifyError } from '../../components/Notify';
 
 function LoginPage() {
 	const [login, onLoginChange] = useInput('');
@@ -25,6 +26,7 @@ function LoginPage() {
 				});
 			})
 			.catch((error) => {
+				notifyError({ message: error.message || 'Login Gagal' });
 				console.error('Login failed:', error);
 			})
 			.finally(() => {

@@ -2,20 +2,23 @@ const FormActions = ({
 	onDelete,
 	onReset,
 	hideDelete,
+	hideReset,
 	isLoading,
 	hideCancel,
 }) => {
 	return (
 		<div className="flex items-center justify-between">
 			<div className="flex items-center gap-2">
-				<button
-					disabled={isLoading}
-					className="btn btn-warning text-warning-content"
-					type="button"
-					onClick={onReset}
-				>
-					Reset
-				</button>
+				{!hideReset && (
+					<button
+						disabled={isLoading}
+						className="btn btn-warning text-warning-content"
+						type="button"
+						onClick={onReset}
+					>
+						Reset
+					</button>
+				)}
 				{!hideDelete && (
 					<button
 						disabled={isLoading}
