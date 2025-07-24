@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 function StockIndex() {
-	const { user } = useAuthStore().auth;
+	const user = useAuthStore((state) => state.user);
 	const [stocks, setStocks] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 

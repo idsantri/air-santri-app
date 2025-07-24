@@ -39,7 +39,7 @@ function ProfileResetPassword() {
 		<>
 			<header className="bg-base-200 p-4">
 				<h2 className="text-xl">Ganti Password</h2>
-				<p className="font-light">{store.auth.user.name}</p>
+				<p className="font-light">{store.user.name}</p>
 			</header>
 			<div className="p-2 rounded-sm border-[0.5px] border-base-300 my-2">
 				<form className="relative" onSubmit={onSubmit}>

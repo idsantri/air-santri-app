@@ -11,7 +11,7 @@ export default function Sales() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState([]);
 	const [filterText, setFilterText] = useState('');
-	const { user } = useAuthStore().auth;
+	const user = useAuthStore((state) => state.user);
 	const navigate = useNavigate();
 
 	useEffect(() => {

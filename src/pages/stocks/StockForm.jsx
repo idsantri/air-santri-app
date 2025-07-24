@@ -10,7 +10,7 @@ import LoadingFixed from '../../components/LoadingFixed';
 import warehouseProduct from '../../models/warehouseProduct';
 
 function StockForm({ inputData = {} }) {
-	const { user } = useAuthStore().auth;
+	const user = useAuthStore((state) => state.user);
 	const dialog = useConfirmDialog();
 	const { formData, updateField, resetForm } = useForm(inputData);
 	const navigate = useNavigate();

@@ -6,8 +6,8 @@ import InstallPwa from './_components/InstallPwa';
 import useAuthStore from '../store/authStore';
 
 const AuthLayout = () => {
-	const { auth } = useAuthStore();
-	if (auth.isAuthenticated) {
+	const loggedIn = useAuthStore((state) => state.isLoggedIn());
+	if (loggedIn) {
 		return <Navigate to="/" replace />;
 	}
 

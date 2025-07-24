@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import useAuthStore from '../../store/authStore';
 
 function ProfileIndex() {
-	const user = useAuthStore().auth.user;
+	const user = useAuthStore((state) => state.user);
 	return (
 		<>
 			<header className="p-4 bg-base-200/50 rounded-sm border border-base-content">

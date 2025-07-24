@@ -11,7 +11,7 @@ import LoadingFixed from '../../components/LoadingFixed';
 import SelectClearable from '../../components/SelectClearable';
 
 const SaleForm = ({ inputData = {} }) => {
-	const { user } = useAuthStore().auth;
+	const user = useAuthStore((state) => state.user);
 	const dialog = useConfirmDialog();
 	const { formData, updateField, resetForm } = useForm(inputData);
 	const [optionsDistrict, setOptionsDistrict] = useState([]);

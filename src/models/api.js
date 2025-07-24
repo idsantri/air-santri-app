@@ -203,8 +203,8 @@ const api = (() => {
 	}
 
 	function getAccessToken() {
-		const { auth } = useAuthStore.getState();
-		return auth?.token || null;
+		const { token } = useAuthStore.getState();
+		return token || null;
 	}
 
 	return {

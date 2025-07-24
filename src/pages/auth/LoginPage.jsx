@@ -8,7 +8,7 @@ function LoginPage() {
 	const [login, onLoginChange] = useInput('');
 	const [password, onPasswordChange] = useInput('');
 	const [isLoading, setIsLoading] = useState(false);
-	const authStore = useAuthStore();
+	const store = useAuthStore();
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -19,8 +19,7 @@ function LoginPage() {
 				password: password,
 			})
 			.then((res) => {
-				authStore.login({
-					isAuthenticated: true,
+				store.login({
 					token: res.token,
 					user: res.user,
 				});

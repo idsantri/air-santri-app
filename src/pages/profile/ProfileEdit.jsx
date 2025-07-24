@@ -7,12 +7,12 @@ import useForm from '../../hooks/useForm';
 import { useNavigate } from 'react-router';
 
 function ProfileEdit() {
-	const { auth, setUser } = useAuthStore();
-	const store = useAuthStore();
+	const currentUser = useAuthStore((state) => state.user); // Ambil user langsung
+	const setUser = useAuthStore((state) => state.setUser); // Ambil setUser
 
-	console.log(store);
 	const [isLoading, setIsLoading] = useState(false);
-	const { formData, updateField, resetForm, pickFields } = useForm(auth.user);
+	const { formData, updateField, resetForm, pickFields } =
+		useForm(currentUser);
 	const navigate = useNavigate();
 
 	const onSubmit = (e) => {
@@ -20,8 +20,8 @@ function ProfileEdit() {
 		const data = pickFields(['name', 'username', 'phone']);
 		setIsLoading(true);
 		user.update(data)
-			.then(({ user }) => {
-				setUser(user);
+			.then(({ user: updatedUser }) => {
+				setUser(updatedUser);
 				navigate('/profile');
 			})
 			.catch((error) => {
@@ -36,7 +36,7 @@ function ProfileEdit() {
 		<>
 			<header className="bg-base-200 p-4">
 				<h2 className="text-xl">Edit Profil</h2>
-				<p className="font-light">{auth.user.name}</p>
+				<p className="font-light">{currentUser.name}</p>
 			</header>
 			<div className="p-2 rounded-sm border-[0.5px] border-base-300 my-2">
 				<form

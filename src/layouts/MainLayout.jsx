@@ -4,18 +4,23 @@ import DockNavigation from './_components/DockNavigation';
 import useAuthStore from '../store/authStore';
 import useConfirmDialog from '../hooks/useConfirmDialog';
 import auth from '../models/auth';
+import { useState } from 'react';
+import LoadingFixed from '../components/LoadingFixed';
 
 const MainLayout = () => {
-	const store = useAuthStore();
 	const dialog = useConfirmDialog();
 	const location = useLocation();
+	const loggedIn = useAuthStore((state) => state.isLoggedIn());
+	const logout = useAuthStore((state) => state.logout);
+	const user = useAuthStore((state) => state.user);
+	const [isLoading, setIsLoading] = useState(false);
 
-	if (!store.auth.isAuthenticated) {
+	if (!loggedIn) {
 		return <Navigate to="/login" replace />;
 	}
 
 	if (
-		store.auth.user?.must_change_password &&
+		user?.must_change_password &&
 		!location.pathname.startsWith('/profile')
 	) {
 		return <Navigate to="/profile" replace />;
@@ -27,9 +32,10 @@ const MainLayout = () => {
 			message: 'Keluar dari Aplikasi?',
 		});
 		if (!isConfirmed) return;
-
+		setIsLoading(true);
 		await auth.logout().finally(() => {
-			store.logout();
+			logout();
+			setIsLoading(false);
 		});
 	}
 
@@ -40,13 +46,14 @@ const MainLayout = () => {
 			</header>
 			<main className="pt-[86px] pb-[74px]">
 				<div className="container mx-auto p-2">
+					{isLoading && <LoadingFixed>Proses logout …</LoadingFixed>}
 					<Outlet />
 				</div>
 			</main>
 			<footer className="fixed bottom-0 z-[1000] w-screen">
 				<DockNavigation
 					clickLogout={handleLogout}
-					disabled={store.auth.user?.must_change_password}
+					disabled={user?.must_change_password}
 				/>
 			</footer>
 		</div>

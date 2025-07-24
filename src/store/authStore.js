@@ -1,35 +1,37 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-const initAuth = {
-	isAuthenticated: false,
-	token: null,
-	user: null,
-};
-
 const useAuthStore = create(
 	persist(
-		(set) => ({
-			auth: initAuth,
-			login: (authData) => {
-				set({ auth: authData });
-			},
-			logout: () => {
-				set({ auth: initAuth });
-			},
+		(set, get) => ({
+			user: null,
+			token: null,
+
+			login: ({ user, token }) => set({ user, token }),
+
 			setUser: (userData) => {
 				set((state) => ({
-					auth: {
-						...state.auth, // Pertahankan properti lain dari objek 'auth'
-						user: {
-							...state.auth.user, // Pertahankan properti lain dari objek 'user' yang sudah ada
-							...userData, // Gabungkan (timpa jika ada) dengan data user yang baru
-						},
+					user: {
+						...state.user,
+						...userData,
 					},
 				}));
 			},
+
+			logout: () => {
+				set({ user: null, token: null });
+			},
+
+			isLoggedIn: () => {
+				const { token } = get();
+				return typeof token === 'string' && token.length >= 10;
+			},
 		}),
-		{ name: 'auth', storage: createJSONStorage(() => localStorage) },
+		{
+			name: 'auth-storage',
+			storage: createJSONStorage(() => localStorage),
+			partialize: (state) => ({ user: state.user, token: state.token }),
+		},
 	),
 );
 
