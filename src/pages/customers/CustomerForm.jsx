@@ -4,9 +4,9 @@ import useForm from '../../hooks/useForm';
 import { useNavigate } from 'react-router';
 import FormActions from '../../components/FormActions';
 import customers from '../../models/customers';
-import LoadingFixed from '../../components/LoadingFixed';
 import SelectSearch from '../../components/SelectSearch';
 import kecamatan from './kecamatan';
+import LoadingAbsolute from '../../components/LoadingAbsolute';
 
 function CustomerForm({ inputData = {} }) {
 	const dialog = useConfirmDialog();
@@ -113,8 +113,8 @@ function CustomerForm({ inputData = {} }) {
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
+		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4 relative">
+			{isLoading && <LoadingAbsolute />}
 
 			<label className="floating-label">
 				<span>Kode</span>

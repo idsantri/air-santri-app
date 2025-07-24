@@ -6,8 +6,8 @@ import useForm from '../../hooks/useForm';
 import { useEffect, useState } from 'react';
 import SelectSearch from '../../components/SelectSearch';
 import products from '../../models/products';
-import LoadingFixed from '../../components/LoadingFixed';
 import warehouseProduct from '../../models/warehouseProduct';
+import LoadingAbsolute from '../../components/LoadingAbsolute';
 
 function StockForm({ inputData = {} }) {
 	const user = useAuthStore((state) => state.user);
@@ -90,8 +90,8 @@ function StockForm({ inputData = {} }) {
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
+		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4 relative">
+			{isLoading && <LoadingAbsolute />}
 
 			<label className="floating-label">
 				<span>Agen (ID)</span>

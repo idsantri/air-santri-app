@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import FormActions from '../../components/FormActions';
-import LoadingFixed from '../../components/LoadingFixed';
 import useForm from '../../hooks/useForm';
 import products from '../../models/products';
 import SelectSearch from '../../components/SelectSearch';
 import saleDetails from '../../models/saleDetails';
+import LoadingAbsolute from '../../components/LoadingAbsolute';
 
 const SaleDetailForm = ({ inputData = {} }) => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -69,8 +69,8 @@ const SaleDetailForm = ({ inputData = {} }) => {
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
+		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4 relative">
+			{isLoading && <LoadingAbsolute />}
 			<SelectSearch
 				options={options}
 				placeholder="Cari produk…"

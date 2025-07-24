@@ -7,8 +7,8 @@ import useAuthStore from '../../store/authStore';
 import useForm from '../../hooks/useForm';
 import sales from '../../models/sales';
 import { useNavigate } from 'react-router';
-import LoadingFixed from '../../components/LoadingFixed';
 import SelectClearable from '../../components/SelectClearable';
+import LoadingAbsolute from '../../components/LoadingAbsolute';
 
 const SaleForm = ({ inputData = {} }) => {
 	const user = useAuthStore((state) => state.user);
@@ -115,8 +115,8 @@ const SaleForm = ({ inputData = {} }) => {
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
+		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4 relative">
+			{isLoading && <LoadingAbsolute />}
 
 			<label className="floating-label">
 				<span>Kode</span>

@@ -3,9 +3,9 @@ import useConfirmDialog from '../../hooks/useConfirmDialog';
 import FormActions from '../../components/FormActions';
 import useForm from '../../hooks/useForm';
 import { useNavigate } from 'react-router';
-import LoadingFixed from '../../components/LoadingFixed';
 import { notifyError } from '../../components/Notify';
 import products from '../../models/products';
+import LoadingAbsolute from '../../components/LoadingAbsolute';
 
 const ProductForm = ({ inputData = {} }) => {
 	const dialog = useConfirmDialog();
@@ -71,8 +71,9 @@ const ProductForm = ({ inputData = {} }) => {
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
+		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4 relative">
+			{isLoading && <LoadingAbsolute />}
+
 			<label className="floating-label">
 				<span>Nama Produk</span>
 				<input

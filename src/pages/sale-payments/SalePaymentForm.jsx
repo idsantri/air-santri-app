@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import FormActions from '../../components/FormActions';
-import LoadingFixed from '../../components/LoadingFixed';
 import useForm from '../../hooks/useForm';
 import salePayments from '../../models/salePayments';
 import { useNavigate } from 'react-router';
+import LoadingAbsolute from '../../components/LoadingAbsolute';
 
 const SalePaymentForm = ({ sale_id, inputData = {} }) => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -48,8 +48,8 @@ const SalePaymentForm = ({ sale_id, inputData = {} }) => {
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4">
-			{isLoading && <LoadingFixed>Memproses data…</LoadingFixed>}
+		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4 relative">
+			{isLoading && <LoadingAbsolute />}
 			<label className="floating-label">
 				<span>Nominal</span>
 				<input

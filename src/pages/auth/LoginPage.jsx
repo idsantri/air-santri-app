@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useAuthStore from '../../store/authStore';
 import auth from '../../models/auth';
 import { notifyError } from '../../components/Notify';
+import LoadingAbsolute from '../../components/LoadingAbsolute';
 
 function LoginPage() {
 	const [login, onLoginChange] = useInput('');
@@ -35,6 +36,7 @@ function LoginPage() {
 
 	return (
 		<>
+			{isLoading && <LoadingAbsolute />}
 			<h2 className="p-2 text-xl text-center text-slate-800 dark:text-slate-200">
 				Login
 			</h2>

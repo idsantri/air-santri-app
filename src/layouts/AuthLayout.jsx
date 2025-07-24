@@ -18,7 +18,8 @@ const AuthLayout = () => {
 					<InstallPwa />
 					<div className="card px-4 py-10 shadow-sm shadow-base-content/70 bg-base-200 rounded-md relative">
 						{/* button mode */}
-						<ToggleMode className="absolute top-2 right-2 hidden" />
+
+						<ToggleMode className="absolute top-2 right-2 " />
 						<header className="">
 							<LogoAvatar className="" />
 							<div className="text-center text-base-content">
