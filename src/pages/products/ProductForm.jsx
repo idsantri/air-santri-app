@@ -15,7 +15,7 @@ const ProductForm = ({ inputData = {} }) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		console.log(formData);
+		// console.log(formData);
 		if (formData?.release_price < formData?.take_price) {
 			return notifyError({
 				message: [
