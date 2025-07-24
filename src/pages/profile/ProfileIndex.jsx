@@ -35,7 +35,7 @@ function ProfileIndex() {
 				</div>
 			) : null}
 
-			<div className="p-4 rounded-sm border-[0.5px] border-base-content shadow-sm shadow-base-content/25 my-2">
+			<div className="p-4 rounded-sm border-[0.5px] border-base-300 my-2">
 				<table>
 					<tbody>
 						<tr>
@@ -51,6 +51,10 @@ function ProfileIndex() {
 							<td>{user.username}</td>
 						</tr>
 						<tr>
+							<td className="pr-4 italic">No. Telepon</td>
+							<td>{user.phone ?? '-'}</td>
+						</tr>
+						<tr>
 							<td className="pr-4 italic">Akses</td>
 							<td>
 								{user?.warehouse_code
@@ -60,17 +64,18 @@ function ProfileIndex() {
 						</tr>
 					</tbody>
 				</table>
-			</div>
-			<div className="flex items-center justify-between">
-				<Link className="btn btn-secondary" to={'/profile/edit'}>
-					Edit Profil
-				</Link>
-				<Link
-					className="btn btn-primary"
-					to={'/profile/reset-password'}
-				>
-					Ganti Password
-				</Link>
+				<div className="divider"></div>
+				<div className="flex items-center justify-between">
+					<Link className="btn btn-secondary" to={'/profile/edit'}>
+						Edit Profil
+					</Link>
+					<Link
+						className="btn btn-primary"
+						to={'/profile/reset-password'}
+					>
+						Ganti Password
+					</Link>
+				</div>
 			</div>
 
 			{/* <pre>{JSON.stringify(user, null, 2)}</pre> */}

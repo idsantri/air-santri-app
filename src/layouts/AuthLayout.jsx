@@ -42,6 +42,13 @@ const AuthLayout = () => {
 					</div>
 				</div>
 			</div>
+			<footer className="absolute bottom-0 left-0 right-0 text-center p-2 bg-base-300">
+				<p>
+					&copy; {new Date().getFullYear()} {config.APP_NAME}. All
+					rights reserved.
+				</p>
+				<p className="text-sm font-semibold">by idsantri</p>
+			</footer>
 		</>
 	);
 };
