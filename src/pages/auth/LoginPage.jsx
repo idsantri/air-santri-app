@@ -2,7 +2,6 @@ import useInput from '../../hooks/useInput';
 import { useState } from 'react';
 import useAuthStore from '../../store/authStore';
 import auth from '../../models/auth';
-import { notifyError } from '../../components/Notify';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
 
 function LoginPage() {
@@ -11,14 +10,14 @@ function LoginPage() {
 	const [isLoading, setIsLoading] = useState(false);
 	const store = useAuthStore();
 
-	const onSubmit = async (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault();
 		setIsLoading(true);
-		await auth
-			.login({
-				login: login,
-				password: password,
-			})
+		auth.setNotify(true);
+		auth.login({
+			login: login,
+			password: password,
+		})
 			.then((res) => {
 				store.login({
 					token: res.token,
@@ -26,7 +25,6 @@ function LoginPage() {
 				});
 			})
 			.catch((error) => {
-				notifyError({ message: error.message || 'Login Gagal' });
 				console.error('Login failed:', error);
 			})
 			.finally(() => {
