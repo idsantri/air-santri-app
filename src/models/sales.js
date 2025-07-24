@@ -2,7 +2,10 @@ import api from './api';
 
 class Sales {
 	async getAll(params) {
-		api.setNotify(false);
+		api.setNotify({
+			showSuccess: false,
+			showError: true,
+		});
 		const response = await api.fetchAuth('sales', {
 			method: 'GET',
 			params,

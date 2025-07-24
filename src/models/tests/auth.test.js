@@ -19,7 +19,7 @@ describe('auth model', () => {
 		const authState = authTestUtils.getAuthState();
 
 		expect(authState.token).toBe(result.token);
-		expect(authState.isAuthenticated).toBe(true);
+		expect(authState.isLoggedIn()).toBe(true);
 		expect(authState.user).toBeDefined();
 	});
 
@@ -39,7 +39,7 @@ describe('auth model', () => {
 		// Verify login worked
 		let authState = authTestUtils.getAuthState();
 		expect(authState.token).toBe(result.token);
-		expect(authState.isAuthenticated).toBe(true);
+		expect(authState.isLoggedIn()).toBe(true);
 
 		auth.setNotify(false);
 		// Perform logout
@@ -51,7 +51,7 @@ describe('auth model', () => {
 		// Verify logout worked
 		authState = authTestUtils.getAuthState();
 		expect(authState.token).toBeNull();
-		expect(authState.isAuthenticated).toBe(false);
+		expect(authState.isLoggedIn()).toBe(false);
 		expect(logoutResponse).toBeDefined();
 	});
 });

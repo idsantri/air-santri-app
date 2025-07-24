@@ -3,7 +3,7 @@ import auth from '../auth';
 
 // Test utilities
 export const authTestUtils = {
-	getAuthState: () => useAuthStore.getState().auth,
+	getAuthState: () => useAuthStore.getState(),
 	getAuthActions: () => useAuthStore.getState(),
 	resetAuth: () => {
 		const store = useAuthStore.getState();
@@ -25,11 +25,7 @@ export async function doLogin() {
 	});
 
 	// Update store with login result
-	authTestUtils.loginToStore({
-		isAuthenticated: true,
-		token: result.token,
-		user: result.user,
-	});
+	authTestUtils.loginToStore(result);
 
 	return result;
 }
