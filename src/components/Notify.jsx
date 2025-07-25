@@ -1,3 +1,6 @@
+// Don not remove import react,
+// it is required for testing model
+import React from 'react';
 import { toast } from 'react-toastify';
 
 const isPrimitiveArray = (arr) =>

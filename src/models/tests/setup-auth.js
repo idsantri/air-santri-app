@@ -4,7 +4,6 @@ import auth from '../auth';
 // Test utilities
 export const authTestUtils = {
 	getAuthState: () => useAuthStore.getState(),
-	getAuthActions: () => useAuthStore.getState(),
 	resetAuth: () => {
 		const store = useAuthStore.getState();
 		store.logout();
@@ -17,8 +16,6 @@ export const authTestUtils = {
 
 export async function doLogin() {
 	localStorage.clear();
-	auth.setNotify(false);
-	auth.setLog(true);
 	const result = await auth.login({
 		login: 'user1',
 		password: '112233',

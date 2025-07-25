@@ -6,14 +6,12 @@ import api from '../api';
 beforeAll(async () => {
 	await doLogin();
 
-	// Mock api.setNotify to do nothing, effectively disabling notifications
-	// regardless of how customers.js functions try to set them.
+	// Mock api.setNotify
 	vi.spyOn(api, 'setNotify').mockImplementation(() => {
 		// No operation
 	});
 
-	// Enable logging for API calls during tests
-	api.setLog(true);
+	api.setLog(false);
 });
 
 describe('sales model', () => {

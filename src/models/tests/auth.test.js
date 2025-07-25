@@ -6,6 +6,7 @@ describe('auth model', () => {
 	beforeEach(() => {
 		localStorage.clear();
 		authTestUtils.resetAuth();
+		auth.setLog(false);
 	});
 
 	it('login should return token on success', async () => {
@@ -24,7 +25,6 @@ describe('auth model', () => {
 	});
 
 	it('login should throw error on wrong credentials', async () => {
-		auth.setNotify(false);
 		await expect(
 			auth.login({
 				login: 'user1',
@@ -41,7 +41,6 @@ describe('auth model', () => {
 		expect(authState.token).toBe(result.token);
 		expect(authState.isLoggedIn()).toBe(true);
 
-		auth.setNotify(false);
 		// Perform logout
 		const logoutResponse = await auth.logout(false);
 
