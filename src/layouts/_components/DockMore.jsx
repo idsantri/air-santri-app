@@ -1,7 +1,14 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Link } from 'react-router';
+import useAuthStore from '../../store/authStore';
 
 function DockMore({ clickLogout, disabled }) {
+	const roles = useAuthStore((state) => state.roles);
+	const isAdmin =
+		roles &&
+		roles.length > 0 &&
+		roles.some((role) => role.toLowerCase().includes('admin'));
+
 	return (
 		<div className="dropdown dropdown-top dropdown-end">
 			<div tabIndex={0} role="button" className="">
@@ -19,7 +26,7 @@ function DockMore({ clickLogout, disabled }) {
 				className="dropdown-content menu bg-neutral-700 text-neutral-content rounded-md z-[1] w-48 shadow-md p-0 mb-4 -mr-5"
 			>
 				<li className="p-2">
-					{disabled ? (
+					{disabled || !isAdmin ? (
 						<div className="opacity-25 cursor-not-allowed ">
 							<Icon icon="mdi:users" width="24" height="24" />
 							Pengguna
