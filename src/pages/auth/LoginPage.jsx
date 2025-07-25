@@ -19,10 +19,7 @@ function LoginPage() {
 			password: password,
 		})
 			.then((res) => {
-				store.login({
-					token: res.token,
-					user: res.user,
-				});
+				store.login(res);
 			})
 			.catch((error) => {
 				console.error('Login failed:', error);

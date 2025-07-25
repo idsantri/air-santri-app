@@ -24,6 +24,7 @@ import StockCreate from './pages/stocks/StockCreate';
 import StockEdit from './pages/stocks/StockEdit';
 import ProfileEdit from './pages/profile/ProfileEdit';
 import ProfileResetPassword from './pages/profile/ProfileResetPassword';
+import UserIndex from './pages/users/UserIndex';
 
 const App = () => {
 	return (
@@ -98,6 +99,9 @@ const App = () => {
 							path="/profile/reset-password"
 							element={<ProfileResetPassword />}
 						/>
+
+						{/* users */}
+						<Route path="/users" element={<UserIndex />} />
 					</Route>
 
 					<Route path="*" element={<ErrorPage />} />

@@ -6,8 +6,9 @@ const useAuthStore = create(
 		(set, get) => ({
 			user: null,
 			token: null,
+			roles: null,
 
-			login: ({ user, token }) => set({ user, token }),
+			login: ({ user, token, roles }) => set({ user, token, roles }),
 
 			setUser: (userData) => {
 				set((state) => ({
@@ -30,7 +31,11 @@ const useAuthStore = create(
 		{
 			name: 'auth-storage',
 			storage: createJSONStorage(() => localStorage),
-			partialize: (state) => ({ user: state.user, token: state.token }),
+			partialize: (state) => ({
+				user: state.user,
+				token: state.token,
+				roles: state.roles,
+			}),
 		},
 	),
 );

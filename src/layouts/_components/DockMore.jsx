@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { Link } from 'react-router';
 
 function DockMore({ clickLogout, disabled }) {
-	console.log('DockMore render', disabled);
 	return (
 		<div className="dropdown dropdown-top dropdown-end">
 			<div tabIndex={0} role="button" className="">
@@ -20,7 +19,21 @@ function DockMore({ clickLogout, disabled }) {
 				className="dropdown-content menu bg-neutral-700 text-neutral-content rounded-md z-[1] w-48 shadow-md p-0 mb-4 -mr-5"
 			>
 				<li className="p-2">
-					<Link to="/profile" className="">
+					{disabled ? (
+						<div className="opacity-25 cursor-not-allowed ">
+							<Icon icon="mdi:users" width="24" height="24" />
+							Pengguna
+						</div>
+					) : (
+						<Link to="/users">
+							<Icon icon="mdi:users" width="24" height="24" />
+							Pengguna
+						</Link>
+					)}
+				</li>
+
+				<li className="p-2">
+					<Link to="/profile">
 						<Icon icon="mdi:user" width="24" height="24" />
 						Profil
 					</Link>
