@@ -37,6 +37,15 @@ const users = (() => {
 		return response.data || true;
 	}
 
+	async function updateRole(id, data) {
+		api.setNotify({ showSuccess: false, showError: true });
+		const response = await api.fetchAuth(`users/${id}/role`, {
+			method: 'PUT',
+			body: JSON.stringify(data),
+		});
+		return response.data || true;
+	}
+
 	async function remove(id) {
 		api.setNotify(true);
 		const response = await api.fetchAuth(`users/${id}`, {
@@ -58,6 +67,7 @@ const users = (() => {
 		getById,
 		create,
 		update,
+		updateRole,
 		remove,
 		setNotify,
 		setLog,

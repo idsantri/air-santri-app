@@ -55,7 +55,7 @@ function ProfileIndex() {
 							<td>{user.phone ?? '-'}</td>
 						</tr>
 						<tr>
-							<td className="pr-4 italic">Akses</td>
+							<td className="pr-4 italic">Gudang</td>
 							<td>
 								{user?.warehouse_code
 									? `${user.warehouse_name} (${user.warehouse_code})`

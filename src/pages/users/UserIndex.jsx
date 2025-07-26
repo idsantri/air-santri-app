@@ -59,11 +59,14 @@ export default function UserIndex() {
 							</div>
 
 							<Link
-								className="btn btn-square btn-outline"
-								to={`/users/${user.id}/edit`}
-								state={{ user }}
+								className="btn btn-circle btn-outline bg-accent/25"
+								to={`/users/${user.id}`}
 							>
-								<Icon icon="wpf:edit" width="20" height="20" />
+								<Icon
+									icon="entypo:info"
+									width="20"
+									height="20"
+								/>
 							</Link>
 						</li>
 					))

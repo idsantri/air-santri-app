@@ -25,6 +25,10 @@ import StockEdit from './pages/stocks/StockEdit';
 import ProfileEdit from './pages/profile/ProfileEdit';
 import ProfileResetPassword from './pages/profile/ProfileResetPassword';
 import UserIndex from './pages/users/UserIndex';
+import UserDetail from './pages/users/UserDetail';
+import UserCreate from './pages/users/UserCreate';
+import UserEdit from './pages/users/UserEdit';
+import UserChangePassword from './pages/users/UserChangePassword';
 
 const App = () => {
 	return (
@@ -102,6 +106,13 @@ const App = () => {
 
 						{/* users */}
 						<Route path="/users" element={<UserIndex />} />
+						<Route path="/users/create" element={<UserCreate />} />
+						<Route path="/users/:id" element={<UserDetail />} />
+						<Route path="/users/:id/edit" element={<UserEdit />} />
+						<Route
+							path="/users/:id/change-password"
+							element={<UserChangePassword />}
+						/>
 					</Route>
 
 					<Route path="*" element={<ErrorPage />} />

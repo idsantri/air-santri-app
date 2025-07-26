@@ -7,7 +7,7 @@ function DockMore({ clickLogout, disabled }) {
 	const isAdmin =
 		roles &&
 		roles.length > 0 &&
-		roles.some((role) => role.toLowerCase().includes('admin'));
+		roles.some((role) => role.toLowerCase() == 'super admin');
 
 	return (
 		<div className="dropdown dropdown-top dropdown-end">
@@ -42,7 +42,7 @@ function DockMore({ clickLogout, disabled }) {
 				<li className="p-2">
 					<Link to="/profile">
 						<Icon icon="mdi:user" width="24" height="24" />
-						Profil
+						Profil Saya
 					</Link>
 				</li>
 
