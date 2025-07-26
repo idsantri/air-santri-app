@@ -15,7 +15,7 @@ function DockNavigation({ clickLogout, disabled }) {
 	};
 
 	const anyActive =
-		isActiveForPath('/products') ||
+		isActiveForPath('/reports') ||
 		isActiveForPath('/stocks') ||
 		isActiveForPath('/sales') ||
 		isActiveForPath('/customers');
@@ -24,12 +24,10 @@ function DockNavigation({ clickLogout, disabled }) {
 		<nav className="">
 			<ul className="dock bg-neutral text-neutral-content border-t-2 border-accent ">
 				<DockButton
-					iconName="gridicons:product"
-					to="/products"
-					label="Produk"
-					className={
-						isActiveForPath('/products') ? 'dock-active' : ''
-					}
+					iconName="carbon:report"
+					to="/reports"
+					label="Laporan"
+					className={isActiveForPath('/reports') ? 'dock-active' : ''}
 					disabled={disabled}
 				/>
 				<DockButton

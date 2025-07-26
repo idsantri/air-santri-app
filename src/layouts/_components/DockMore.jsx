@@ -40,6 +40,23 @@ function DockMore({ clickLogout, disabled }) {
 				</li>
 
 				<li className="p-2">
+					<Link to="/warehouses">
+						<Icon
+							icon="material-symbols-light:warehouse-rounded"
+							width="24"
+							height="24"
+						/>
+						Gudang (Agen)
+					</Link>
+				</li>
+				<li className="p-2">
+					<Link to="/products">
+						<Icon icon="gridicons:product" width="24" height="24" />
+						Produk
+					</Link>
+				</li>
+
+				<li className="p-2">
 					<Link to="/profile">
 						<Icon icon="mdi:user" width="24" height="24" />
 						Profil Saya
