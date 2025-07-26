@@ -4,8 +4,10 @@ import { useCallback, useEffect, useState } from 'react';
 import LoadingFixed from '../../components/LoadingFixed';
 import formatDate from '../../utils/format-date';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import SaleDetailTab from './SaleDetailTab';
+import Tabs from '../../components/Tabs';
 import useSaleStore from '../../store/saleStore';
+import SaleListDetail from './SaleListDetail';
+import SaleListPayment from './SaleListPayment';
 
 const SaleDetail = () => {
 	const { id } = useParams();
@@ -157,11 +159,16 @@ const SaleDetail = () => {
 						</table>
 					</div>
 				</div>
-				<SaleDetailTab
-					details={details}
-					payments={payments}
-					sale={sale}
-					onDelete={fetchData}
+
+				<Tabs
+					tab1={{
+						label: 'Detail Barang',
+						component: <SaleListDetail />,
+					}}
+					tab2={{
+						label: 'Pembayaran',
+						component: <SaleListPayment />,
+					}}
 				/>
 			</>
 		</>
