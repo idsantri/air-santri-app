@@ -16,8 +16,12 @@ export default function Sales() {
 
 	useEffect(() => {
 		setIsLoading(true);
+		const params = user.warehouse_id
+			? { warehouse_id: user.warehouse_id }
+			: null;
+
 		sales
-			.getAll({ warehouse_id: user.warehouse_id })
+			.getAll(params)
 			.then(({ sales }) => {
 				setData(sales);
 				// console.log(res.sales);
@@ -83,8 +87,16 @@ export default function Sales() {
 		<>
 			<header className="text-center">
 				<h2 className="text-xl">Data Penjualan</h2>
-				<p>{user.warehouse_name}</p>
-				<p className="text-sm">{user.warehouse_address}</p>
+				{user.warehouse_id ? (
+					<>
+						<p>{user.warehouse_name}</p>
+						<p className="text-sm">{user.warehouse_address}</p>
+					</>
+				) : (
+					<>
+						<p>Semua Gudang</p>
+					</>
+				)}
 			</header>
 			<FilterDataTable
 				onFilter={(e) => setFilterText(e.target.value)}
