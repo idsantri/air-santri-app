@@ -103,10 +103,23 @@ export default function UserDetail() {
 						</tr>
 						<tr>
 							<td className="pr-4 italic">Gudang</td>
-							<td>
-								{user?.warehouse_id
-									? `${user.warehouse.name} (${user.warehouse.code})`
-									: '-'}
+							<td className="flex items-center justify-between">
+								<div>
+									{user?.warehouse_id
+										? `${user.warehouse.name} (${user.warehouse.code})`
+										: '-'}
+								</div>
+
+								<Link
+									disabled
+									className="btn btn-sm btn-info btn-circle text-neutral border-neutral-400 absolute right-2"
+									to={`/warehouses/${user.warehouse_id}`}
+								>
+									<Icon
+										icon="material-symbols:info"
+										width="1.5em"
+									/>
+								</Link>
 							</td>
 						</tr>
 						<tr>

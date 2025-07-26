@@ -29,6 +29,9 @@ import UserDetail from './pages/users/UserDetail';
 import UserCreate from './pages/users/UserCreate';
 import UserEdit from './pages/users/UserEdit';
 import UserChangePassword from './pages/users/UserChangePassword';
+import WarehouseIndex from './pages/warehouses/WarehouseIndex';
+import WarehouseCreate from './pages/warehouses/WarehouseCreate';
+import WarehouseEdit from './pages/warehouses/WarehouseEdit';
 
 const App = () => {
 	return (
@@ -112,6 +115,20 @@ const App = () => {
 						<Route
 							path="/users/:id/change-password"
 							element={<UserChangePassword />}
+						/>
+
+						{/* warehouses */}
+						<Route
+							path="/warehouses"
+							element={<WarehouseIndex />}
+						/>
+						<Route
+							path="/warehouses/create"
+							element={<WarehouseCreate />}
+						/>
+						<Route
+							path="/warehouses/:id/edit"
+							element={<WarehouseEdit />}
 						/>
 					</Route>
 

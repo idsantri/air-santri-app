@@ -137,6 +137,7 @@ const SaleDetail = () => {
 									<td className="flex items-center justify-between">
 										{sale.warehouse_name}
 										<Link
+											disabled
 											className="btn btn-sm btn-info btn-circle text-neutral border-neutral-400 absolute right-2"
 											to={`/warehouses/${sale.warehouse_id}`}
 										>
