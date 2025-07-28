@@ -6,6 +6,7 @@ import { useState } from 'react';
 import salePayments from '../../models/salePayments';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
 import { Link } from 'react-router';
+import FileDownloader from '../../models/FileDownloader';
 
 function SaleListPayment() {
 	const { sale, payments, onDeletePayment } = useSaleStore((state) => state);
@@ -29,6 +30,10 @@ function SaleListPayment() {
 		}
 	};
 
+	const handleDownload = (id) => {
+		FileDownloader.downloadPayment(id);
+	};
+
 	return (
 		<ul className="list border border-base-200 rounded relative">
 			{isLoading && <LoadingAbsolute />}
@@ -50,6 +55,12 @@ function SaleListPayment() {
 			{payments.length > 0 ? (
 				payments.map((payment) => (
 					<li className="list-row px-2 py-2" key={payment.id}>
+						<button
+							className="btn btn-square btn-success"
+							onClick={() => handleDownload(payment.id)}
+						>
+							<Icon icon="material-symbols:print" height={22} />
+						</button>
 						<div className="list-col-grow text-left">
 							<div>
 								{formatDate(

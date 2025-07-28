@@ -8,6 +8,7 @@ import Tabs from '../../components/Tabs';
 import useSaleStore from '../../store/saleStore';
 import SaleListDetail from './SaleListDetail';
 import SaleListPayment from './SaleListPayment';
+import FileDownloader from '../../models/FileDownloader';
 
 const SaleDetail = () => {
 	const { id } = useParams();
@@ -51,18 +52,34 @@ const SaleDetail = () => {
 		setOnDeletePayment(() => fetchData());
 	}, [setOnDeleteDetail, setOnDeletePayment, fetchData]);
 
+	const downloadInvoice = async () => {
+		await FileDownloader.downloadInvoice(id, sale.code);
+	};
+
 	return (
 		<>
 			<header className="flex items-center justify-between  rounded-sm p-2 bg-base-300 mb-2">
 				<h2 className="text-xl text-base-content">Detail Penjualan</h2>
-				<Link
-					className="btn btn-sm btn-accent rounded-sm"
-					to={`/sales/${id}/edit`}
-					state={{ sale }}
-				>
-					<Icon icon="material-symbols:edit-rounded" />
-					Edit
-				</Link>
+				<div className="flex gap-2">
+					<button
+						className="btn btn-sm btn-outline rounded-sm"
+						onClick={downloadInvoice}
+					>
+						<Icon icon="material-symbols:print" height="22" />
+						Invoice
+					</button>
+					<Link
+						className="btn btn-sm btn-accent rounded-sm"
+						to={`/sales/${id}/edit`}
+						state={{ sale }}
+					>
+						<Icon
+							icon="material-symbols:edit-rounded"
+							height="16"
+						/>
+						Edit
+					</Link>
+				</div>
 			</header>
 			{/* <LoadingFixed /> */}
 			{isLoading && <LoadingFixed />}
