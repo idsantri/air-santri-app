@@ -1,4 +1,3 @@
-import config from '../config';
 import useAuthStore from '../store/authStore';
 import { notifyError, notifySuccess } from '../components/Notify';
 import {
@@ -9,7 +8,9 @@ import {
 } from './utils/logger';
 
 const api = (() => {
-	const BASE_URL = config.BASE_API + config.END_API;
+	const BASE_URL =
+		import.meta.env.VITE_BASE_API + import.meta.env.VITE_END_API;
+	// console.log('🚀 ~ BASE_URL:', BASE_URL);
 
 	// Global notify configuration
 	let notifyConfig = {
@@ -182,6 +183,7 @@ const api = (() => {
 	}
 
 	async function fetchAuth(endPoint, options = {}) {
+		console.log('🚀 ~ fetchAuth ~ BASE_URL:', BASE_URL);
 		const token = getAccessToken();
 		if (!token) {
 			if (withLog) logErrorToken(BASE_URL + endPoint, options);

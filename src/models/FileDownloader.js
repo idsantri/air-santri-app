@@ -1,8 +1,7 @@
-import config from '../config';
-
 class FileDownloader {
 	constructor() {
-		this.baseUrl = config.BASE_API + config.END_API;
+		this.baseUrl =
+			import.meta.env.VITE_BASE_API + import.meta.env.VITE_END_API;
 	}
 
 	// Private method untuk memulai proses unduhan
