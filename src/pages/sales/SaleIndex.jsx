@@ -24,7 +24,7 @@ export default function Sales() {
 			.getAll(params)
 			.then(({ sales }) => {
 				setData(sales);
-				// console.log(res.sales);
+				console.log(sales[0]);
 			})
 			.catch((e) => {
 				console.log('error get sales', e);
@@ -46,27 +46,40 @@ export default function Sales() {
 			selector: (row) => row.customer_name,
 			sortable: true,
 		},
-		{
-			name: 'Agen',
-			selector: (row) => row.warehouse_name,
-			sortable: true,
-		},
+		// {
+		// 	name: 'Agen',
+		// 	selector: (row) => row.warehouse_name,
+		// 	sortable: true,
+		// },
 		{
 			name: 'Status',
 			selector: (row) => row.status,
 			sortable: true,
 		},
+		// {
+		// 	name: 'Pembayaran',
+		// 	selector: (row) => {
+		// 		if (row.total_payment >= row.total_amount) {
+		// 			return 'Lunas';
+		// 		} else if (row.total_payment > 0) {
+		// 			return 'Sebagian';
+		// 		} else {
+		// 			return 'Belum Dibayar';
+		// 		}
+		// 	},
+		// 	sortable: true,
+		// },
 		{
-			name: 'Pembayaran',
-			selector: (row) => {
-				if (row.total_payment >= row.total_amount) {
-					return 'Lunas';
-				} else if (row.total_payment > 0) {
-					return 'Sebagian';
-				} else {
-					return 'Belum Dibayar';
-				}
-			},
+			name: 'Tagihan',
+			selector: (row) => row?.total_gross?.toRupiah(),
+			sortable: true,
+		},
+		{
+			name: 'Sisa',
+			selector: (row) =>
+				(
+					(row?.total_gross || 0) - (row?.total_payment || 0)
+				)?.toRupiah(),
 			sortable: true,
 		},
 	];

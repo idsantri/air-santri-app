@@ -183,7 +183,7 @@ const api = (() => {
 	}
 
 	async function fetchAuth(endPoint, options = {}) {
-		console.log('🚀 ~ fetchAuth ~ BASE_URL:', BASE_URL);
+		// console.log('🚀 ~ fetchAuth ~ BASE_URL:', BASE_URL);
 		const token = getAccessToken();
 		if (!token) {
 			if (withLog) logErrorToken(BASE_URL + endPoint, options);
