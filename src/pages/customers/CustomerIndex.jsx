@@ -37,16 +37,21 @@ export default function CustomerIndex() {
 			name: 'Nama',
 			selector: (row) => row.name,
 			sortable: true,
+			minWidth: '150px',
+			grow: 2,
 		},
 		{
 			name: 'Alamat',
 			selector: (row) => `${row.address ?? ''} ${row.district ?? ''}`,
 			sortable: true,
+			minWidth: '200px',
 		},
 		{
 			name: 'Ref',
 			selector: (row) => row.referrer_name,
 			sortable: true,
+			minWidth: '150px',
+			grow: 2,
 		},
 	];
 

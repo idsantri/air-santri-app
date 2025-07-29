@@ -24,7 +24,7 @@ export default function Sales() {
 			.getAll(params)
 			.then(({ sales }) => {
 				setData(sales);
-				console.log(sales[0]);
+				// console.log(sales[0]);
 			})
 			.catch((e) => {
 				console.log('error get sales', e);
@@ -45,6 +45,10 @@ export default function Sales() {
 			name: 'Pelanggan',
 			selector: (row) => row.customer_name,
 			sortable: true,
+			// style: {
+			// 	flex: 3,
+			// },
+			grow: 3,
 		},
 		// {
 		// 	name: 'Agen',
