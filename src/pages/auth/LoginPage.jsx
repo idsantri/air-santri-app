@@ -32,9 +32,7 @@ function LoginPage() {
 	return (
 		<>
 			{isLoading && <LoadingAbsolute />}
-			<h2 className="p-2 text-xl text-center text-slate-800 dark:text-slate-200">
-				Login
-			</h2>
+			<h2 className="p-2 text-xl text-center text-base-content">Login</h2>
 			<form onSubmit={onSubmit}>
 				<label className="floating-label ">
 					<span>Login</span>
