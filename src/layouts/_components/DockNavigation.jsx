@@ -28,7 +28,7 @@ function DockNavigation({ clickLogout, disabled }) {
 					to="/reports"
 					label="Laporan"
 					className={isActiveForPath('/reports') ? 'dock-active' : ''}
-					disabled={disabled}
+					disabled
 				/>
 				<DockButton
 					iconName="healthicons:stock-out"
@@ -40,7 +40,7 @@ function DockNavigation({ clickLogout, disabled }) {
 				<DockButton
 					iconName="iconoir:home-sale"
 					to="/sales"
-					label="Penjualan"
+					label="Transaksi"
 					className={isActiveForPath('/sales') ? 'dock-active' : ''}
 					disabled={disabled}
 				/>

@@ -50,7 +50,7 @@ export default function WarehouseIndex() {
 								</div>
 							</div>
 							<p className="list-col-wrap text-sm italic opacity-65">
-								{warehouse.address}
+								{warehouse.address} ({warehouse.phone})
 							</p>
 							<Link
 								className="btn btn-square btn-outline"

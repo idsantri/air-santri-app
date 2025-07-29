@@ -15,7 +15,7 @@ const WarehouseForm = ({ inputData = {} }) => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		// console.log(formData);
-		const submitted = pickFields(['name', 'code', 'address']);
+		const submitted = pickFields(['name', 'code', 'address', 'phone']);
 		// console.log('🚀 ~ onSubmit ~ submitted:', submitted);
 		// return;
 
@@ -97,6 +97,18 @@ const WarehouseForm = ({ inputData = {} }) => {
 					value={formData?.address ?? ''}
 					onChange={(e) => updateField('address', e.target.value)}
 					required
+				/>
+			</label>
+
+			<label className="floating-label">
+				<span>Nomor Telepon</span>
+				<input
+					className="input w-full"
+					type="number"
+					name="phone"
+					value={formData?.phone ?? ''}
+					onChange={(e) => updateField('phone', e.target.value)}
+					placeholder="0812…"
 				/>
 			</label>
 

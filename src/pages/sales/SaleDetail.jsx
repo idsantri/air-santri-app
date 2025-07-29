@@ -59,7 +59,7 @@ const SaleDetail = () => {
 	return (
 		<>
 			<header className="flex items-center justify-between  rounded-sm p-2 bg-base-300 mb-2">
-				<h2 className="text-xl text-base-content">Detail Penjualan</h2>
+				<h2 className="text-xl text-base-content">Detail Transaksi</h2>
 				<div className="flex gap-2">
 					<button
 						className="btn btn-sm btn-outline rounded-sm"

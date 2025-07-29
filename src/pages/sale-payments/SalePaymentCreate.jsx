@@ -42,7 +42,7 @@ function SalePaymentCreate() {
 								<td className="pr-4 italic">Sisa Tagihan</td>
 								<td className="font-semibold">
 									{(
-										(sale?.total_amount || 0) -
+										(sale?.total_gross || 0) -
 										(sale?.total_payment || 0)
 									)?.toRupiah()}
 								</td>
@@ -51,7 +51,16 @@ function SalePaymentCreate() {
 					</table>
 				</div>
 			</header>
-			{sale?.id && <SalePaymentForm sale_id={sale.id} />}
+			{sale?.id && (
+				<SalePaymentForm
+					sale_id={sale.id}
+					inputData={{
+						amount:
+							(sale?.total_gross || 0) -
+							(sale?.total_payment || 0),
+					}}
+				/>
+			)}
 		</div>
 	);
 }

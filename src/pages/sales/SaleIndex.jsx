@@ -86,7 +86,7 @@ export default function Sales() {
 	return (
 		<>
 			<header className="text-center">
-				<h2 className="text-xl">Data Penjualan</h2>
+				<h2 className="text-xl">Data Transaksi (Penjualan)</h2>
 				{user.warehouse_id ? (
 					<>
 						<p>{user.warehouse_name}</p>
