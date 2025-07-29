@@ -73,6 +73,7 @@ export default function Sales() {
 			name: 'Tagihan',
 			selector: (row) => row?.total_gross?.toRupiah(),
 			sortable: true,
+			right: true,
 		},
 		{
 			name: 'Sisa',
@@ -81,6 +82,7 @@ export default function Sales() {
 					(row?.total_gross || 0) - (row?.total_payment || 0)
 				)?.toRupiah(),
 			sortable: true,
+			right: true,
 		},
 	];
 
