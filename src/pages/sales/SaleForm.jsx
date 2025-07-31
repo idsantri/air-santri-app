@@ -62,10 +62,7 @@ const SaleForm = ({ inputData = {} }) => {
 	};
 
 	return (
-		<form
-			onSubmit={onSubmit}
-			className=" mt-2 relative flex flex-col gap-4"
-		>
+		<form onSubmit={onSubmit} className="mt-2 relative flex flex-col gap-4">
 			{isLoading && <LoadingAbsolute />}
 			<SaleFormInputs
 				formData={formData}

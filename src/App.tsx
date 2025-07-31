@@ -32,6 +32,7 @@ import UserChangePassword from './pages/users/UserChangePassword';
 import WarehouseIndex from './pages/warehouses/WarehouseIndex';
 import WarehouseCreate from './pages/warehouses/WarehouseCreate';
 import WarehouseEdit from './pages/warehouses/WarehouseEdit';
+import SaleTransaction from './pages/sales/transaction/SaleTransaction';
 
 const App = () => {
 	return (
@@ -50,6 +51,10 @@ const App = () => {
 						{/* sales */}
 						<Route path="/sales" element={<SaleIndex />} />
 						<Route path="/sales/create" element={<SaleCreate />} />
+						<Route
+							path="/sales/transaction"
+							element={<SaleTransaction />}
+						/>
 						<Route path="/sales/:id" element={<SaleDetail />} />
 						<Route path="/sales/:id/edit" element={<SaleEdit />} />
 
