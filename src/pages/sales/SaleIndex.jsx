@@ -105,7 +105,9 @@ export default function Sales() {
 	return (
 		<>
 			<header className="text-center">
-				<h2 className="text-xl">Data Transaksi (Penjualan)</h2>
+				<h2 className="text-xl font-semibold">
+					Data Transaksi (Penjualan)
+				</h2>
 				{user.warehouse_id ? (
 					<>
 						<p>{user.warehouse_name}</p>
@@ -119,7 +121,8 @@ export default function Sales() {
 			</header>
 			<FilterDataTable
 				onFilter={(e) => setFilterText(e.target.value)}
-				onAdd={() => navigate('/sales/create')}
+				onAdd={() => navigate('/sales/transaction')}
+				// onAdd={() => navigate('/sales/create')}
 				filterText={filterText}
 				placeholder="Cari pelanggan atau agen"
 			/>

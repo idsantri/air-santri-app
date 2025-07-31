@@ -1,72 +1,19 @@
-import { useEffect, useState } from 'react';
-import SelectSearch from '../../components/SelectSearch';
+import { useState } from 'react';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
 import FormActions from '../../components/FormActions';
-import customers from '../../models/customers';
 import useAuthStore from '../../store/authStore';
 import useForm from '../../hooks/useForm';
 import sales from '../../models/sales';
 import { useNavigate } from 'react-router';
-import SelectClearable from '../../components/SelectClearable';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
+import SaleFormInputs from './SaleFormInputs'; // Import the new component
 
 const SaleForm = ({ inputData = {} }) => {
 	const user = useAuthStore((state) => state.user);
 	const dialog = useConfirmDialog();
 	const { formData, updateField, resetForm } = useForm(inputData);
-	const [optionsDistrict, setOptionsDistrict] = useState([]);
-	const [district, setDistrict] = useState(null);
 	const navigate = useNavigate();
-	// const { formData, updateField, setFormData } = useForm(inputData);
-	// setFormData((prev) => ({
-	// 	...prev,
-	// 	dynamic_field: 'baru',
-	// }));
-
-	const [options, setOptions] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
-	const [loadingCustomer, setLoadingCustomer] = useState(false);
-	const [customerData, setCustomerData] = useState([]);
-
-	// Muat customer
-	useEffect(() => {
-		setLoadingCustomer(true);
-		customers.setNotify({ showSuccess: false, showError: true });
-		customers
-			.getAll()
-			.then(({ customers }) => {
-				// console.log(customers);
-				const district = [
-					...new Set(
-						customers
-							.filter((c) => c.district)
-							.map((c) => c.district),
-					),
-				].sort();
-				setOptionsDistrict(district);
-				setCustomerData(customers);
-			})
-			.catch((error) => {
-				console.error('Failed to fetch customers:', error);
-			})
-			.finally(() => {
-				setLoadingCustomer(false);
-			});
-	}, []);
-
-	useEffect(() => {
-		const mapCustomers = customerData
-			.filter(
-				(c) =>
-					c.is_active && (district ? c.district === district : true),
-			)
-			.map((c) => ({
-				value: c.id,
-				label: `${c.name} (${c.code})`,
-				description: (c.address ?? '?') + ' — ' + c.district,
-			}));
-		setOptions(mapCustomers);
-	}, [district, customerData]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -115,85 +62,16 @@ const SaleForm = ({ inputData = {} }) => {
 	};
 
 	return (
-		<form onSubmit={onSubmit} className="flex flex-col gap-4 mt-4 relative">
+		<form
+			onSubmit={onSubmit}
+			className=" mt-2 relative flex flex-col gap-4"
+		>
 			{isLoading && <LoadingAbsolute />}
-
-			<label className="floating-label">
-				<span>Kode</span>
-				<input
-					type="text"
-					className="input w-full"
-					disabled
-					value={formData?.code ?? ''}
-				/>
-			</label>
-
-			<SelectClearable
-				label="Filter Kecamatan"
-				options={optionsDistrict}
-				value={district}
-				onChange={setDistrict}
-				placeholder="Filter kecamatan"
-				disabled={loadingCustomer}
+			<SaleFormInputs
+				formData={formData}
+				updateField={updateField}
+				user={user}
 			/>
-
-			<SelectSearch
-				options={options}
-				placeholder="Cari pelanggan/toko …"
-				value={formData?.customer_id ?? ''}
-				onChange={(value) => updateField('customer_id', value)}
-				isLoading={loadingCustomer}
-				label="Pelanggan/Toko"
-			/>
-
-			<label className="floating-label">
-				<span>Agen (ID)</span>
-				<input
-					type="text"
-					className="input w-full"
-					value={`${user.warehouse_name} (${user.warehouse_code})`}
-					disabled
-				/>
-			</label>
-
-			<label className="floating-label">
-				<span>Tanggal</span>
-				<input
-					type="date"
-					className="input w-full"
-					value={
-						formData?.sale_date
-							? formData.sale_date.split('T')[0]
-							: ''
-					}
-					onChange={(e) =>
-						updateField(
-							'sale_date',
-							new Date(e.target.value).toISOString(),
-						)
-					}
-				/>
-				<div className="text-xs text-base-content/75 ml-2">
-					Kosongkan untuk waktu saat ini
-				</div>
-			</label>
-
-			<SelectClearable
-				label="Status Transaksi"
-				options={['Proses', 'Selesai', 'Gagal']}
-				value={formData?.status || ''}
-				onChange={(e) => updateField('status', e)}
-				placeholder="Pilih status transaksi"
-			/>
-
-			<label className="floating-label">
-				<span>Catatan</span>
-				<textarea
-					className="textarea w-full"
-					value={formData?.note ?? ''}
-					onChange={(e) => updateField('note', e.target.value)}
-				/>
-			</label>
 
 			<FormActions
 				onDelete={handleDelete}
