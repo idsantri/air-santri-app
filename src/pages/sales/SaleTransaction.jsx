@@ -82,7 +82,7 @@ export default function SaleTransaction() {
 				<div>
 					<div
 						{...swipeHandlers}
-						className="p-2 h-[60vh] overflow-y-scroll"
+						className="p-2 h-[55vh] overflow-y-scroll"
 					>
 						{renderStepContent()}
 					</div>

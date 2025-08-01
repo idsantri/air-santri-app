@@ -32,7 +32,8 @@ export default function Step4Confirmation({ goToStep }) {
 	};
 
 	const checkPayment = () => {
-		if (payment.amount && !payment?.payment_method) {
+		if (!payment.amount) return true;
+		if (payment.amount > 0 && !payment?.payment_method) {
 			notifyError({ message: 'Metode pembayaran diperlukan!' });
 			goToStep(2);
 			return false;

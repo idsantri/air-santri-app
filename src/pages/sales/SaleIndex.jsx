@@ -125,6 +125,7 @@ export default function Sales() {
 				// onAdd={() => navigate('/sales/create')}
 				filterText={filterText}
 				placeholder="Cari pelanggan atau agen"
+				disableAdd={!user?.warehouse_id}
 			/>
 			{isLoading ? (
 				<LoadingFixed />
