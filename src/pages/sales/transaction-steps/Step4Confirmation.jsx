@@ -8,7 +8,9 @@ import sales from '../../../models/sales';
 import { useNavigate } from 'react-router';
 
 export default function Step4Confirmation({ goToStep }) {
-	const { sale, payment, details } = useTransactionStore((state) => state);
+	const { sale, payment, details, reset } = useTransactionStore(
+		(state) => state,
+	);
 	const dialog = useConfirmDialog();
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
@@ -73,6 +75,7 @@ export default function Step4Confirmation({ goToStep }) {
 		sales
 			.createTransaction(data)
 			.then(({ sale }) => {
+				reset();
 				navigate(`/sales/${sale.id}`);
 			})
 			.catch((e) => console.log(e))
@@ -148,7 +151,7 @@ export default function Step4Confirmation({ goToStep }) {
 					className="btn btn-secondary"
 					onClick={finishTransaction}
 				>
-					Konfirmasi
+					Simpan
 				</button>
 			</div>
 			<div>

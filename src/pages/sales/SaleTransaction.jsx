@@ -29,12 +29,8 @@ export default function SaleTransaction() {
 		setStep((prev) => Math.min(prev + 1, steps.length - 1));
 		// console.log(sale);
 	};
-
 	const handleBack = () => setStep((prev) => Math.max(prev - 1, 0));
-
-	const goToStep = (n) => {
-		setStep(n);
-	};
+	const goToStep = (n) => setStep(n);
 
 	const renderStepContent = () => {
 		switch (step) {
