@@ -11,3 +11,13 @@
 	font-family: 'Ubuntu', sans-serif;
 	font-weight: 300;
 } */
+.btn {
+	@apply font-normal rounded-sm;
+}
+
+.input {
+	@apply border-primary rounded-sm;
+}
+.textarea {
+	@apply border-primary rounded-sm;
+}

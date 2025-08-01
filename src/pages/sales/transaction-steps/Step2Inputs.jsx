@@ -34,18 +34,20 @@ export default function Step2Inputs() {
 	return (
 		<>
 			<Step2List />
-			<div>
+			<div className="">
 				<SaleDetailFormInputs
 					formData={formData}
 					updateField={updateField}
 				/>
-				<button
-					type="submit"
-					className="btn float-end"
-					onClick={onSubmit}
-				>
-					Tambahkan
-				</button>
+				<div className="flex items-center justify-end">
+					<button
+						type="submit"
+						className="btn btn-success"
+						onClick={onSubmit}
+					>
+						Tambahkan
+					</button>
+				</div>
 			</div>
 		</>
 	);

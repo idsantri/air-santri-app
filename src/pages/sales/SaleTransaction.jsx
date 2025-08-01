@@ -86,7 +86,7 @@ export default function SaleTransaction() {
 
 					<div className="flex items-center justify-between p-2 bg-secondary/25">
 						<button
-							className="btn"
+							className="btn btn-accent btn-sm"
 							disabled={step == 0}
 							onClick={handleBack}
 						>
@@ -100,7 +100,7 @@ export default function SaleTransaction() {
 							Gagal
 						</button>
 						<button
-							className="btn"
+							className="btn btn-accent btn-sm"
 							disabled={step == steps.length - 1}
 							onClick={handleNext}
 						>
