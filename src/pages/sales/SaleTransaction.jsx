@@ -14,7 +14,8 @@ export default function SaleTransaction() {
 
 	useEffect(() => reset(), [reset]);
 
-	const swipeHandlers = useSwipeable({
+	// swipe banyak masalah
+	const _swipeHandlers = useSwipeable({
 		onSwipedLeft: () => handleNext(),
 		onSwipedRight: () => handleBack(),
 		preventDefaultTouchmoveEvent: true,
@@ -81,7 +82,7 @@ export default function SaleTransaction() {
 				</ul>
 				<div>
 					<div
-						{...swipeHandlers}
+						// {...swipeHandlers}
 						className="p-2 h-[55vh] overflow-y-scroll"
 					>
 						{renderStepContent()}
