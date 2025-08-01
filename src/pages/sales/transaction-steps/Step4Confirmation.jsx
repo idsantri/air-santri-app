@@ -142,9 +142,12 @@ export default function Step4Confirmation({ goToStep }) {
 					</table>
 				</div>
 			</div>
-			<div className="p-2 bg-base-300 flex justify-between">
-				<div></div>
-				<button className="btn" onClick={finishTransaction}>
+			<div className="p-2 bg-base-300 flex justify-between items-center">
+				<div className="italic text-sm ml-2">Selesaikan transaksi</div>
+				<button
+					className="btn btn-secondary"
+					onClick={finishTransaction}
+				>
 					Konfirmasi
 				</button>
 			</div>

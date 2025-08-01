@@ -98,7 +98,7 @@ export default function SaleTransaction() {
 						</button>
 						<button
 							type="button"
-							className="btn btn-outline font-light btn-sm"
+							className="btn btn-outline font-light btn-sm btn-dash"
 							onClick={handleCancel}
 						>
 							Gagal
