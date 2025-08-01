@@ -121,7 +121,7 @@ export default function Sales() {
 			</header>
 			<FilterDataTable
 				onFilter={(e) => setFilterText(e.target.value)}
-				onAdd={() => navigate('/sales/transaction')}
+				onAdd={() => navigate('/sales/create-transaction')}
 				// onAdd={() => navigate('/sales/create')}
 				filterText={filterText}
 				placeholder="Cari pelanggan atau agen"

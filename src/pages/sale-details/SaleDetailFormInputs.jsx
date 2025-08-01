@@ -39,6 +39,7 @@ const SaleDetailFormInputs = ({ formData, updateField }) => {
 		const prod = productsList.find((p) => p.id === product_id);
 		// console.log(prod);
 		updateField('unit_price', prod?.release_price || '');
+		updateField('product_name', prod?.name || '');
 	};
 
 	return (
@@ -69,11 +70,11 @@ const SaleDetailFormInputs = ({ formData, updateField }) => {
 					onChange={(e) => updateField('quantity', e.target.value)}
 				/>
 			</label>
-			<div className="px-1 font-semibold">
+			<div className="px-1 font-normal">
 				Total:{' '}
 				{(
 					(formData?.quantity || 0) * (formData?.unit_price || 0)
-				).toRupiah()}
+				)?.toRupiah()}
 			</div>
 		</div>
 	);

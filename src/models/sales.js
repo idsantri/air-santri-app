@@ -30,6 +30,15 @@ class Sales {
 		return response.data || true;
 	}
 
+	async createTransaction(data) {
+		api.setNotify(true);
+		const response = await api.fetchAuth('sales/transaction', {
+			method: 'POST',
+			body: JSON.stringify(data),
+		});
+		return response.data || true;
+	}
+
 	async update(id, data) {
 		api.setNotify(true);
 		const response = await api.fetchAuth(`sales/${id}`, {

@@ -48,6 +48,13 @@ const SaleFormInputs = ({ formData, updateField, user }) => {
 		setOptions(mapCustomers);
 	}, [district, customerData]);
 
+	const onChangeCustomer = (customer_id) => {
+		updateField('customer_id', customer_id);
+		const found = customerData.find((p) => p.id === customer_id);
+		updateField('customer_name', found?.name || '');
+		updateField('customer_code', found?.code || '');
+	};
+
 	return (
 		<div className="flex flex-col gap-4">
 			<label className="floating-label">
@@ -57,6 +64,16 @@ const SaleFormInputs = ({ formData, updateField, user }) => {
 					className="input w-full"
 					disabled
 					value={formData?.code ?? ''}
+				/>
+			</label>
+
+			<label className="floating-label">
+				<span>Agen (ID)</span>
+				<input
+					type="text"
+					className="input w-full"
+					value={`${user.warehouse_name} (${user.warehouse_code})`}
+					disabled
 				/>
 			</label>
 
@@ -73,20 +90,10 @@ const SaleFormInputs = ({ formData, updateField, user }) => {
 				options={options}
 				placeholder="Cari pelanggan/toko …"
 				value={formData?.customer_id ?? ''}
-				onChange={(value) => updateField('customer_id', value)}
+				onChange={onChangeCustomer}
 				isLoading={loadingCustomer}
 				label="Pelanggan/Toko"
 			/>
-
-			<label className="floating-label">
-				<span>Agen (ID)</span>
-				<input
-					type="text"
-					className="input w-full"
-					value={`${user.warehouse_name} (${user.warehouse_code})`}
-					disabled
-				/>
-			</label>
 
 			<label className="floating-label">
 				<span>Tanggal</span>
