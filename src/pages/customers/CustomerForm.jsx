@@ -189,7 +189,7 @@ function CustomerForm({ inputData = {} }) {
 				</select>
 			</label>
 
-			<label className="label rounded-md border-[0.5px] border-base-content/20 text-base-content p-2">
+			<label className="label rounded-sm border-[0.5px] border-primary text-base-content p-2">
 				<input
 					type="checkbox"
 					className="toggle"
@@ -202,7 +202,7 @@ function CustomerForm({ inputData = {} }) {
 						);
 					}}
 				/>
-				Sebagai Referrer
+				<span className="text-sm">Sebagai Referrer</span>
 			</label>
 			<SelectSearch
 				value={formData?.referrer_code ?? ''}
