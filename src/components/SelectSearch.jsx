@@ -19,11 +19,11 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
  */
 const SelectSearch = ({
 	options,
-	label = 'Pilih...', // Added label prop
+	label = 'Pilih...',
 	placeholder = 'Cari...',
 	value,
 	onChange,
-	isLoading = false, // New prop for loading state
+	isLoading = false,
 	disabled = false,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -55,13 +55,14 @@ const SelectSearch = ({
 			);
 			setFilteredOptions(filtered);
 		} else {
-			setFilteredOptions(options); // Show all options if search term is less than 3 chars
+			setFilteredOptions(options);
 		}
 	}, [searchTerm, options]);
 
 	// Effect to close dropdown when clicking outside
 	useEffect(() => {
 		const handleClickOutside = (event) => {
+			// Check if the click is outside the select component
 			if (
 				selectRef.current &&
 				!selectRef.current.contains(event.target)
@@ -77,11 +78,16 @@ const SelectSearch = ({
 				}
 			}
 		};
-		document.addEventListener('mousedown', handleClickOutside);
+
+		// Only add the event listener if the dropdown is open
+		if (isOpen) {
+			document.addEventListener('mousedown', handleClickOutside);
+		}
+
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, [currentSelectedValue, options]);
+	}, [isOpen, currentSelectedValue, options]);
 
 	const handleSelect = useCallback(
 		(option) => {
@@ -122,18 +128,19 @@ const SelectSearch = ({
 		[options, onChange],
 	);
 
-	const toggleDropdown = useCallback(() => {
+	const toggleDropdown = useCallback((e) => {
+		// Prevent the event from bubbling up to the document
+		e.stopPropagation();
 		setIsOpen((prev) => !prev);
-		if (!isOpen && currentSelectedValue) {
-			const selectedOption = options.find(
-				(opt) => opt.value === currentSelectedValue,
-			);
-			setSearchTerm(selectedOption ? selectedOption.label : '');
-		} else if (!isOpen && !currentSelectedValue) {
-			setSearchTerm('');
-		}
 		inputRef.current?.focus();
-	}, [isOpen, currentSelectedValue, options]);
+	}, []);
+
+	const handleInputClick = useCallback((e) => {
+		// Prevent the event from bubbling up to the document
+		e.stopPropagation();
+		setIsOpen(true);
+		inputRef.current?.focus();
+	}, []);
 
 	const displayInputValue = currentSelectedValue
 		? options.find((option) => option.value === currentSelectedValue)
@@ -157,37 +164,37 @@ const SelectSearch = ({
 						placeholder={placeholder}
 						value={displayInputValue}
 						onChange={handleInputChange}
-						onFocus={() => setIsOpen(true)}
-						disabled={isLoading || disabled} // Disable input when loading
+						onClick={handleInputClick} // Added click handler
+						onFocus={handleInputClick} // Changed to use the same handler
+						disabled={isLoading || disabled}
 					/>
 					{isLoading && (
-						<span className="loading loading-spinner loading-sm absolute right-2"></span> // DaisyUI spinner
+						<span className="loading loading-spinner loading-sm absolute right-2"></span>
 					)}
-					{!isLoading &&
-						currentSelectedValue && ( // Show clear button only if not loading
-							<button
-								type="button"
-								onClick={handleClear}
-								className="absolute right-8 text-neutral-500 hover:text-gray-700 focus:outline-none"
-								aria-label="Clear selection"
+					{!isLoading && currentSelectedValue && (
+						<button
+							type="button"
+							onClick={handleClear}
+							className="absolute right-8 text-neutral-500 hover:text-gray-700 focus:outline-none"
+							aria-label="Clear selection"
+						>
+							<svg
+								className="w-4 h-4"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
 							>
-								<svg
-									className="w-4 h-4"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth="2"
-										d="M6 18L18 6M6 6l12 12"
-									></path>
-								</svg>
-							</button>
-						)}
-					{!isLoading && ( // Show arrow icon only if not loading
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="2"
+									d="M6 18L18 6M6 6l12 12"
+								></path>
+							</svg>
+						</button>
+					)}
+					{!isLoading && (
 						<svg
 							className={`w-4 h-4 text-neutral-500 transition-transform duration-200 absolute right-2 ${isOpen ? 'rotate-180' : ''}`}
 							fill="none"
@@ -209,14 +216,9 @@ const SelectSearch = ({
 			{isOpen && (
 				<div className="absolute w-full mt-1 bg-white border text-black border-base-300 rounded-md shadow-lg max-h-100 overflow-y-auto z-9999">
 					{isLoading ? (
-						// Skeleton or spinner for loading options
 						<div className="p-2">
 							<span className="loading loading-spinner text-primary"></span>{' '}
 							Loading options...
-							{/* Or a skeleton loader for better UX */}
-							{/* <div className="skeleton h-4 w-full mb-2"></div>
-                            <div className="skeleton h-4 w-full mb-2"></div>
-                            <div className="skeleton h-4 w-full"></div> */}
 						</div>
 					) : filteredOptions.length > 0 ? (
 						filteredOptions.map((option) => (
