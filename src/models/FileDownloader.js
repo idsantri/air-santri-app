@@ -31,7 +31,7 @@ class FileDownloader {
 
 	async downloadInvoice(invoiceId, saleCode) {
 		return this.#startDownload({
-			endPoint: `reports/sales/${invoiceId}`,
+			endPoint: `reports/sales/${invoiceId}/invoice`,
 			fileName: `invoice-${saleCode}.pdf`,
 		});
 	}
