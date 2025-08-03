@@ -7,8 +7,15 @@ import customers from '../../models/customers';
 import SelectSearch from '../../components/SelectSearch';
 import kecamatan from './kecamatan';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
+import useAuthStore from '../../store/authStore';
 
 function CustomerForm({ inputData = {} }) {
+	const roles = useAuthStore((state) => state.roles);
+	const isAdmin =
+		roles &&
+		roles.length > 0 &&
+		roles.some((role) => role.toLowerCase() == 'super admin');
+
 	const dialog = useConfirmDialog();
 	const { formData, updateField, resetForm, pickFields } = useForm(inputData);
 
@@ -124,7 +131,8 @@ function CustomerForm({ inputData = {} }) {
 					name="code"
 					value={formData?.code ?? ''}
 					onChange={(e) => updateField('code', e.target.value)}
-					disabled={formData.id}
+					// disabled={formData.id}
+					disabled
 				/>
 				{!formData.id && (
 					<div className="text-xs ml-3 py-0.5 opacity-75">
@@ -158,7 +166,7 @@ function CustomerForm({ inputData = {} }) {
 			</label>
 
 			<label className="floating-label">
-				<span>Alamat (Pendek)</span>
+				<span>Alamat</span>
 				<input
 					className="input w-full"
 					type="text"
@@ -189,7 +197,9 @@ function CustomerForm({ inputData = {} }) {
 				</select>
 			</label>
 
-			<label className="label rounded-sm border-[0.5px] border-primary text-base-content p-2">
+			<label
+				className={`label rounded-sm border-[0.5px] border-primary text-base-content p-2 ${isAdmin ? '' : 'bg-base-300 cursor-not-allowed opacity-50'}`}
+			>
 				<input
 					type="checkbox"
 					className="toggle"
@@ -201,6 +211,7 @@ function CustomerForm({ inputData = {} }) {
 							e.target.checked ? true : false,
 						);
 					}}
+					disabled={!isAdmin}
 				/>
 				<span className="text-sm">Sebagai Referrer</span>
 			</label>
