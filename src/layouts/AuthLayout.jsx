@@ -21,7 +21,7 @@ const AuthLayout = () => {
 
 						<ToggleMode className="absolute top-2 right-2 " />
 						<header className="">
-							<LogoAvatar className="" />
+							<LogoAvatar className="w-28 mx-auto" />
 							<div className="text-center text-base-content">
 								<h1 className="mt-4 text-xl font-semibold">
 									Aplikasi
