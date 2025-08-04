@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from 'react-router';
 import ToggleMode from '../components/ToggleMode';
-import config from '../config';
 import LogoAvatar from './_components/LogoAvatar';
 import InstallPwa from './_components/InstallPwa';
 import useAuthStore from '../store/authStore';
+import config from '../config';
 
 const AuthLayout = () => {
 	const loggedIn = useAuthStore((state) => state.isLoggedIn());
@@ -23,18 +23,16 @@ const AuthLayout = () => {
 						<header className="">
 							<LogoAvatar className="" />
 							<div className="text-center text-base-content">
-								<h1 className="mt-4 text-3xl">
-									{config.APP_NAME}
-								</h1>
-								<p>
-									<span className="text-xl">
-										{config.INS_DESC}
-									</span>
+								<h1 className="mt-4 text-xl font-semibold">
+									Aplikasi
 									<br />
-									<span className="text-lg">
-										{config.INS_NAME}
+									<span className="text-3xl font-light">
+										{config.APP_LONG_NAME}
 									</span>
-								</p>
+								</h1>
+								<h2 className="text-md tracking-widest">
+									{config.APP_INSTANCE}
+								</h2>
 							</div>
 						</header>
 						<main>
@@ -45,8 +43,8 @@ const AuthLayout = () => {
 			</div>
 			<footer className="absolute bottom-0 left-0 right-0 text-center p-2 bg-base-300">
 				<p>
-					&copy; {new Date().getFullYear()} {config.APP_NAME}. All
-					rights reserved.
+					&copy; {new Date().getFullYear()}{' '}
+					{import.meta.env.VITE_APP_SHORT_NAME}. All rights reserved.
 				</p>
 				<p className="text-sm font-semibold">by idsantri</p>
 			</footer>

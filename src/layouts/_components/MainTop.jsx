@@ -18,7 +18,7 @@ function MainTop() {
 							lineHeight: '25px',
 						}}
 					>
-						{config.APP_NAME}
+						Aplikasi
 					</h1>
 					<p
 						className="p-0 m-0 "
@@ -29,7 +29,7 @@ function MainTop() {
 							lineHeight: '22px',
 						}}
 					>
-						{config.INS_DESC}
+						{config.APP_LONG_NAME}
 					</p>
 					<p
 						className="p-0 m-0 "
@@ -39,7 +39,7 @@ function MainTop() {
 							lineHeight: '20px',
 						}}
 					>
-						{config.INS_NAME}
+						{config.APP_INSTANCE}
 					</p>
 				</div>
 			</div>

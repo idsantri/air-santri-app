@@ -1,9 +1,9 @@
 import config from './src/config';
 
 export default {
-	name: config.PWA_NAME,
-	short_name: config.PWA_SHORT_NAME,
-	description: 'Aplikasi Air Santri',
+	name: config.APP_LONG_NAME,
+	short_name: config.APP_SHORT_NAME,
+	description: config.APP_DESCRIPTION,
 	theme_color: '#5e4b1f',
 	background_color: '#ffffff',
 	display: 'standalone',

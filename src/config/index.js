@@ -1,9 +1,9 @@
 const config = {
-	APP_NAME: 'Aplikasi Air Santri',
-	INS_DESC: 'PW IASS Bangkalan',
-	INS_NAME: 'Demo Aplikasi',
-	DEV: true,
-	PWA_NAME: 'Aplikasi Air Santri',
-	PWA_SHORT_NAME: 'Air Santri',
+	APP_DEV: false,
+	APP_LONG_NAME: 'AMDK Santri',
+	APP_SHORT_NAME: 'AMDK Santri',
+	APP_INSTANCE: 'Bangkalan',
+	APP_DESCRIPTION:
+		'Aplikasi IPOS Air Minum dalam Kemasan dengan Merek Santri',
 };
 export default config;
