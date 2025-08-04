@@ -21,7 +21,7 @@ function MainTop() {
 						Aplikasi
 					</h1>
 					<p
-						className="p-0 m-0 "
+						className="p-0 m-0 small-caps "
 						style={{
 							fontVariant: 'small-caps',
 							fontSize: '1.25em',
@@ -31,14 +31,7 @@ function MainTop() {
 					>
 						{config.APP_LONG_NAME}
 					</p>
-					<p
-						className="p-0 m-0 "
-						style={{
-							fontSize: '1.1em',
-							fontWeight: 400,
-							lineHeight: '20px',
-						}}
-					>
+					<p className="p-0 m-0 tracking-widest font-light">
 						{config.APP_INSTANCE}
 					</p>
 				</div>
