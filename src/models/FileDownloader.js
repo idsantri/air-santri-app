@@ -29,10 +29,17 @@ class FileDownloader {
 		}
 	}
 
-	async downloadInvoice(invoiceId, saleCode) {
+	async downloadInvoice(saleId, saleCode) {
 		return this.#startDownload({
-			endPoint: `reports/sales/${invoiceId}/invoice`,
+			endPoint: `reports/sales/${saleId}/invoice`,
 			fileName: `invoice-${saleCode}.pdf`,
+		});
+	}
+
+	async downloadReceipt(saleId, saleCode) {
+		return this.#startDownload({
+			endPoint: `reports/sales/${saleId}/receipt`,
+			fileName: `struk-${saleCode}.pdf`,
 		});
 	}
 

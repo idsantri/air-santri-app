@@ -53,8 +53,8 @@ function SalePaymentCreate() {
 			</header>
 			{sale?.id && (
 				<SalePaymentForm
-					sale_id={sale.id}
 					inputData={{
+						sale_id: sale.id,
 						amount:
 							(sale?.total_gross || 0) -
 							(sale?.total_payment || 0),

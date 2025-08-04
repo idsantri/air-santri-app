@@ -55,19 +55,15 @@ const SaleDetail = () => {
 	const downloadInvoice = async () => {
 		await FileDownloader.downloadInvoice(id, sale.code);
 	};
+	const downloadReceipt = async () => {
+		await FileDownloader.downloadReceipt(id, sale.code);
+	};
 
 	return (
 		<>
 			<header className="flex items-center justify-between  rounded-sm p-2 bg-base-300 mb-2">
 				<h2 className="text-xl text-base-content">Detail Transaksi</h2>
 				<div className="flex gap-2">
-					<button
-						className="btn btn-sm btn-outline rounded-sm"
-						onClick={downloadInvoice}
-					>
-						<Icon icon="material-symbols:print" height="22" />
-						Invoice
-					</button>
 					<Link
 						className="btn btn-sm btn-accent rounded-sm"
 						to={`/sales/${id}/edit`}
@@ -168,6 +164,37 @@ const SaleDetail = () => {
 								<td>{sale.note || '-'}</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td
+									colSpan="2"
+									className="py-1 px-2 bg-base-200 "
+								>
+									<div className="flex items-center justify-between gap-x-4">
+										<button
+											className="btn btn-sm btn-accent rounded-sm"
+											onClick={downloadInvoice}
+										>
+											<Icon
+												icon="material-symbols:print"
+												height="22"
+											/>
+											Invoice
+										</button>
+										<button
+											className="btn btn-sm btn-info rounded-sm"
+											onClick={downloadReceipt}
+										>
+											<Icon
+												icon="material-symbols:print"
+												height="22"
+											/>
+											Struk
+										</button>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>

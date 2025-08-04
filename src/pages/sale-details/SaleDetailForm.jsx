@@ -4,23 +4,22 @@ import useForm from '../../hooks/useForm';
 import saleDetails from '../../models/saleDetails';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
 import SaleDetailFormInputs from './SaleDetailFormInputs';
+import { useNavigate } from 'react-router';
 
 const SaleDetailForm = ({ inputData = {} }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const { formData, updateField, resetForm } = useForm(inputData);
-	const [submitted, setSubmitted] = useState(false);
+	const navigate = useNavigate();
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 		// console.log('🚀 ~ onSubmit ~ formData:', formData);
 		setIsLoading(true);
-		setSubmitted(false);
 		saleDetails
 			.create(formData)
-			.then(({ _product }) => {
+			.then(({ _ }) => {
 				// console.log(_product);
-				resetForm();
-				setSubmitted(true);
+				navigate(`/sales/${formData.sale_id}`);
 			})
 			.catch((error) => {
 				console.error('Failed to create product:', error);
@@ -39,13 +38,7 @@ const SaleDetailForm = ({ inputData = {} }) => {
 				updateField={updateField}
 			/>
 
-			<FormActions onReset={resetForm} hideCancel hideDelete />
-
-			{submitted && (
-				<div className="p-4 rounded-sm bg-info text-info-content text-center w-full">
-					Tambahkan produk lagi
-				</div>
-			)}
+			<FormActions onReset={resetForm} hideDelete />
 		</form>
 	);
 };

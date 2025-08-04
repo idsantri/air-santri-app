@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import SaleDetailForm from './SaleDetailForm';
-import { Icon } from '@iconify/react/dist/iconify.js';
 import useSaleStore from '../../store/saleStore';
 
 function SaleDetailCreate() {
@@ -44,16 +43,6 @@ function SaleDetailCreate() {
 				</div>
 			</header>
 			{sale?.id && <SaleDetailForm inputData={{ sale_id: sale.id }} />}
-			<div className="fixed bottom-20 right-4">
-				<button
-					type="button"
-					className="btn btn-accent text-accent-content"
-					onClick={() => navigate(-1)}
-				>
-					<Icon icon="material-symbols:arrow-back-rounded" />
-					Kembali
-				</button>
-			</div>
 		</div>
 	);
 }

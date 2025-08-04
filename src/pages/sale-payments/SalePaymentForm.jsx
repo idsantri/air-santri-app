@@ -6,14 +6,13 @@ import { useNavigate } from 'react-router';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
 import SalePaymentFormInputs from './SalePaymentFormInputs';
 
-const SalePaymentForm = ({ sale_id, inputData = {} }) => {
+const SalePaymentForm = ({ inputData = {} }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const { formData, updateField, resetForm } = useForm(inputData);
 	const navigate = useNavigate();
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		formData.sale_id = sale_id;
 		// console.log('🚀 ~ onSubmit ~ formData:', formData);
 		// return;
 		setIsLoading(true);
@@ -22,7 +21,7 @@ const SalePaymentForm = ({ sale_id, inputData = {} }) => {
 			.then(({ _ }) => {
 				// console.log(_product);
 				// resetForm();
-				navigate(`/sales/${sale_id}`);
+				navigate(`/sales/${formData.sale_id}`);
 			})
 			.catch((error) => {
 				console.error('Failed to create product:', error);
