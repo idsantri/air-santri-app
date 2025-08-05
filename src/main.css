@@ -16,8 +16,12 @@
 }
 
 .input {
-	@apply border-primary rounded-sm;
+	@apply border-accent rounded-sm focus:outline-0 focus:border-primary focus:shadow focus:shadow-primary/50 focus:bg-base-100;
 }
 .textarea {
-	@apply border-primary rounded-sm;
+	@apply border-accent rounded-sm focus:outline-0 focus:border-primary focus:shadow focus:shadow-primary/50 focus:bg-base-100;
+}
+
+.card-label {
+	@apply border border-accent rounded-sm focus:outline-0 focus:border-primary;
 }
