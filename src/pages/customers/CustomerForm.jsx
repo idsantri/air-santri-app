@@ -136,8 +136,7 @@ function CustomerForm({ inputData = {} }) {
 				/>
 				{!formData.id && (
 					<div className="text-xs ml-3 py-0.5 opacity-75">
-						Kosongkan untuk pengisian otomatis; Hanya dibuat sekali
-						(tidak dapat diubah)
+						Diisi oleh sistem
 					</div>
 				)}
 			</label>
@@ -198,7 +197,7 @@ function CustomerForm({ inputData = {} }) {
 			</label>
 
 			<label
-				className={`label rounded-sm border-[0.5px] border-primary text-base-content p-2 ${isAdmin ? '' : 'bg-base-300 cursor-not-allowed opacity-50'}`}
+				className={`card-label text-base-content p-2 ${isAdmin ? '' : 'bg-base-300 cursor-not-allowed opacity-50'}`}
 			>
 				<input
 					type="checkbox"
@@ -213,7 +212,7 @@ function CustomerForm({ inputData = {} }) {
 					}}
 					disabled={!isAdmin}
 				/>
-				<span className="text-sm">Sebagai Referrer</span>
+				<span className="text-sm ml-4">Sebagai Referrer</span>
 			</label>
 			<SelectSearch
 				value={formData?.referrer_code ?? ''}
