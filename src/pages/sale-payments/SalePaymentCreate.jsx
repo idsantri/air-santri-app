@@ -58,6 +58,7 @@ function SalePaymentCreate() {
 						amount:
 							(sale?.total_gross || 0) -
 							(sale?.total_payment || 0),
+						payment_method: 'Tunai',
 					}}
 				/>
 			)}

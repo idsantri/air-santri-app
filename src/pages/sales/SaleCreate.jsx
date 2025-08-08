@@ -1,5 +1,7 @@
+import { useTransactionStore } from '../../store/transactionStore';
 import SaleForm from './SaleForm';
 const SaleCreate = () => {
+	const sale = useTransactionStore((state) => state.sale);
 	return (
 		<>
 			<div className="card p-2 border border-base-200 rounded-sm">
@@ -9,7 +11,7 @@ const SaleCreate = () => {
 						<p className="badge badge-info">Baru</p>
 					</div>
 				</header>
-				<SaleForm />
+				<SaleForm inputData={sale} />
 			</div>
 		</>
 	);

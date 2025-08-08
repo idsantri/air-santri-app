@@ -1,10 +1,16 @@
 // store/saleStore.js
 import { create } from 'zustand';
-
+const initSale = {
+	status: 'Selesai',
+};
+const initPayment = {
+	payment_method: 'Tunai',
+	amount: 0,
+};
 export const useTransactionStore = create((set, get) => ({
-	sale: {},
+	sale: initSale,
 	details: [],
-	payment: {},
+	payment: initPayment,
 
 	// ========== DETAILS ACTIONS ========== //
 	addDetail: (newDetail) => {
@@ -44,5 +50,10 @@ export const useTransactionStore = create((set, get) => ({
 	setSale: (data) => set((state) => ({ sale: { ...state.sale, ...data } })),
 	setPayment: (data) =>
 		set((state) => ({ payment: { ...state.payment, ...data } })),
-	reset: () => set({ sale: {}, details: [], payment: {} }),
+	reset: () =>
+		set({
+			sale: initSale,
+			details: [],
+			payment: initPayment,
+		}),
 }));
