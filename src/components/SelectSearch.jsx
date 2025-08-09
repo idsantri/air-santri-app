@@ -156,47 +156,31 @@ const SelectSearch = ({
 				onClick={toggleDropdown}
 			>
 				<span className="label-text">{label}</span>
-				<div className="flex items-center w-full relative">
-					<input
-						ref={inputRef}
-						type="text"
-						className="input w-full pr-14"
-						placeholder={placeholder}
-						value={displayInputValue}
-						onChange={handleInputChange}
-						onClick={handleInputClick} // Added click handler
-						onFocus={handleInputClick} // Changed to use the same handler
-						disabled={isLoading || disabled}
-					/>
-					{isLoading && (
-						<span className="loading loading-spinner loading-sm absolute right-2"></span>
-					)}
-					{!isLoading && currentSelectedValue && (
-						<button
-							type="button"
-							onClick={handleClear}
-							className="absolute right-8 text-neutral-500 hover:text-gray-700 focus:outline-none"
-							aria-label="Clear selection"
-						>
-							<svg
-								className="w-4 h-4"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="M6 18L18 6M6 6l12 12"
-								></path>
-							</svg>
-						</button>
-					)}
-					{!isLoading && (
+			</label>
+			<div className="flex items-center w-full relative">
+				<input
+					ref={inputRef}
+					type="text"
+					className="input w-full pr-14"
+					placeholder={placeholder}
+					value={displayInputValue}
+					onChange={handleInputChange}
+					onClick={handleInputClick} // Added click handler
+					onFocus={handleInputClick} // Changed to use the same handler
+					disabled={isLoading || disabled}
+				/>
+				{isLoading && (
+					<span className="loading loading-spinner loading-sm absolute right-2"></span>
+				)}
+				{!isLoading && currentSelectedValue && (
+					<button
+						type="button"
+						onClick={handleClear}
+						className="absolute right-8 text-neutral-500 hover:text-gray-700 focus:outline-none"
+						aria-label="Clear selection"
+					>
 						<svg
-							className={`w-4 h-4 text-neutral-500 transition-transform duration-200 absolute right-2 ${isOpen ? 'rotate-180' : ''}`}
+							className="w-4 h-4"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
@@ -206,12 +190,28 @@ const SelectSearch = ({
 								strokeLinecap="round"
 								strokeLinejoin="round"
 								strokeWidth="2"
-								d="M19 9l-7 7-7-7"
+								d="M6 18L18 6M6 6l12 12"
 							></path>
 						</svg>
-					)}
-				</div>
-			</label>
+					</button>
+				)}
+				{!isLoading && (
+					<svg
+						className={`w-4 h-4 text-neutral-500 transition-transform duration-200 absolute right-2 ${isOpen ? 'rotate-180' : ''}`}
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth="2"
+							d="M19 9l-7 7-7-7"
+						></path>
+					</svg>
+				)}
+			</div>
 
 			{isOpen && (
 				<div className="absolute w-full mt-1 bg-white border text-black border-base-300 rounded-md shadow-lg max-h-100 overflow-y-auto z-9999">

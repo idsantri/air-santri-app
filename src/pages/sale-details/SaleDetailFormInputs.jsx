@@ -50,10 +50,10 @@ const SaleDetailFormInputs = ({ formData, updateField }) => {
 				value={formData?.product_id ?? ''}
 				onChange={onChangeProduct}
 				isLoading={isLoadingProduct}
-				label="Produk"
+				label="Produk *"
 			/>
 			<label className="floating-label">
-				<span>Harga</span>
+				<span>Harga *</span>
 				<input
 					type="number"
 					className="input w-full"
@@ -62,7 +62,7 @@ const SaleDetailFormInputs = ({ formData, updateField }) => {
 				/>
 			</label>
 			<label className="floating-label">
-				<span>Jumlah</span>
+				<span>Jumlah *</span>
 				<input
 					type="number"
 					className="input w-full"

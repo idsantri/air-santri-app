@@ -18,7 +18,7 @@ function SaleDetailCreate() {
 
 	return (
 		<div className="card p-2 border border-base-200 rounded-sm">
-			<header>
+			<header className="mb-2">
 				<div className="flex items-center justify-between rounded-sm p-2 bg-secondary text-secondary-content mb-2">
 					<h2 className="text-md">Formulir Detail Transaksi</h2>
 					<p className="badge badge-info">Baru</p>
