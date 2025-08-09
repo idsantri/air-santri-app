@@ -2,14 +2,12 @@ import { useState } from 'react';
 import FormActions from '../../components/FormActions';
 import useForm from '../../hooks/useForm';
 import salePayments from '../../models/salePayments';
-import { useNavigate } from 'react-router';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
 import SalePaymentFormInputs from './SalePaymentFormInputs';
 
 const SalePaymentForm = ({ inputData = {} }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const { formData, updateField, resetForm } = useForm(inputData);
-	const navigate = useNavigate();
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -19,9 +17,7 @@ const SalePaymentForm = ({ inputData = {} }) => {
 		salePayments
 			.create(formData)
 			.then(({ _ }) => {
-				// console.log(_product);
-				// resetForm();
-				navigate(`/sales/${formData.sale_id}`);
+				window.history.back();
 			})
 			.catch((error) => {
 				console.error('Failed to create product:', error);

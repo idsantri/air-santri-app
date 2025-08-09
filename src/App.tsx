@@ -33,6 +33,8 @@ import WarehouseIndex from './pages/warehouses/WarehouseIndex';
 import WarehouseCreate from './pages/warehouses/WarehouseCreate';
 import WarehouseEdit from './pages/warehouses/WarehouseEdit';
 import SaleTransaction from './pages/sales/SaleTransaction';
+import SaleListDetail from './pages/sales/SaleListDetail';
+import SaleListPayment from './pages/sales/SaleListPayment';
 
 const App = () => {
 	return (
@@ -55,7 +57,16 @@ const App = () => {
 							path="/sales/create-transaction"
 							element={<SaleTransaction />}
 						/>
-						<Route path="/sales/:id" element={<SaleDetail />} />
+						<Route path="/sales/:id" element={<SaleDetail />}>
+							<Route
+								path="details"
+								element={<SaleListDetail />}
+							/>
+							<Route
+								path="payments"
+								element={<SaleListPayment />}
+							/>
+						</Route>
 						<Route path="/sales/:id/edit" element={<SaleEdit />} />
 
 						<Route

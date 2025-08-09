@@ -110,6 +110,10 @@ export default function Step4Confirmation({ goToStep }) {
 								<td>Status</td>
 								<td>{sale?.status}</td>
 							</tr>
+							<tr>
+								<td>Penerima</td>
+								<td>{sale?.recipient}</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

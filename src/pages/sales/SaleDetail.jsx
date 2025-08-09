@@ -1,17 +1,23 @@
-import { Link, useParams } from 'react-router';
+import {
+	Link,
+	Outlet,
+	useLocation,
+	useNavigate,
+	useParams,
+} from 'react-router';
 import sales from '../../models/sales';
 import { useCallback, useEffect, useState } from 'react';
 import LoadingFixed from '../../components/LoadingFixed';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import Tabs from '../../components/Tabs';
 import useSaleStore from '../../store/saleStore';
-import SaleListDetail from './SaleListDetail';
-import SaleListPayment from './SaleListPayment';
 import FileDownloader from '../../models/FileDownloader';
 import SaleDetailTable from './SaleDetailTable';
+import TabRoute from '../../components/TabRoute';
 
 const SaleDetail = () => {
 	const { id } = useParams();
+	const navigate = useNavigate();
+	const location = useLocation();
 	const [isLoading, setIsLoading] = useState(true);
 
 	const {
@@ -24,6 +30,13 @@ const SaleDetail = () => {
 		setOnDeleteDetail,
 		setOnDeletePayment,
 	} = useSaleStore((state) => state);
+
+	useEffect(() => {
+		// jika tidak ada sub-path yang ditentukan
+		if (location.pathname === `/sales/${id}`) {
+			navigate(`details`, { replace: true });
+		}
+	}, [id, navigate, location]);
 
 	const fetchData = useCallback(() => {
 		setIsLoading(true);
@@ -104,17 +117,26 @@ const SaleDetail = () => {
 					</div>
 				</div>
 			</div>
-
-			<Tabs
-				tab1={{
-					label: 'Detail Barang',
-					component: <SaleListDetail />,
-				}}
-				tab2={{
-					label: 'Pembayaran',
-					component: <SaleListPayment />,
-				}}
+			<TabRoute
+				routes={[
+					{
+						label: 'Detail Barang',
+						url: `/sales/${id}/details`,
+						icon: <Icon icon="mynaui:list" height="24" />,
+					},
+					{
+						label: 'Pembayaran',
+						url: `/sales/${id}/payments`,
+						icon: (
+							<Icon
+								icon="fluent:payment-28-regular"
+								height="28"
+							/>
+						),
+					},
+				]}
 			/>
+			<Outlet />
 		</>
 	);
 };
