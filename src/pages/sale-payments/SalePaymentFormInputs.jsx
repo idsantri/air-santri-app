@@ -36,7 +36,7 @@ const SalePaymentFormInputs = ({ formData, updateField }) => {
 			</label>
 
 			<SelectClearable
-				label="Metode Pembayaran"
+				label="Metode Pembayaran *"
 				options={['Tunai', 'Transfer', 'Lainnya']}
 				value={formData?.payment_method || ''}
 				onChange={(val) => updateField('payment_method', val)}
