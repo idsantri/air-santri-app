@@ -57,18 +57,18 @@ const SaleFormInputs = ({ formData, updateField, user }) => {
 
 	return (
 		<div className="flex flex-col gap-4">
-			<label className="floating-label">
-				<span>Kode</span>
+			{/* <label className="floating-label">
+				<span>Kode *</span>
 				<input
 					type="text"
 					className="input w-full"
 					disabled
 					value={formData?.code ?? ''}
 				/>
-			</label>
+			</label> */}
 
 			<label className="floating-label">
-				<span>Agen (ID)</span>
+				<span>Agen (ID) *</span>
 				<input
 					type="text"
 					className="input w-full"
@@ -92,11 +92,11 @@ const SaleFormInputs = ({ formData, updateField, user }) => {
 				value={formData?.customer_id ?? ''}
 				onChange={onChangeCustomer}
 				isLoading={loadingCustomer}
-				label="Pelanggan/Toko"
+				label="Pelanggan/Toko *"
 			/>
 
 			<label className="floating-label">
-				<span>Tanggal</span>
+				<span>Tanggal *</span>
 				<input
 					type="date"
 					className="input w-full"
@@ -112,18 +112,30 @@ const SaleFormInputs = ({ formData, updateField, user }) => {
 						)
 					}
 				/>
-				<div className="text-xs text-base-content/75 ml-2">
-					Kosongkan untuk waktu saat ini
-				</div>
+				{!formData.id && (
+					<div className="text-xs text-base-content/75 ml-2">
+						Kosongkan untuk waktu saat ini
+					</div>
+				)}
 			</label>
 
 			<SelectClearable
-				label="Status Transaksi"
+				label="Status Transaksi *"
 				options={['Proses', 'Selesai', 'Gagal']}
 				value={formData?.status || ''}
 				onChange={(e) => updateField('status', e)}
 				placeholder="Pilih status transaksi"
 			/>
+
+			<label className="floating-label">
+				<span>Penerima</span>
+				<input
+					type="text"
+					className="input w-full"
+					value={formData?.recipient ?? ''}
+					onChange={(e) => updateField('recipient', e.target.value)}
+				/>
+			</label>
 
 			<label className="floating-label">
 				<span>Catatan</span>

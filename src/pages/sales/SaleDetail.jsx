@@ -160,6 +160,10 @@ const SaleDetail = () => {
 							</tr>
 
 							<tr>
+								<td>Penerima</td>
+								<td>{sale.recipient || '-'}</td>
+							</tr>
+							<tr>
 								<td>Catatan</td>
 								<td>{sale.note || '-'}</td>
 							</tr>
