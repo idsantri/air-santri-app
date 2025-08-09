@@ -1,3 +1,5 @@
+import { sanitizeFileName } from '../utils/string';
+
 class FileDownloader {
 	constructor() {
 		this.baseUrl =
@@ -18,7 +20,7 @@ class FileDownloader {
 
 			const anchor = document.createElement('a');
 			anchor.href = objectUrl;
-			anchor.download = fileName;
+			anchor.download = sanitizeFileName(fileName);
 			document.body.appendChild(anchor);
 			anchor.click();
 			anchor.remove();

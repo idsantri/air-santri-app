@@ -66,16 +66,12 @@ const SaleDetail = () => {
 	}, [setOnDeleteDetail, setOnDeletePayment, fetchData]);
 
 	const downloadInvoice = async () => {
-		const fileName = `invoice-${sale.customer_name}-${sale.code}.pdf`
-			.replace(/\s/g, '-')
-			.replace(/\//g, '-');
+		const fileName = `invoice-${sale.customer_name}-${sale.code}.pdf`;
 		await FileDownloader.downloadInvoice(id, fileName);
 	};
 
 	const downloadReceipt = async () => {
-		const fileName = `nota-${sale.customer_name}-${sale.code}.pdf`
-			.replace(/\s/g, '-')
-			.replace(/\//g, '-');
+		const fileName = `nota-${sale.customer_name}-${sale.code}.pdf`;
 		await FileDownloader.downloadReceipt(id, fileName);
 	};
 

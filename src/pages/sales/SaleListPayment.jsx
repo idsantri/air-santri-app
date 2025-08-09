@@ -31,9 +31,7 @@ function SaleListPayment() {
 	};
 
 	const handleDownload = (id) => {
-		const fileName = `kuitansi-${sale.customer_name}-${id}-${sale.code}.pdf`
-			.replace(/\s/g, '-')
-			.replace(/\//g, '-');
+		const fileName = `kuitansi-${sale.customer_name}-${id}-${sale.code}.pdf`;
 		FileDownloader.downloadPayment(id, fileName);
 	};
 
