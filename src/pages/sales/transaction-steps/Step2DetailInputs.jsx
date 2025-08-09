@@ -3,9 +3,8 @@ import { useTransactionStore } from '../../../store/transactionStore';
 import SaleDetailFormInputs from '../../sale-details/SaleDetailFormInputs';
 import useForm from '../../../hooks/useForm';
 import { notifyError } from '../../../components/Notify';
-import Step2List from './Step2List';
 
-export default function Step2Inputs() {
+export default function Step2DetailInputs() {
 	const { formData, updateField, resetForm } = useForm({});
 	const { addDetail } = useTransactionStore((state) => state);
 
@@ -33,7 +32,6 @@ export default function Step2Inputs() {
 
 	return (
 		<>
-			<Step2List />
 			<div className="">
 				<SaleDetailFormInputs
 					formData={formData}

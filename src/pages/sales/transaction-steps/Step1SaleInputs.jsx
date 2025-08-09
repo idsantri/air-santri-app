@@ -4,7 +4,7 @@ import useAuthStore from '../../../store/authStore';
 import SaleFormInputs from '../SaleFormInputs';
 import useForm from '../../../hooks/useForm';
 
-export default function Step1Inputs() {
+export default function Step1SaleInputs() {
 	const user = useAuthStore((state) => state.user);
 	const sale = useTransactionStore((state) => state.sale);
 	const setSale = useTransactionStore((state) => state.setSale);

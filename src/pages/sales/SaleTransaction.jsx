@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTransactionStore } from '../../store/transactionStore';
 import { useSwipeable } from 'react-swipeable';
-import Step1Inputs from './transaction-steps/Step1Inputs';
-import Step2Inputs from './transaction-steps/Step2Inputs';
-import Step3Inputs from './transaction-steps/Step3Inputs';
+import Step1SaleInputs from './transaction-steps/Step1SaleInputs';
+import Step2DetailInputs from './transaction-steps/Step2DetailInputs';
+import Step3PaymentInputs from './transaction-steps/Step3PaymentInputs';
 import Step4Confirmation from './transaction-steps/Step4Confirmation';
 import useConfirmDialog from '../../hooks/useConfirmDialog';
+import Step2DetailList from './transaction-steps/Step2DetailList';
 
 export default function SaleTransaction() {
 	const [step, setStep] = useState(0);
@@ -35,11 +36,16 @@ export default function SaleTransaction() {
 	const renderStepContent = () => {
 		switch (step) {
 			case 0:
-				return <Step1Inputs />;
+				return <Step1SaleInputs />;
 			case 1:
-				return <Step2Inputs />;
+				return (
+					<>
+						<Step2DetailList />
+						<Step2DetailInputs />
+					</>
+				);
 			case 2:
-				return <Step3Inputs />;
+				return <Step3PaymentInputs />;
 			case 3:
 				return <Step4Confirmation goToStep={goToStep} />;
 			default:

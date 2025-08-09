@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTransactionStore } from '../../../store/transactionStore';
 
-export default function Step2List({btnDelete=true}) {
+export default function Step2DetailList({ btnDelete = true }) {
 	const { details, removeDetail } = useTransactionStore((state) => state);
 	return (
 		<>
@@ -26,14 +26,16 @@ export default function Step2List({btnDelete=true}) {
 									</span>
 								</div>
 							</div>
-							{btnDelete && 						
-							<button
-								className="btn btn-circle btn-error btn-sm"
-								onClick={() => removeDetail(detail.product_id)}
-							>
-								⨉
-							</button>
-							}
+							{btnDelete && (
+								<button
+									className="btn btn-circle btn-error btn-sm"
+									onClick={() =>
+										removeDetail(detail.product_id)
+									}
+								>
+									⨉
+								</button>
+							)}
 						</li>
 					))
 				) : (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTransactionStore } from '../../../store/transactionStore';
-import Step2List from './Step2List';
+import Step2DetailList from './Step2DetailList';
 import { notifyError } from '../../../components/Notify';
 import useConfirmDialog from '../../../hooks/useConfirmDialog';
 import LoadingFixed from '../../../components/LoadingFixed';
@@ -115,7 +115,7 @@ export default function Step4Confirmation({ goToStep }) {
 				</div>
 			</div>
 			<div className="my-2">
-				<Step2List btnDelete={false} />
+				<Step2DetailList btnDelete={false} />
 			</div>
 
 			<div className="border border-base-200/75 rounded-sm">

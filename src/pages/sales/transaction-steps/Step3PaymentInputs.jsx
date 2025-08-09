@@ -3,7 +3,7 @@ import { useTransactionStore } from '../../../store/transactionStore';
 import SalePaymentFormInputs from '../../sale-payments/SalePaymentFormInputs';
 import useForm from '../../../hooks/useForm';
 
-export default function Step3Inputs() {
+export default function Step3PaymentInputs() {
 	const { payment, setPayment, details } = useTransactionStore(
 		(state) => state,
 	);
