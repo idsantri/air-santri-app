@@ -66,10 +66,17 @@ const SaleDetail = () => {
 	}, [setOnDeleteDetail, setOnDeletePayment, fetchData]);
 
 	const downloadInvoice = async () => {
-		await FileDownloader.downloadInvoice(id, sale.code);
+		const fileName = `invoice-${sale.customer_name}-${sale.code}.pdf`
+			.replace(/\s/g, '-')
+			.replace(/\//g, '-');
+		await FileDownloader.downloadInvoice(id, fileName);
 	};
+
 	const downloadReceipt = async () => {
-		await FileDownloader.downloadReceipt(id, sale.code);
+		const fileName = `nota-${sale.customer_name}-${sale.code}.pdf`
+			.replace(/\s/g, '-')
+			.replace(/\//g, '-');
+		await FileDownloader.downloadReceipt(id, fileName);
 	};
 
 	return (
@@ -112,7 +119,7 @@ const SaleDetail = () => {
 							onClick={downloadReceipt}
 						>
 							<Icon icon="material-symbols:print" height="22" />
-							Struk
+							Nota/Struk
 						</button>
 					</div>
 				</div>

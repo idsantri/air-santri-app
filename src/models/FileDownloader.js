@@ -29,24 +29,24 @@ class FileDownloader {
 		}
 	}
 
-	async downloadInvoice(saleId, saleCode) {
+	async downloadInvoice(saleId, fileName) {
 		return this.#startDownload({
 			endPoint: `reports/sales/${saleId}/invoice`,
-			fileName: `invoice-${saleCode}.pdf`,
+			fileName: fileName,
 		});
 	}
 
-	async downloadReceipt(saleId, saleCode) {
+	async downloadReceipt(saleId, fileName) {
 		return this.#startDownload({
 			endPoint: `reports/sales/${saleId}/receipt`,
-			fileName: `struk-${saleCode}.pdf`,
+			fileName: fileName,
 		});
 	}
 
-	async downloadPayment(paymentsId) {
+	async downloadPayment(paymentsId, fileName) {
 		return this.#startDownload({
 			endPoint: `reports/payments/${paymentsId}`,
-			fileName: `kuitansi-${paymentsId}.pdf`,
+			fileName: fileName,
 		});
 	}
 }

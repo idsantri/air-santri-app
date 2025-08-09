@@ -31,7 +31,10 @@ function SaleListPayment() {
 	};
 
 	const handleDownload = (id) => {
-		FileDownloader.downloadPayment(id);
+		const fileName = `kuitansi-${sale.customer_name}-${id}-${sale.code}.pdf`
+			.replace(/\s/g, '-')
+			.replace(/\//g, '-');
+		FileDownloader.downloadPayment(id, fileName);
 	};
 
 	return (
