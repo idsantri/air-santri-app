@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import FormActions from '../../components/FormActions';
 import customers from '../../models/customers';
 import SelectSearch from '../../components/SelectSearch';
-import kecamatan from './kecamatan';
+import kecamatan from '../../utils/kecamatan';
 import LoadingAbsolute from '../../components/LoadingAbsolute';
 import useAuthStore from '../../store/authStore';
 
