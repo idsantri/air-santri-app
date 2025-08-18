@@ -1,5 +1,5 @@
 import useAuthStore from '../store/authStore';
-import { notifyError } from '../components/Notify';
+import { notifyError, notifySuccess } from '../components/Notify';
 import {
 	logErrorDetails,
 	logErrorToken,
@@ -99,13 +99,14 @@ const api = (() => {
 
 	async function performFetch(fullUrl, options) {
 		const requestStart = Date.now();
+		const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 		try {
 			const response = await fetch(fullUrl, {
 				...options,
 				headers: {
 					...options.headers,
-					'Content-Type': 'application/json',
+					'X-Timezone': timezone, // Tambahkan header timezone
 				},
 			});
 
@@ -124,6 +125,10 @@ const api = (() => {
 	async function fetchGuest(endPoint, options = {}) {
 		// Extract params from options and build query string
 		const { params, ...fetchOptions } = options;
+		fetchOptions.headers = {
+			...options.headers,
+			'Content-Type': 'application/json',
+		};
 		const queryString = buildQueryString(params);
 		const fullUrl = BASE_URL + endPoint + queryString;
 
@@ -176,6 +181,61 @@ const api = (() => {
 		});
 	}
 
+	/**
+	 * 🆕 Method baru untuk mengambil dan mengunduh file
+	 * Menggunakan alur yang sama dengan fetchGuest/fetchAuth untuk penanganan error, log, dll.
+	 * @param {string} endPoint - Endpoint API untuk file
+	 * @param {string} fileName - Nama file untuk disimpan
+	 * @param {Object} options - Opsi fetch seperti headers
+	 */
+	async function fetchFile(endPoint, fileName, options = {}) {
+		// Extract params from options and build query string
+		const { params, ...fetchOptions } = options;
+		const queryString = buildQueryString(params);
+		const fullUrl = BASE_URL + endPoint + queryString;
+
+		// Tambahkan token jika ada
+		const token = getAccessToken();
+		fetchOptions.headers = {
+			...fetchOptions.headers,
+			...(token ? { Authorization: `Bearer ${token}` } : {}),
+		};
+
+		if (withLog) logRequestDetails(fullUrl, fetchOptions);
+
+		// Perform fetch request
+		const response = await performFetch(fullUrl, fetchOptions);
+
+		// Handle error response
+		if (!response.ok) {
+			if (response.status >= 500) {
+				await handleServerError(response, notifyConfig, withLog);
+			} else {
+				await handleResponseError(response, notifyConfig, withLog);
+			}
+		}
+
+		// Ambil blob dari response
+		let responseBlob;
+		try {
+			responseBlob = await response.blob();
+		} catch (error) {
+			if (withLog)
+				logErrorDetails({ error, fullUrl, options: fetchOptions });
+			if (notifyConfig.showError)
+				notifyError({ message: 'Gagal memproses file dari server' });
+			throw error;
+		}
+
+		if (withLog) {
+			logResponseDetails(response, {
+				message: 'File fetched successfully',
+			});
+		}
+		notifySuccess({ message: `File ${fileName} berhasil diunduh` });
+		return responseBlob;
+	}
+
 	function getAccessToken() {
 		const { token } = useAuthStore.getState();
 		return token || null;
@@ -184,11 +244,11 @@ const api = (() => {
 	return {
 		fetchGuest,
 		fetchAuth,
+		fetchFile,
 		setNotify,
 		getNotify: () => ({ ...notifyConfig }), // Return copy to prevent direct mutation
 		setLog,
 		getLog: () => withLog, // Return current log state
-		baseUrl: () => BASE_URL,
 	};
 })();
 

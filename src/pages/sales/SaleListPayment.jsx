@@ -31,8 +31,12 @@ function SaleListPayment() {
 	};
 
 	const handleDownload = (id) => {
+		setIsLoading(true);
 		const fileName = `kuitansi-${sale.customer_name}-${id}-${sale.code}.pdf`;
-		FileDownloader.downloadPayment(id, fileName);
+		FileDownloader.downloadPayment(id, fileName)
+			.then(() => {})
+			.catch((error) => console.log(error))
+			.finally(() => setIsLoading(false));
 	};
 
 	return (

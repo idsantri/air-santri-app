@@ -65,14 +65,22 @@ const SaleDetail = () => {
 		setOnDeletePayment(() => fetchData());
 	}, [setOnDeleteDetail, setOnDeletePayment, fetchData]);
 
-	const downloadInvoice = async () => {
+	const downloadInvoice = () => {
+		setIsLoading(true);
 		const fileName = `invoice-${sale.customer_name}-${sale.code}.pdf`;
-		await FileDownloader.downloadInvoice(id, fileName);
+		FileDownloader.downloadInvoice(id, fileName)
+			.then(() => {})
+			.catch((error) => console.log(error))
+			.finally(() => setIsLoading(false));
 	};
 
-	const downloadReceipt = async () => {
+	const downloadReceipt = () => {
+		setIsLoading(true);
 		const fileName = `nota-${sale.customer_name}-${sale.code}.pdf`;
-		await FileDownloader.downloadReceipt(id, fileName);
+		FileDownloader.downloadReceipt(id, fileName)
+			.then(() => {})
+			.catch((error) => console.log(error))
+			.finally(() => setIsLoading(false));
 	};
 
 	return (
