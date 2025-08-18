@@ -7,7 +7,7 @@ import { logErrorDetails, logResponseDetails } from './logger';
  * @param {Object} notifyConfig - Notification configuration
  * @param {boolean} withLog - Whether to log the response
  */
-export async function handleServerError(response, notifyConfig, withLog) {
+async function handleError5xx(response, notifyConfig, withLog) {
 	try {
 		// Try to get error details from response body
 		const errorData = await response.json().catch(() => null);
@@ -114,7 +114,7 @@ export async function handleServerError(response, notifyConfig, withLog) {
  * @param {Object} notifyConfig - Notification configuration
  * @param {boolean} withLog - Whether to log the response
  */
-export async function handleResponseError(response, notifyConfig, withLog) {
+async function handleError4xx(response, notifyConfig, withLog) {
 	let errorMessage = 'Terjadi kesalahan pada server';
 	let responseJson = null;
 
@@ -131,6 +131,14 @@ export async function handleResponseError(response, notifyConfig, withLog) {
 	if (notifyConfig.showError) notifyError({ message: errorMessage });
 	if (withLog) logResponseDetails(response, responseJson);
 	throw responseJson || new Error(errorMessage);
+}
+
+export async function handleResponseErrors(response, notifyConfig, withLog) {
+	if (response.status >= 500) {
+		await handleError5xx(response, notifyConfig, withLog);
+	} else {
+		await handleError4xx(response, notifyConfig, withLog);
+	}
 }
 
 /**

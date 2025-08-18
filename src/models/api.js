@@ -6,11 +6,7 @@ import {
 	logRequestDetails,
 	logResponseDetails,
 } from './utils/logger';
-import {
-	handleServerError,
-	handleResponseError,
-	handleResponseSuccess,
-} from './utils/handler';
+import { handleResponseSuccess, handleResponseErrors } from './utils/handler';
 
 const api = (() => {
 	const BASE_URL =
@@ -139,11 +135,7 @@ const api = (() => {
 
 		// Handle error response
 		if (!response.ok) {
-			if (response.status >= 500) {
-				await handleServerError(response, notifyConfig, withLog);
-			} else {
-				await handleResponseError(response, notifyConfig, withLog);
-			}
+			await handleResponseErrors(response, notifyConfig, withLog);
 		}
 
 		// Handle and parse successful response
@@ -208,11 +200,7 @@ const api = (() => {
 
 		// Handle error response
 		if (!response.ok) {
-			if (response.status >= 500) {
-				await handleServerError(response, notifyConfig, withLog);
-			} else {
-				await handleResponseError(response, notifyConfig, withLog);
-			}
+			await handleResponseErrors(response, notifyConfig, withLog);
 		}
 
 		// Ambil blob dari response
