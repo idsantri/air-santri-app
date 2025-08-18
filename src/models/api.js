@@ -1,11 +1,16 @@
 import useAuthStore from '../store/authStore';
-import { notifyError, notifySuccess } from '../components/Notify';
+import { notifyError } from '../components/Notify';
 import {
 	logErrorDetails,
 	logErrorToken,
 	logRequestDetails,
 	logResponseDetails,
 } from './utils/logger';
+import {
+	handleServerError,
+	handleResponseError,
+	handleResponseSuccess,
+} from './utils/handler';
 
 const api = (() => {
 	const BASE_URL =
@@ -116,46 +121,6 @@ const api = (() => {
 		}
 	}
 
-	async function handleErrorResponse(response) {
-		let errorMessage = 'Terjadi kesalahan pada server';
-		let responseJson = null;
-
-		// Try to parse error response for better error message
-		try {
-			responseJson = await response.json();
-			errorMessage = responseJson.message || errorMessage;
-		} catch (parseError) {
-			if (withLog)
-				console.error(
-					'Failed to parse error response:',
-					parseError.message,
-				);
-			throw parseError;
-		}
-
-		if (notifyConfig.showError) notifyError({ message: errorMessage });
-		if (withLog) logResponseDetails(response, responseJson);
-		throw responseJson || new Error(errorMessage);
-	}
-
-	async function parseSuccessResponse(response, options) {
-		const fullUrl = response.url || 'unknown';
-		try {
-			return await response.json();
-		} catch (error) {
-			if (withLog) logErrorDetails({ error, fullUrl, options });
-			if (notifyConfig.showError)
-				notifyError({ message: 'Gagal memproses respons server' });
-			throw error;
-		}
-	}
-
-	function handleSuccessResponse(responseJson) {
-		const { message } = responseJson;
-		if (notifyConfig.showSuccess)
-			notifySuccess({ message: message || 'Success' });
-	}
-
 	async function fetchGuest(endPoint, options = {}) {
 		// Extract params from options and build query string
 		const { params, ...fetchOptions } = options;
@@ -169,15 +134,22 @@ const api = (() => {
 
 		// Handle error response
 		if (!response.ok) {
-			await handleErrorResponse(response);
+			if (response.status >= 500) {
+				await handleServerError(response, notifyConfig, withLog);
+			} else {
+				await handleResponseError(response, notifyConfig, withLog);
+			}
 		}
 
-		// Parse successful response
-		const responseJson = await parseSuccessResponse(response, fetchOptions);
+		// Handle and parse successful response
+		const responseJson = await handleResponseSuccess(
+			response,
+			fetchOptions,
+			notifyConfig,
+			withLog,
+		);
 
 		if (withLog) logResponseDetails(response, responseJson);
-
-		handleSuccessResponse(responseJson);
 
 		return responseJson;
 	}
@@ -216,6 +188,7 @@ const api = (() => {
 		getNotify: () => ({ ...notifyConfig }), // Return copy to prevent direct mutation
 		setLog,
 		getLog: () => withLog, // Return current log state
+		baseUrl: () => BASE_URL,
 	};
 })();
 
