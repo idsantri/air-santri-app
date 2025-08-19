@@ -8,155 +8,161 @@ import {
 } from './utils/logger';
 import { handleResponseSuccess, handleResponseErrors } from './utils/handler';
 
-const api = (() => {
-	const BASE_URL =
-		import.meta.env.VITE_BASE_API + import.meta.env.VITE_END_API;
-	// console.log('🚀 ~ BASE_URL:', BASE_URL);
-
-	// Global notify configuration
-	let notifyConfig = {
+const state = {
+	BASE_URL: import.meta.env.VITE_BASE_API + import.meta.env.VITE_END_API,
+	notifyConfig: {
 		showSuccess: true,
 		showError: true,
-	};
+	},
+	withLog: false,
+};
 
-	let withLog = false;
+const api = (() => {
+	/**
+	 * Mengambil token akses dari store.
+	 * @returns {string|null} Token akses atau null.
+	 */
+	function getAccessToken() {
+		const { token } = useAuthStore.getState();
+		return token || null;
+	}
 
+	/**
+	 * Mengatur konfigurasi notifikasi.
+	 * @param {boolean|object} notify - Nilai boolean atau objek konfigurasi.
+	 */
 	function setNotify(notify) {
-		// Handle undefined, use default config
-		if (notify === undefined) {
-			notifyConfig = {
-				showSuccess: true,
-				showError: true,
+		if (typeof notify === 'boolean') {
+			state.notifyConfig = {
+				showSuccess: notify,
+				showError: notify,
 			};
-			return;
-		}
-
-		// Handle boolean true, use default config
-		if (notify === true) {
-			notifyConfig = {
-				showSuccess: true,
-				showError: true,
+		} else if (typeof notify === 'object' && notify !== null) {
+			// Menggunakan default value jika properti tidak ada atau bukan boolean
+			state.notifyConfig = {
+				showSuccess: !!notify.showSuccess, // Menggunakan !! untuk konversi ke boolean
+				showError: !!notify.showError,
 			};
-			return;
+		} else {
+			// Default jika input tidak valid
+			state.notifyConfig = { showSuccess: true, showError: true };
 		}
-
-		// Handle boolean false or any other falsy value except undefined
-		if (!notify) {
-			notifyConfig = {
-				showSuccess: false,
-				showError: false,
-			};
-			return;
-		}
-
-		// Handle object configuration
-		if (typeof notify === 'object' && notify !== null) {
-			// Validate that it's a plain object (not array, date, etc.)
-			if (notify.constructor === Object) {
-				notifyConfig = {
-					showSuccess:
-						typeof notify.showSuccess === 'boolean'
-							? notify.showSuccess
-							: false,
-					showError:
-						typeof notify.showError === 'boolean'
-							? notify.showError
-							: false,
-				};
-				return;
-			}
-		}
-
-		// For boolean true or any other truthy value, use defaults
-		notifyConfig = {
-			showSuccess: true,
-			showError: true,
-		};
 	}
 
+	/**
+	 * Mengatur status logging.
+	 * @param {boolean} value - Status logging.
+	 */
 	function setLog(value) {
-		withLog = value ? true : false;
+		state.withLog = !!value;
 	}
 
-	// Helper function to build query string from params object
+	/**
+	 * Membangun query string dari objek params.
+	 * @param {object} params - Objek parameter.
+	 * @returns {string} Query string.
+	 */
 	function buildQueryString(params) {
 		if (!params || typeof params !== 'object') return '';
-
-		const searchParams = new URLSearchParams();
-		Object.entries(params).forEach(([key, value]) => {
-			if (value !== null && value !== undefined) {
-				searchParams.append(key, String(value));
-			}
-		});
-
+		const searchParams = new URLSearchParams(
+			Object.entries(params).filter(
+				([, value]) => value !== null && value !== undefined,
+			),
+		);
 		const queryString = searchParams.toString();
 		return queryString ? `?${queryString}` : '';
 	}
 
+	/**
+	 * Melakukan permintaan fetch.
+	 * @param {string} fullUrl - URL lengkap.
+	 * @param {object} options - Opsi fetch.
+	 * @returns {Promise<Response>} Promise yang menghasilkan objek Response.
+	 */
 	async function performFetch(fullUrl, options) {
 		const requestStart = Date.now();
 		const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		const finalOptions = {
+			...options,
+			headers: {
+				...options.headers,
+				'X-Timezone': timezone,
+			},
+		};
+
+		if (state.withLog) logRequestDetails(fullUrl, finalOptions);
 
 		try {
-			const response = await fetch(fullUrl, {
-				...options,
-				headers: {
-					...options.headers,
-					'X-Timezone': timezone, // Tambahkan header timezone
-				},
-			});
-
-			// Attach requestStart to response for duration calculation
-			response.requestStart = requestStart;
-
+			const response = await fetch(fullUrl, finalOptions);
+			response.requestStart = requestStart; // Attach requestStart to response
 			return response;
 		} catch (error) {
-			if (withLog) logErrorDetails({ error, fullUrl, options });
-			if (notifyConfig.showError)
+			if (state.withLog)
+				logErrorDetails({ error, fullUrl, options: finalOptions });
+			if (state.notifyConfig.showError) {
 				notifyError({ message: 'Gagal terhubung ke server' });
+			}
 			throw error;
 		}
 	}
 
+	/**
+	 * Mengelola respons API, menangani kesalahan dan parsing data.
+	 * @param {Response} response - Objek respons fetch.
+	 * @param {object} options - Opsi fetch yang digunakan.
+	 * @returns {Promise<object>} Promise yang menghasilkan data JSON.
+	 */
+	async function handleApi(response, options) {
+		if (!response.ok) {
+			await handleResponseErrors(
+				response,
+				state.notifyConfig,
+				state.withLog,
+			);
+			return; // Menghentikan eksekusi setelah menangani kesalahan
+		}
+
+		const responseJson = await handleResponseSuccess(
+			response,
+			options,
+			state.notifyConfig,
+			state.withLog,
+		);
+
+		if (state.withLog) logResponseDetails(response, responseJson);
+		return responseJson;
+	}
+
+	/**
+	 * Mengambil data untuk endpoint tamu (tanpa otentikasi).
+	 * @param {string} endPoint - Endpoint API.
+	 * @param {object} options - Opsi fetch.
+	 * @returns {Promise<object>} Promise yang menghasilkan data JSON.
+	 */
 	async function fetchGuest(endPoint, options = {}) {
-		// Extract params from options and build query string
 		const { params, ...fetchOptions } = options;
 		fetchOptions.headers = {
 			...options.headers,
 			'Content-Type': 'application/json',
 		};
 		const queryString = buildQueryString(params);
-		const fullUrl = BASE_URL + endPoint + queryString;
-
-		if (withLog) logRequestDetails(fullUrl, fetchOptions);
-
-		// Perform fetch request
+		const fullUrl = state.BASE_URL + endPoint + queryString;
 		const response = await performFetch(fullUrl, fetchOptions);
-
-		// Handle error response
-		if (!response.ok) {
-			await handleResponseErrors(response, notifyConfig, withLog);
-		}
-
-		// Handle and parse successful response
-		const responseJson = await handleResponseSuccess(
-			response,
-			fetchOptions,
-			notifyConfig,
-			withLog,
-		);
-
-		if (withLog) logResponseDetails(response, responseJson);
-
-		return responseJson;
+		return handleApi(response, fetchOptions);
 	}
 
+	/**
+	 * Mengambil data untuk endpoint yang memerlukan otentikasi.
+	 * @param {string} endPoint - Endpoint API.
+	 * @param {object} options - Opsi fetch.
+	 * @returns {Promise<object>} Promise yang menghasilkan data JSON.
+	 */
 	async function fetchAuth(endPoint, options = {}) {
-		// console.log('🚀 ~ fetchAuth ~ BASE_URL:', BASE_URL);
 		const token = getAccessToken();
 		if (!token) {
-			if (withLog) logErrorToken(BASE_URL + endPoint, options);
-			if (notifyConfig.showError) {
+			if (state.withLog)
+				logErrorToken(state.BASE_URL + endPoint, options);
+			if (state.notifyConfig.showError) {
 				notifyError({
 					message: 'Tidak ada token akses yang ditemukan',
 				});
@@ -174,59 +180,55 @@ const api = (() => {
 	}
 
 	/**
-	 * 🆕 Method baru untuk mengambil dan mengunduh file
-	 * Menggunakan alur yang sama dengan fetchGuest/fetchAuth untuk penanganan error, log, dll.
-	 * @param {string} endPoint - Endpoint API untuk file
-	 * @param {string} fileName - Nama file untuk disimpan
-	 * @param {Object} options - Opsi fetch seperti headers
+	 * Mengambil dan mengunduh file dari endpoint.
+	 * @param {string} endPoint - Endpoint API.
+	 * @param {string} fileName - Nama file.
+	 * @param {object} options - Opsi fetch.
+	 * @returns {Promise<Blob>} Promise yang menghasilkan objek Blob.
 	 */
 	async function fetchFile(endPoint, fileName, options = {}) {
-		// Extract params from options and build query string
 		const { params, ...fetchOptions } = options;
 		const queryString = buildQueryString(params);
-		const fullUrl = BASE_URL + endPoint + queryString;
+		const fullUrl = state.BASE_URL + endPoint + queryString;
 
-		// Tambahkan token jika ada
 		const token = getAccessToken();
-		fetchOptions.headers = {
-			...fetchOptions.headers,
-			...(token ? { Authorization: `Bearer ${token}` } : {}),
-		};
-
-		if (withLog) logRequestDetails(fullUrl, fetchOptions);
-
-		// Perform fetch request
-		const response = await performFetch(fullUrl, fetchOptions);
-
-		// Handle error response
-		if (!response.ok) {
-			await handleResponseErrors(response, notifyConfig, withLog);
+		if (token) {
+			fetchOptions.headers = {
+				...fetchOptions.headers,
+				Authorization: `Bearer ${token}`,
+			};
 		}
 
-		// Ambil blob dari response
-		let responseBlob;
+		const response = await performFetch(fullUrl, fetchOptions);
+		if (!response.ok) {
+			await handleResponseErrors(
+				response,
+				state.notifyConfig,
+				state.withLog,
+			);
+			throw new Error('Failed to fetch file');
+		}
+
 		try {
-			responseBlob = await response.blob();
+			const responseBlob = await response.blob();
+			if (state.withLog) {
+				logResponseDetails(response, {
+					message: 'File fetched successfully',
+				});
+			}
+			if (state.notifyConfig.showSuccess) {
+				notifySuccess({ message: `File ${fileName} berhasil diunduh` });
+			}
+			return responseBlob;
 		} catch (error) {
-			if (withLog)
+			if (state.withLog) {
 				logErrorDetails({ error, fullUrl, options: fetchOptions });
-			if (notifyConfig.showError)
+			}
+			if (state.notifyConfig.showError) {
 				notifyError({ message: 'Gagal memproses file dari server' });
+			}
 			throw error;
 		}
-
-		if (withLog) {
-			logResponseDetails(response, {
-				message: 'File fetched successfully',
-			});
-		}
-		notifySuccess({ message: `File ${fileName} berhasil diunduh` });
-		return responseBlob;
-	}
-
-	function getAccessToken() {
-		const { token } = useAuthStore.getState();
-		return token || null;
 	}
 
 	return {
@@ -234,9 +236,9 @@ const api = (() => {
 		fetchAuth,
 		fetchFile,
 		setNotify,
-		getNotify: () => ({ ...notifyConfig }), // Return copy to prevent direct mutation
+		getNotify: () => ({ ...state.notifyConfig }),
 		setLog,
-		getLog: () => withLog, // Return current log state
+		getLog: () => state.withLog,
 	};
 })();
 

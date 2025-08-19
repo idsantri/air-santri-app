@@ -15,21 +15,22 @@ class FileDownloader {
 		window.URL.revokeObjectURL(objectUrl);
 	}
 
-	async #download(endPoint, fileName) {
+	async #fetchDownload(endPoint, fileName) {
+		api.setNotify(true);
 		const blob = await api.fetchFile(endPoint, fileName);
 		return this.#downloadBlob(blob, fileName);
 	}
 
 	async downloadInvoice(saleId, fileName) {
-		await this.#download(`reports/sales/${saleId}/invoice`, fileName);
+		await this.#fetchDownload(`reports/sales/${saleId}/invoice`, fileName);
 	}
 
 	async downloadReceipt(saleId, fileName) {
-		await this.#download(`reports/sales/${saleId}/receipt`, fileName);
+		await this.#fetchDownload(`reports/sales/${saleId}/receipt`, fileName);
 	}
 
 	async downloadPayment(paymentsId, fileName) {
-		await this.#download(`reports/payments/${paymentsId}`, fileName);
+		await this.#fetchDownload(`reports/payments/${paymentsId}`, fileName);
 	}
 }
 
