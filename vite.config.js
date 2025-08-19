@@ -6,15 +6,15 @@ import manifest from './manifest';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-	/**
-	 * TODO: add manifest from env
-	 */
-	const _env = loadEnv(mode, process.cwd());
+	const env = loadEnv(mode, process.cwd());
 	return {
 		plugins: [
 			react(),
 			tailwindcss(),
 			VitePWA({
+				devOptions: {
+					enabled: false, // Aktifkan PWA untuk development
+				},
 				registerType: 'autoUpdate', // Untuk otomatis memperbarui service worker
 				includeAssets: [
 					'favicon.svg',
@@ -22,7 +22,12 @@ export default defineConfig(({ mode }) => {
 					'robots.txt',
 					'apple-touch-icon.png',
 				], // Tambahkan aset tambahan
-				manifest: manifest,
+				manifest: {
+					...manifest,
+					name: env.VITE_APP_LONG_NAME,
+					short_name: env.VITE_APP_SHORT_NAME,
+					description: env.VITE_APP_DESCRIPTION,
+				},
 			}),
 		],
 		server: {

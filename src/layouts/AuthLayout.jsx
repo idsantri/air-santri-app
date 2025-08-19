@@ -3,9 +3,11 @@ import ToggleMode from '../components/ToggleMode';
 import LogoAvatar from './_components/LogoAvatar';
 import InstallPwa from './_components/InstallPwa';
 import useAuthStore from '../store/authStore';
-import config from '../config';
 
 const AuthLayout = () => {
+	const env = import.meta.env;
+	// console.log(env);
+
 	const loggedIn = useAuthStore((state) => state.isLoggedIn());
 	if (loggedIn) {
 		return <Navigate to="/" replace />;
@@ -27,11 +29,11 @@ const AuthLayout = () => {
 									Aplikasi
 									<br />
 									<span className="text-3xl font-light">
-										{config.APP_LONG_NAME}
+										{env.VITE_APP_LONG_NAME}
 									</span>
 								</h1>
 								<h2 className="text-md tracking-widest">
-									{config.APP_INSTANCE}
+									{env.VITE_APP_INSTANCE}
 								</h2>
 							</div>
 						</header>

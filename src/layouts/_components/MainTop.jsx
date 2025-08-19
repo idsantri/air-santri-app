@@ -1,8 +1,9 @@
 import ToggleMode from '../../components/ToggleMode';
-import config from '../../config';
 import LogoAvatar from './LogoAvatar';
 
 function MainTop() {
+	const env = import.meta.env;
+	// console.log(env);
 	return (
 		<div className="shadow-md bg-success text-success-content">
 			<div className="container mx-auto py-2 px-2 ">
@@ -31,10 +32,10 @@ function MainTop() {
 									lineHeight: '22px',
 								}}
 							>
-								{config.APP_LONG_NAME}
+								{env.VITE_APP_LONG_NAME}
 							</p>
 							<p className="p-0 m-0 tracking-widest font-light">
-								{config.APP_INSTANCE}
+								{env.VITE_APP_INSTANCE}
 							</p>
 						</div>
 					</div>

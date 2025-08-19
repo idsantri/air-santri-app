@@ -1,9 +1,7 @@
-import config from './src/config';
-
 export default {
-	name: config.APP_LONG_NAME,
-	short_name: config.APP_SHORT_NAME,
-	description: config.APP_DESCRIPTION,
+	name: 'AMDK Santri', // replaced by env.VITE_APP_LONG_NAME
+	short_name: 'AMDK Santri', // replaced by env.VITE_APP_SHORT_NAME
+	description: 'Aplikasi IPOS AMDK dengan Merek Santri', // replaced by env.VITE_APP_DESCRIPTION
 	theme_color: '#5e4b1f',
 	background_color: '#ffffff',
 	display: 'standalone',
