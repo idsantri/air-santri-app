@@ -63,7 +63,22 @@ function CustomerDetail() {
 							</tr>
 							<tr>
 								<td>No. Telepon</td>
-								<td>{`${customer?.phone ?? ''}`}</td>
+								<td className="flex items-center justify-between">
+									<span>{`${customer?.phone ?? ''}`}</span>
+									{customer?.phone && (
+										<a
+											className="btn btn-sm btn-circle btn-success text-neutral border-neutral-400 absolute right-2"
+											href={`https://wa.me/${customer?.phone?.replace(/^0/, '62') ?? ''}?text=Assalamualaikum%20${customer?.name}`}
+											target="_blank"
+											rel="noreferrer"
+										>
+											<Icon
+												icon="logos:whatsapp-icon"
+												width="1.5em"
+											/>
+										</a>
+									)}
+								</td>
 							</tr>
 							<tr>
 								<td>Referensi</td>
